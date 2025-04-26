@@ -22,6 +22,7 @@ def upgrade():
         sa.Column('user_id', sa.CHAR(length=26), nullable=False),
         sa.Column('code', sa.Integer, nullable=False),  # 6 digits OTP code, don't start with 0 to avoid truncation
         sa.Column('used_at', sa.DateTime, nullable=True),
+        sa.Column('revoked_at', sa.DateTime, nullable=True),
         sa.Column('expired_at', sa.DateTime, nullable=False),
         sa.Column('created_at', sa.DateTime, nullable=False, default=sa.func.now()),
         sa.Column('updated_at', sa.DateTime),
