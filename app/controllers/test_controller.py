@@ -17,4 +17,4 @@ def test():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify(UserSchema().dump(user)), 200
+    return "test", 200
