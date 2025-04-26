@@ -25,6 +25,14 @@ class User(db.Model):
         print('PASSWORD IS MATCH', isMatch)
         return bcrypt.checkpw(password=password, hashed_password= self.password)
 
-
-    def __repr__(self):
-        return f"<User {self.name}>"
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'username': self.username,
+            'birth_date': self.birth_date,
+            'email': self.email,
+            'email_verified_at': self.email_verified_at,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
