@@ -102,9 +102,9 @@ def logout():
     """
     return create_response_tuple(status=HTTPStatus.OK, message='User logged out successfully')
 
-@user_bp.route("/users/<string:user_id>", methods=["GET"])
+@user_bp.route("/users/<string:user_identifier>", methods=["GET"])
 @authenticate
-def show(user_id: str):
+def show(user_identifier: str):
     """
     Returns the user with the given ID.
 
@@ -119,7 +119,11 @@ def show(user_id: str):
         and the user data if the request is successful.
     """
 
-    user = User.query.filter_by(id=user_id).first()
+    user = User.query.filter(
+        (User.id == user_identifier) | 
+        (User.email == user_identifier) | 
+        (User.username == user_identifier)
+    ).first()
     if user is None:
         raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
 
