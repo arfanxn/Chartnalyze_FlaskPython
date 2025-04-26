@@ -1,0 +1,10 @@
+alembic==1.15.2
+Flask==3.1.0
+Flask_JWT_Extended==4.7.1
+Flask_Migrate==4.1.0
+flask_sqlalchemy==3.1.1
+marshmallow==4.0.0
+bcrypt==4.3.0
+SQLAlchemy==2.0.40
+ulid==1.1
+ulid_py==1.1.0
