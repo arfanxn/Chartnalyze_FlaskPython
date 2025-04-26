@@ -26,13 +26,22 @@ class User(db.Model):
         return bcrypt.checkpw(password=password, hashed_password= self.password)
 
     def to_json(self):
+        """
+        Returns the user as a JSON serializable dictionary.
+
+        This method returns the user as a JSON serializable dictionary which
+        can be used to return the user in an API response.
+
+        Returns:
+            A JSON serializable dictionary containing the user data.
+        """
         return {
             'id': self.id,
             'name': self.name,
             'username': self.username,
-            'birth_date': self.birth_date,
+            'birth_date': self.birth_date.isoformat() if self.birth_date is not None else None,
             'email': self.email,
-            'email_verified_at': self.email_verified_at,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'email_verified_at': self.email_verified_at.isoformat() if self.email_verified_at is not None else None,
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat() if self.updated_at is not None else None
         }
