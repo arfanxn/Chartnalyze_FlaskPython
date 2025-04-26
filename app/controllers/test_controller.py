@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify
-from app.services.user_service import UserService
 from app.schemas.user_schema import UserSchema
 from datetime import  date
 from app.models.user import User
