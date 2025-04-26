@@ -7,6 +7,7 @@ from app.forms.update_user_form import UpdateUserForm
 from app.helpers.response_helpers import create_response_tuple
 from app.middlewares.authenticate_middleware import authenticate
 from app.models.user import User
+from datetime import timedelta
 from flask import Blueprint, g, request
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
@@ -81,7 +82,8 @@ def login():
         errors = {'password': [message]}
         raise ValidationException(message, errors)
     
-    access_token = create_access_token(identity=user.id)
+    # Generate a JWT token with the user's ID as the identity and 30 days expiration time.
+    access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=30))
 
     return create_response_tuple(status=HTTPStatus.OK, message='User logged in successfully', data={'access_token': access_token})
 
