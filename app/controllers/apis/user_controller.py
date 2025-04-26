@@ -100,23 +100,6 @@ def logout():
     """
     return create_response_tuple(status=HTTPStatus.OK, message='User logged out successfully')
 
-@user_bp.route("/users/self", methods=["GET"])
-@authenticate
-def self():
-    """
-    Returns the currently authenticated user.
-
-    This function is a shortcut for getting the currently authenticated user.
-    It returns the user that is currently authenticated via the `authenticate`
-    decorator.
-
-    Returns:
-        A JSON response containing a success message, HTTP status code 200,
-        and the user data if the request is successful.
-    """
-    user: User = g.user
-    return show(user.id)
-
 @user_bp.route("/users/<string:user_id>", methods=["GET"])
 @authenticate
 def show(user_id: str):
@@ -144,15 +127,45 @@ def show(user_id: str):
         data={'user': user.to_json()}
     )
 
-@user_bp.route("/users/self", methods=["PUT"])
+@user_bp.route("/users/self", methods=["GET"])
 @authenticate
-def updateSelf():
-    user = g.user
-    return update(user.id)
+def showSelf():
+    """
+    Returns the currently authenticated user.
+
+    This function is a shortcut for getting the currently authenticated user.
+    It returns the user that is currently authenticated via the `authenticate`
+    decorator.
+
+    Returns:
+        A JSON response containing a success message, HTTP status code 200,
+        and the user data if the request is successful.
+    """
+    user: User = g.user
+    return show(user.id)
 
 @user_bp.route("/users/<string:user_id>", methods=["PUT"])
 @authenticate
 def update (user_id: str):
+    """
+    Updates the user with the given ID.
+
+    This function handles the updating of a user's information. It requires
+    the user to be authenticated via the `authenticate` decorator. The function
+    validates the input data using the `UpdateUserForm` and updates the user's
+    details if they exist in the database.
+
+    Args:
+        user_id (str): The ID of the user to update.
+
+    Returns:
+        A JSON response containing a success message, HTTP status code 200,
+        and the updated user data if the request is successful.
+
+    Raises:
+        HttpException: If the user is not found in the database.
+    """
+
     form = UpdateUserForm(request.form) 
     form.try_validate()
 
@@ -171,3 +184,20 @@ def update (user_id: str):
         message='User updated successfully',
         data={'user': user.to_json()}
     )
+
+@user_bp.route("/users/self", methods=["PUT"])
+@authenticate
+def updateSelf():
+    """
+    Updates the currently authenticated user.
+
+    This function is a shortcut for updating the currently authenticated user.
+    It requires the user to be authenticated via the `authenticate` decorator.
+    Upon successful update, it returns a success message with an HTTP status code 200.
+
+    Returns:
+        A JSON response containing a success message, HTTP status code 200,
+        and the updated user data if the request is successful.
+    """
+    user = g.user
+    return update(user.id)
