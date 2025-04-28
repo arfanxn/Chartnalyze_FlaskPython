@@ -37,7 +37,7 @@ Running the application
 ```
 flask run
 # or
-flask run --debug --debug # run in debug mode
+flask run --debug # run in debug mode
 ```
 
 Running the application unit/feature test
