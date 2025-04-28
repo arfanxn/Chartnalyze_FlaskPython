@@ -25,9 +25,13 @@ db-downgrade:
 # Show migration history
 db-history:
 	flask db history --directory $(MIGRATIONS_DIR)
+	
+#
+generate-secret-key:
+	python app/clis/generate_secret_key.py --env-file .env
 
 # Run the Flask app (optional)
 server:
 	flask run
 
-.PHONY: init migrate upgrade downgrade history server
+.PHONY: db-init db-migrate db-upgrade db-downgrade db-history generate-secret-key server
