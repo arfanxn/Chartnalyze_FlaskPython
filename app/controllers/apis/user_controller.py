@@ -1,20 +1,27 @@
+from app.services.otp_service import OtpService
 from app.exceptions.http_exception import HttpException
 from app.exceptions.validation_exception import ValidationException
 from app.extensions import db
+from app.forms.otp_code_form import OtpCodeForm
 from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
 from app.forms.update_user_form import UpdateUserForm
+from app.forms.update_user_email_form import UpdateUserEmailForm
+from app.forms.update_user_password_form import UpdateUserPasswordForm
+from app.forms.reset_user_password_form import ResetUserPasswordForm
 from app.helpers.response_helpers import create_response_tuple
 from app.middlewares.authenticate_middleware import authenticate
 from app.middlewares.verify_email_middleware import verify_email
 from app.models.user import User
-from datetime import timedelta
+from app.extensions import limiter
+from datetime import timedelta, datetime
 from flask import Blueprint, g, request
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
-user_bp = Blueprint('user', __name__)
+otp_service = OtpService()
+user_bp = Blueprint('user', __name__, url_prefix='/users')
 
 @user_bp.route('/register', methods=['POST'])
 def register():
@@ -40,9 +47,13 @@ def register():
         errors = {'email': [message]}
         raise ValidationException(message, errors)
 
-    return create_response_tuple(status=HTTPStatus.CREATED, message='User registered successfully')
+    return create_response_tuple(
+        status=HTTPStatus.CREATED, 
+        message='User registered successfully', 
+        data={'user': user.to_json()})
 
 @user_bp.route('/login', methods=['POST'])
+@limiter.limit("5 per minute")
 def login():
     """
     Handles user login by validating credentials and returning a JWT token if successful.
@@ -66,16 +77,33 @@ def login():
 
     return create_response_tuple(status=HTTPStatus.OK, message='User logged in successfully', data={'access_token': access_token})
 
-@user_bp.route('/logout', methods=['DELETE'])
+@user_bp.route('/self/email/verify', methods=['POST'])
 @authenticate
-@verify_email
+def verify_self_email():
+    form = OtpCodeForm(request.form)
+    form.try_validate()
+    
+    try:
+        otp_service.verify(email=g.user.email, code=form.code.data)
+
+        user:User = g.user
+        user.email_verified_at = datetime.now()
+        db.session.commit()
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        raise HttpException(message='Email verification failed', status=HTTPStatus.INTERNAL_SERVER_ERROR)
+
+    return create_response_tuple(status=HTTPStatus.OK, message='Email verified successfully')
+
+@user_bp.route('/self/logout', methods=['DELETE'])
+@authenticate
 def logout():
     """
     Logs out the authenticated user and returns a success message.
     """
     return create_response_tuple(status=HTTPStatus.OK, message='User logged out successfully')
 
-@user_bp.route("/users/<string:user_identifier>", methods=["GET"])
+@user_bp.route("/<string:user_identifier>", methods=["GET"])
 @authenticate
 @verify_email
 def show(user_identifier: str):
@@ -96,17 +124,19 @@ def show(user_identifier: str):
         data={'user': user.to_json()}
     )
 
-@user_bp.route("/users/self", methods=["GET"])
+@user_bp.route("/self", methods=["GET"])
 @authenticate
-@verify_email
-def showSelf():
+def show_self():
     """
     Retrieves the currently authenticated user's data.
     """
-    user: User = g.user
-    return show(user.id)
+    return create_response_tuple(
+        status=HTTPStatus.OK,
+        message='User found successfully',
+        data={'user': g.user.to_json()}
+    )
 
-@user_bp.route("/users/<string:user_id>", methods=["PUT"])
+@user_bp.route("/<string:user_id>", methods=["PUT"])
 @authenticate
 @verify_email
 def update(user_id: str):
@@ -132,12 +162,96 @@ def update(user_id: str):
         data={'user': user.to_json()}
     )
 
-@user_bp.route("/users/self", methods=["PUT"])
+@user_bp.route("/self", methods=["PUT"])
 @authenticate
 @verify_email
-def updateSelf():
+def update_self():
     """
     Updates the currently authenticated user's details.
     """
     user = g.user
     return update(user.id)
+
+@user_bp.route("/self/email", methods=["PATCH"])
+@authenticate
+@verify_email
+def update_self_email():
+    """
+    Updates the currently authenticated user's email address by validating input and sending an OTP code to the old email.
+    Returns updated user data or raises HttpException if not found.
+
+    Args:
+        request.form (dict): request form containing form data
+
+    Returns:
+        A response tuple containing the HTTP status and response message.
+    """
+    form = UpdateUserEmailForm(request.form)
+    form.try_validate()
+    
+    old_email = g.user.email
+    new_email = form.email.data
+
+    otp_service.verify(email=old_email, code=form.code.data)   
+
+    user: User = g.user
+    user.email = new_email
+    user.email_verified_at = None
+    db.session.commit()
+
+    return create_response_tuple(
+        status=HTTPStatus.OK, 
+        message='Email updated successfully, please verify your new email', 
+        data={'user': user.to_json()}
+    )
+
+@user_bp.route("/self/password", methods=["PATCH"])
+@authenticate
+@verify_email
+def update_self_password():
+    """
+    Updates the currently authenticated user's password by validating input and verifying the current password.
+    Returns a success message if successful, raises ValidationException if current password does not match.
+    """
+    form = UpdateUserPasswordForm(request.form)
+    form.try_validate()
+    
+    user: User = g.user
+
+    if (user.check_password(form.current_password.data) == False):
+        message = 'Current password does not match'
+        errors = {'current_password': [message]}
+        raise ValidationException(message, errors)
+
+    user.set_password(form.password.data)
+    db.session.commit()
+
+    return create_response_tuple(
+        status=HTTPStatus.OK, 
+        message='Password updated successfully',
+    )
+
+
+@user_bp.route("/self/password/reset", methods=["PATCH"])
+@authenticate
+@verify_email
+def reset_self_password():
+    """
+    Resets the currently authenticated user's password by validating input and verifying an OTP code sent to the user's email.
+    Returns a success message if successful, raises ValidationException if OTP code does not match.
+    """
+    form = ResetUserPasswordForm(request.form)
+    form.try_validate()
+    
+    user: User = g.user
+
+    otp_service.verify(email=user.email, code=form.code.data)
+
+    user.set_password(form.password.data)
+    db.session.commit()
+
+    return create_response_tuple(
+        status=HTTPStatus.OK, 
+        message='Password updated successfully',
+    )
+
