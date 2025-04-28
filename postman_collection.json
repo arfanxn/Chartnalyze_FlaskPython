@@ -1,0 +1,532 @@
+{
+	"info": {
+		"_postman_id": "85249586-fcd9-4f3e-9f61-438febb6be18",
+		"name": "Chartnalyze",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17284024"
+	},
+	"item": [
+		{
+			"name": "APIs",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Update Self Email",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "jack.new@gm.com",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "750487",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self/email",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self",
+										"email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Self Password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "current_password",
+											"value": "11112222",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "11113333",
+											"type": "text"
+										},
+										{
+											"key": "confirm_password",
+											"value": "11113333",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self/password",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Self Password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "code",
+											"value": "941880",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "11114444",
+											"type": "text"
+										},
+										{
+											"key": "confirm_password",
+											"value": "11114444",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self/password/reset",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self",
+										"password",
+										"reset"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Self",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Jack",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "jack1111",
+											"type": "text"
+										},
+										{
+											"key": "birth_date",
+											"value": "2000-01-01",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Jack",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "jack1111",
+											"type": "text"
+										},
+										{
+											"key": "birth_date",
+											"value": "2000-01-01",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/01JSXWRMBSZAY7PDNFG6THS1XR",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"01JSXWRMBSZAY7PDNFG6THS1XR"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show Self",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/01JSS6R4SYZD42VPY39CS79YKG<NOT_FOUND>",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"01JSS6R4SYZD42VPY39CS79YKG<NOT_FOUND>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Jack",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "jack1111",
+											"type": "text"
+										},
+										{
+											"key": "birth_date",
+											"value": "2000-01-01",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "jack@gm.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "11112222",
+											"type": "text"
+										},
+										{
+											"key": "confirm_password",
+											"value": "11112222",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "identifier",
+											"value": "jack@gm.com",
+											"description": "Login via email or username",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "11112222",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "jack@gm.com",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "779837",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self/email/verify",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self",
+										"email",
+										"verify"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self/logout",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Otps",
+					"item": [
+						{
+							"name": "Send",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "jack@gm.com",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "jack.new@gm.com",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/otps/send",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"otps",
+										"send"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NTg1NDU1MSwianRpIjoiZDAzNDZhYWQtMDhlMi00ZGE3LTg1NGMtNGU5NGM3MmU0NzQ5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjAxSlNZR0tEOUsySkRKVFRCQlFaN1ZaUjdGIiwibmJmIjoxNzQ1ODU0NTUxLCJjc3JmIjoiN2ZmZGZiMWMtNTYyNy00MmRlLWExYmEtZWE2MWMxN2MzYzRiIiwiZXhwIjoxNzQ4NDQ2NTUxfQ.7LlwzeARiCvcGYstGmqosMtmn_WJdxqSOPdItPPRTaQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/test",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
