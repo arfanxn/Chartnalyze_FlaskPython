@@ -1,5 +1,6 @@
 from flask import Blueprint
 from .user_controller import user_bp
+from .otp_controller import otp_bp
 from app.exceptions.validation_exception import ValidationException
 from app.exceptions.http_exception import HttpException
 from app.helpers.response_helpers import create_response_tuple
@@ -8,8 +9,9 @@ from http import HTTPStatus
 # Create API blueprint
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
-# Register user blueprint under API blueprint
+# Register module blueprints under API blueprint
 api_bp.register_blueprint(user_bp)
+api_bp.register_blueprint(otp_bp)
 
 # Register error handlers for the API blueprint
 @api_bp.errorhandler(ValidationException)
