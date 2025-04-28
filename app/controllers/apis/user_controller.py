@@ -6,6 +6,7 @@ from app.forms.register_form import RegisterForm
 from app.forms.update_user_form import UpdateUserForm
 from app.helpers.response_helpers import create_response_tuple
 from app.middlewares.authenticate_middleware import authenticate
+from app.middlewares.verify_email_middleware import verify_email
 from app.models.user import User
 from datetime import timedelta
 from flask import Blueprint, g, request
@@ -37,7 +38,7 @@ def register():
         errors = {'email': [message]}
         raise ValidationException(message, errors)
 
-    return create_response_tuple(status=HTTPStatus.CREATED, message='User registered successfully',)
+    return create_response_tuple(status=HTTPStatus.CREATED, message='User registered successfully')
 
 @user_bp.route('/login', methods=['POST'])
 def login():
@@ -65,6 +66,7 @@ def login():
 
 @user_bp.route('/logout', methods=['DELETE'])
 @authenticate
+@verify_email
 def logout():
     """
     Logs out the authenticated user and returns a success message.
@@ -73,6 +75,7 @@ def logout():
 
 @user_bp.route("/users/<string:user_identifier>", methods=["GET"])
 @authenticate
+@verify_email
 def show(user_identifier: str):
     """
     Retrieves the user by ID or email/username. Returns user data or raises HttpException if not found.
@@ -93,6 +96,7 @@ def show(user_identifier: str):
 
 @user_bp.route("/users/self", methods=["GET"])
 @authenticate
+@verify_email
 def showSelf():
     """
     Retrieves the currently authenticated user's data.
@@ -102,6 +106,7 @@ def showSelf():
 
 @user_bp.route("/users/<string:user_id>", methods=["PUT"])
 @authenticate
+@verify_email
 def update(user_id: str):
     """
     Updates user details by validating input. Returns updated user data or raises HttpException if not found.
@@ -127,6 +132,7 @@ def update(user_id: str):
 
 @user_bp.route("/users/self", methods=["PUT"])
 @authenticate
+@verify_email
 def updateSelf():
     """
     Updates the currently authenticated user's details.
