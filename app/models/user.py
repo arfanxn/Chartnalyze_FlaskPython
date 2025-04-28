@@ -7,9 +7,9 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.CHAR(26), primary_key=True, default=lambda: ulid.new().str)
-    name = db.Column(db.String(50), nullable=True)
-    username = db.Column(db.String(16), nullable=False)
-    birth_date = db.Column(db.Date, nullable=True)
+    name = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(16), nullable=False, unique=True)
+    birth_date = db.Column(db.Date, nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     email_verified_at = db.Column(db.DateTime, nullable=True)
     password = db.Column(db.String(255), nullable=False)
@@ -21,8 +21,6 @@ class User(db.Model):
         self.password = hashed_password
 
     def check_password(self, password):
-        isMatch =  bcrypt.checkpw(password=password, hashed_password= self.password)
-        print('PASSWORD IS MATCH', isMatch)
         return bcrypt.checkpw(password=password, hashed_password= self.password)
 
     def to_json(self):
