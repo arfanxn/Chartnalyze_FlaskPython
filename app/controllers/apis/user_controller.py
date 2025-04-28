@@ -26,7 +26,9 @@ def register():
     form.try_validate()
 
     user = User()
+    user.name = form.name.data
     user.username = form.username.data
+    user.birth_date = form.birth_date.data
     user.email = form.email.data
     user.set_password(form.password.data)
 
@@ -34,7 +36,7 @@ def register():
         db.session.add(user)
         db.session.commit()    
     except IntegrityError as e:
-        message = 'Email already exists' 
+        message = 'Email or username already exists' 
         errors = {'email': [message]}
         raise ValidationException(message, errors)
 
