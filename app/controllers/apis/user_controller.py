@@ -18,20 +18,8 @@ user_bp = Blueprint('user', __name__)
 @user_bp.route('/register', methods=['POST'])
 def register():
     """
-    Registers a new user in the system.
-
-    This function handles the registration of a new user by validating the
-    input data from the request form. If the provided data is valid, it creates
-    a new user instance, hashes the user's password, and attempts to save the
-    user in the database. If the email already exists, a ValidationException
-    is raised.
-
-    Returns:
-        A JSON response containing a success message and HTTP status code 201
-        if registration is successful.
-
-    Raises:
-        ValidationException: If the form validation fails or the email already exists.
+    Registers a new user by validating input and saving to the database.
+    Returns a success message if successful, raises ValidationException if email exists.
     """
     form = RegisterForm(request.form) 
     form.try_validate()
@@ -54,20 +42,8 @@ def register():
 @user_bp.route('/login', methods=['POST'])
 def login():
     """
-    Handles user login.
-
-    This function validates the input data from the request form. If the
-    provided data is valid, it attempts to find a user in the database by
-    either username or email. If the user is found and the passwords match,
-    it generates a JWT token and returns it in the response.
-
-    Returns:
-        A JSON response containing a success message, HTTP status code 200,
-        and the generated JWT token if the login is successful.
-
-    Raises:
-        ValidationException: If the form validation fails or the credentials
-            do not match.
+    Handles user login by validating credentials and returning a JWT token if successful.
+    Raises ValidationException if credentials do not match.
     """
     form = LoginForm(request.form)
     form.try_validate()
@@ -91,14 +67,7 @@ def login():
 @authenticate
 def logout():
     """
-    Logs out the currently authenticated user.
-
-    This function handles the logout process for an authenticated user.
-    It requires the user to be authenticated via the `authenticate` decorator.
-    Upon successful logout, it returns a success message with an HTTP status code 200.
-
-    Returns:
-        A JSON response containing a success message and HTTP status code 200.
+    Logs out the authenticated user and returns a success message.
     """
     return create_response_tuple(status=HTTPStatus.OK, message='User logged out successfully')
 
@@ -106,19 +75,8 @@ def logout():
 @authenticate
 def show(user_identifier: str):
     """
-    Returns the user with the given ID.
-
-    This function handles the retrieval of a user by ID. It requires the user
-    to be authenticated via the `authenticate` decorator.
-
-    Args:
-        user_id (str): The ID of the user to retrieve.
-
-    Returns:
-        A JSON response containing a success message, HTTP status code 200,
-        and the user data if the request is successful.
+    Retrieves the user by ID or email/username. Returns user data or raises HttpException if not found.
     """
-
     user = User.query.filter(
         (User.id == user_identifier) | 
         (User.email == user_identifier) | 
@@ -137,41 +95,17 @@ def show(user_identifier: str):
 @authenticate
 def showSelf():
     """
-    Returns the currently authenticated user.
-
-    This function is a shortcut for getting the currently authenticated user.
-    It returns the user that is currently authenticated via the `authenticate`
-    decorator.
-
-    Returns:
-        A JSON response containing a success message, HTTP status code 200,
-        and the user data if the request is successful.
+    Retrieves the currently authenticated user's data.
     """
     user: User = g.user
     return show(user.id)
 
 @user_bp.route("/users/<string:user_id>", methods=["PUT"])
 @authenticate
-def update (user_id: str):
+def update(user_id: str):
     """
-    Updates the user with the given ID.
-
-    This function handles the updating of a user's information. It requires
-    the user to be authenticated via the `authenticate` decorator. The function
-    validates the input data using the `UpdateUserForm` and updates the user's
-    details if they exist in the database.
-
-    Args:
-        user_id (str): The ID of the user to update.
-
-    Returns:
-        A JSON response containing a success message, HTTP status code 200,
-        and the updated user data if the request is successful.
-
-    Raises:
-        HttpException: If the user is not found in the database.
+    Updates user details by validating input. Returns updated user data or raises HttpException if not found.
     """
-
     form = UpdateUserForm(request.form) 
     form.try_validate()
 
@@ -195,15 +129,7 @@ def update (user_id: str):
 @authenticate
 def updateSelf():
     """
-    Updates the currently authenticated user.
-
-    This function is a shortcut for updating the currently authenticated user.
-    It requires the user to be authenticated via the `authenticate` decorator.
-    Upon successful update, it returns a success message with an HTTP status code 200.
-
-    Returns:
-        A JSON response containing a success message, HTTP status code 200,
-        and the updated user data if the request is successful.
+    Updates the currently authenticated user's details.
     """
     user = g.user
     return update(user.id)
