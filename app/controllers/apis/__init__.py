@@ -29,3 +29,10 @@ def handle_http_error(e: HttpException):
         message=str(e),
         additionals=e.additionals if e.additionals is not None else None
     )
+
+@api_bp.errorhandler(429)
+def handle_limit_error(error):
+    return create_response_tuple(
+        status=HTTPStatus.TOO_MANY_REQUESTS,
+        message=f"Too many requests, {error.description}, please try again later",
+    )
