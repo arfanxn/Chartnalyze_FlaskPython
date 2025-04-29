@@ -21,18 +21,9 @@ class User(db.Model):
         self.password = hashed_password
 
     def check_password(self, password):
-        return bcrypt.checkpw(password=password, hashed_password= self.password)
+        return bcrypt.checkpw(password=password, hashed_password=self.password)
 
     def to_json(self):
-        """
-        Returns the user as a JSON serializable dictionary.
-
-        This method returns the user as a JSON serializable dictionary which
-        can be used to return the user in an API response.
-
-        Returns:
-            A JSON serializable dictionary containing the user data.
-        """
         return {
             'id': self.id,
             'name': self.name,
