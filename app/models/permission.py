@@ -10,6 +10,12 @@ class Permission(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     updated_at = db.Column(db.DateTime, onupdate=datetime.now())
 
+    roles = db.relationship(
+        'Role', 
+        secondary='permission_role', 
+        back_populates='permissions'
+    )
+
     def to_json(self):
         return {
             'id': self.id,

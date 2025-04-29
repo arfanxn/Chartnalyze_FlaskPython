@@ -16,6 +16,12 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     updated_at = db.Column(db.DateTime, onupdate=datetime.now())
 
+    roles = db.relationship(
+        'Role', 
+        secondary='role_user',  # Use table name as string
+        back_populates='users'  # Match the name in Role model
+    )
+
     def set_password(self, password):
         hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
         self.password = hashed_password

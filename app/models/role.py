@@ -11,6 +11,17 @@ class Role(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     updated_at = db.Column(db.DateTime, onupdate=datetime.now())
 
+    users = db.relationship(
+        'User', 
+        secondary='role_user', 
+        back_populates='roles'
+    )
+    permissions = db.relationship(
+        'Permission', 
+        secondary='permission_role', 
+        back_populates='roles'
+    )
+
     def to_json(self):
         return {
             'id': self.id,
