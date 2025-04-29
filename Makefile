@@ -20,7 +20,7 @@ db-upgrade:
 
 # Revert migrations
 db-downgrade:
-	flask db downgrade --directory $(MIGRATIONS_DIR)
+	flask db downgrade base --directory $(MIGRATIONS_DIR)
 
 # Show migration history
 db-history:
