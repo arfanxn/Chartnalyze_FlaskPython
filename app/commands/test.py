@@ -1,9 +1,9 @@
-# seeders.py
 from flask import Flask
 
 def register_test_commands(app: Flask):
 
-    @app.cli.command('demo')
-    def demo():
+    @app.cli.command('test_command')
+    def test_command():
         with app.app_context():
-            print('Demo...')
+            print('Test command...')
+
