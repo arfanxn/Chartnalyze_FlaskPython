@@ -11,6 +11,13 @@ test_bp = Blueprint('test', __name__)
 
 @test_bp.route('/test', methods=['GET'])
 def test():
-    user = User.query.first()
-    return create_response_tuple(status=HTTPStatus.OK, message='User found successfully', data={'user': user.to_json()})
+    user: User = User.query.first()
+    return create_response_tuple(
+        status=HTTPStatus.OK,
+        message='User found successfully', 
+        data={
+            'user': user.to_json(),
+            'user_roles': user.roles[0].to_json()
+        }
+    )
     
