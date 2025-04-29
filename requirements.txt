@@ -1,10 +1,12 @@
 alembic==1.15.2
+click==8.1.7
 Flask==3.1.0
 Flask_JWT_Extended==4.7.1
 flask_limiter==3.12
 flask_mail==0.10.0
 Flask_Migrate==4.1.0
 flask_sqlalchemy==3.1.1
+python-dotenv==1.1.0
 python_bcrypt==0.3.2
 SQLAlchemy==2.0.40
 ulid==1.1
