@@ -6,6 +6,8 @@ from datetime import date
 class UserSeeder(Seeder):
 
     def run(self):
+        super().run()
+
         roles = Role.query.all()
 
         user_list = [

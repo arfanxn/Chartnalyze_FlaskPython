@@ -3,13 +3,12 @@ from database.seeders.role_seeder import RoleSeeder
 from database.seeders.user_seeder import UserSeeder
 from database.seeders.seeder import Seeder
 
-def run ():
-    seeders = [
-        Seeder(),
-        PermissionSeeder(),
-        RoleSeeder(),
-        UserSeeder(),
-    ]
+_registered_seeders: list[Seeder] = [
+    PermissionSeeder(),
+    RoleSeeder(),
+    UserSeeder(),
+]
 
-    for seeder in seeders:
-            seeder.run()
+def run_registered_seeders ():
+    for seeder in _registered_seeders:
+        seeder.run()

@@ -1,7 +1,8 @@
 class Seeder:
 
     def __init__(self):
-        print(f"{self.__class__.__name__}")
+        pass
 
     def run(self):
+        print(f"Running: {self.__class__.__name__}")
         pass

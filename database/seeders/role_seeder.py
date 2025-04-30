@@ -6,6 +6,8 @@ from datetime import date
 class RoleSeeder(Seeder):
 
     def run(self):
+        super().run()
+
         permissions = Permission.query.all()
 
         # TODO add permissions to analyst and user 

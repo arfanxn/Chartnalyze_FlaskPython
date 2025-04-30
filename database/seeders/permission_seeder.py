@@ -6,6 +6,8 @@ from datetime import date
 class PermissionSeeder(Seeder):
 
     def run(self):
+        super().run()
+        
         permissionNames = [
             '*', 
             'users.index', 'users.show', 'users.store', 'users.update', 'users.destroy',
