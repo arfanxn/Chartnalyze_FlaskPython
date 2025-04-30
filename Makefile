@@ -38,6 +38,6 @@ db-refresh-seed:
 	$(MAKE) db-seed
 	
 generate-secret-key:
-	@flask generate-secret-key --env-file .env
+	@flask generate-secret-key --env-file $(ENV_FILE)
 
 .PHONY: db-init db-migrate db-upgrade db-downgrade db-history db-refresh db-seed db-refresh-seed generate-secret-key
