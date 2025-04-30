@@ -17,3 +17,4 @@ class Config:
     # The environment variables that are used without injection
     LIMITER_DEFAULT_LIMITS = os.getenv('LIMITER_DEFAULT_LIMITS').split(',')
     OTP_EXPIRATION_MINUTES = int(os.getenv('OTP_EXPIRATION_MINUTES'))
+    JWT_EXPIRATION_DAYS = int(os.getenv('JWT_EXPIRATION_DAYS'))
