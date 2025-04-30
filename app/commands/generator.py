@@ -11,6 +11,7 @@ def register_generator_commands(app: Flask):
     @click.option('--key-name', type=str, default='SECRET_KEY', help='Name of the secret key in the .env file')
     def generate_secret_key(length, env_file, key_name):
         with app.app_context():
+            print('Generating secret key...')
             try:
                 secret_key = secrets.token_urlsafe(length)
 
@@ -20,7 +21,7 @@ def register_generator_commands(app: Flask):
                 else:
                     set_key(env_file, key_name, secret_key)
 
-                print('Secret key generated and stored in', env_file)
+                print(f"Secret key generated in: {env_file}")
             except Exception as e:
                 print('Error:', str(e))
 
