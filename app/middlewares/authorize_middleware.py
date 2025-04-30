@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import g
 from app.models import User
-from app.exceptions.http_exception import HttpException
+from app.exceptions import HttpException
 from http import HTTPStatus
 
 def authorize(permissions):

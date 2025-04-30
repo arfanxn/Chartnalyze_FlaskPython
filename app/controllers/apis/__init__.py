@@ -1,8 +1,7 @@
 from flask import Blueprint
 from .user_controller import user_bp
 from .otp_controller import otp_bp
-from app.exceptions.validation_exception import ValidationException
-from app.exceptions.http_exception import HttpException
+from app.exceptions import ValidationException, HttpException
 from app.helpers.response_helpers import create_response_tuple
 from http import HTTPStatus
 

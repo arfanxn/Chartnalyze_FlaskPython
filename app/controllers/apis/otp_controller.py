@@ -1,6 +1,6 @@
 from app.services.otp_service import OtpService 
 from app.extensions import limiter
-from app.forms.send_otp_form import SendOtpForm
+from app.forms import SendOtpForm
 from app.helpers.response_helpers import create_response_tuple
 from flask import Blueprint, request
 from http import HTTPStatus

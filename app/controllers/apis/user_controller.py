@@ -1,25 +1,29 @@
-from app.extensions import db, limiter
-from app.exceptions.http_exception import HttpException
-from app.exceptions.validation_exception import ValidationException
-from app.forms.login_form import LoginForm
-from app.forms.otp_code_form import OtpCodeForm
-from app.forms.register_form import RegisterForm
-from app.forms.reset_user_password_form import ResetUserPasswordForm
-from app.forms.update_user_email_form import UpdateUserEmailForm
-from app.forms.update_user_form import UpdateUserForm
-from app.forms.update_user_password_form import UpdateUserPasswordForm
-from app.helpers.response_helpers import create_response_tuple
-from app.middlewares.authenticate_middleware import authenticate
-from app.middlewares.authorize_middleware import authorize
-from app.middlewares.verify_email_middleware import verify_email
-from app.models.user import User
-from app.services.otp_service import OtpService
 from datetime import datetime, timedelta
 from flask import Blueprint, g, request
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+
 from app.config import Config
+from app.exceptions import HttpException, ValidationException
+from app.extensions import db, limiter
+from app.forms import (
+    LoginForm,
+    OtpCodeForm,
+    RegisterForm,
+    ResetUserPasswordForm,
+    UpdateUserEmailForm,
+    UpdateUserForm,
+    UpdateUserPasswordForm,
+)
+from app.helpers.response_helpers import create_response_tuple
+from app.middlewares import (
+    authenticate,
+    authorize,
+    verify_email
+)
+from app.models.user import User
+from app.services.otp_service import OtpService
 
 otp_service = OtpService()
 user_bp = Blueprint('user', __name__, url_prefix='/users')
@@ -54,7 +58,7 @@ def register():
         data={'user': user.to_json()})
 
 @user_bp.route('/login', methods=['POST'])
-@limiter.limit("5 per minute")
+@limiter.limit("10 per minute")
 def login():
     """
     Handles user login by validating credentials and returning a JWT token if successful.

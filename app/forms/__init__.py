@@ -2,3 +2,14 @@ from wtforms import Form
 from app.helpers.form_helpers import try_validate   
 
 Form.try_validate = try_validate
+
+from .login_form import LoginForm
+from .register_form import RegisterForm
+
+from .update_user_form import UpdateUserForm
+from .update_user_email_form import UpdateUserEmailForm
+from .update_user_password_form import UpdateUserPasswordForm
+from .reset_user_password_form import ResetUserPasswordForm
+
+from .send_otp_form import SendOtpForm
+from .otp_code_form import OtpCodeForm

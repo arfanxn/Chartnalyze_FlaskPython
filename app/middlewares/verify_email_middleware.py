@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import g
-from app.exceptions.http_exception import HttpException
+from app.exceptions import HttpException
 from app.models.user import User
 from http import HTTPStatus
 

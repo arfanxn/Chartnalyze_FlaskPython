@@ -1,5 +1,5 @@
 from wtforms import Form
-from app.exceptions.validation_exception import ValidationException
+from app.exceptions import ValidationException
 
 def get_error_message(form: Form, field_name: str = None):
     """
