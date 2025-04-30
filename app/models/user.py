@@ -1,4 +1,5 @@
 from app.extensions import db
+from app.helpers.string_helpers import is_ulid
 from datetime import datetime
 import bcrypt
 import ulid
@@ -28,6 +29,43 @@ class User(db.Model):
 
     def check_password(self, password):
         return bcrypt.checkpw(password=password, hashed_password=self.password)
+
+    def has_permissions(self, *permissions) -> bool:
+        """
+        Check if the user has ANY of the specified permissions.
+        Accepts: Permission names (str), IDs (str), or Permission instances.
+        Returns: True/False (executed at the database level).
+        """
+        if not permissions:
+            return False  # Edge case: no permissions specified
+
+        # LOCAL IMPORT to break circular dependency
+        from app.models import Permission, PermissionRole, RoleUser
+
+        names, ids = set(), set()
+        for perm in permissions:
+            if isinstance(perm, Permission):
+                ids.add(perm.id)
+            elif isinstance(perm, str):
+                if is_ulid(perm):  # detects if ulid
+                    ids.add(perm)
+                else:
+                    names.add(perm)
+
+        query = db.session.query(db.exists().where(
+            db.and_(
+                RoleUser.user_id == self.id,
+                RoleUser.role_id == PermissionRole.role_id,
+                PermissionRole.permission_id == Permission.id,
+                db.or_(
+                    Permission.id.in_(ids),
+                    Permission.name.in_(names)
+                )
+            )
+
+        ))
+
+        return db.session.scalar(query)
 
     def to_json(self):
         return {
