@@ -22,12 +22,16 @@ Generate secret key, hash key, or JWT secret key into the `.env` file.
 make generate-secret-key
 ```
 
-Migrate up/down Chartnalyze's required tables
+Migrate Chartnalyze's required tables
 
 ```sh
 make db-upgrade # to migrate up
 # or
 make db-downgrade # to migrate down
+# or
+make db-fresh # to migrate down and up
+# or
+make db-fresh-seed # to migrate down, up, and seed
 ```
 
 ## Running
