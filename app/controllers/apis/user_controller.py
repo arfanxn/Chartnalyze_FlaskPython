@@ -1,24 +1,25 @@
-from app.services.otp_service import OtpService
+from app.extensions import db, limiter
 from app.exceptions.http_exception import HttpException
 from app.exceptions.validation_exception import ValidationException
-from app.extensions import db
-from app.forms.otp_code_form import OtpCodeForm
 from app.forms.login_form import LoginForm
+from app.forms.otp_code_form import OtpCodeForm
 from app.forms.register_form import RegisterForm
-from app.forms.update_user_form import UpdateUserForm
-from app.forms.update_user_email_form import UpdateUserEmailForm
-from app.forms.update_user_password_form import UpdateUserPasswordForm
 from app.forms.reset_user_password_form import ResetUserPasswordForm
+from app.forms.update_user_email_form import UpdateUserEmailForm
+from app.forms.update_user_form import UpdateUserForm
+from app.forms.update_user_password_form import UpdateUserPasswordForm
 from app.helpers.response_helpers import create_response_tuple
 from app.middlewares.authenticate_middleware import authenticate
+from app.middlewares.authorize_middleware import authorize
 from app.middlewares.verify_email_middleware import verify_email
 from app.models.user import User
-from app.extensions import limiter
-from datetime import timedelta, datetime
+from app.services.otp_service import OtpService
+from datetime import datetime, timedelta
 from flask import Blueprint, g, request
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from app.config import Config
 
 otp_service = OtpService()
 user_bp = Blueprint('user', __name__, url_prefix='/users')
@@ -37,7 +38,7 @@ def register():
     user.username = form.username.data
     user.birth_date = form.birth_date.data
     user.email = form.email.data
-    user.set_password(form.password.data)
+    user.password = form.password.data 
 
     try:
         db.session.add(user)
@@ -73,7 +74,7 @@ def login():
         raise ValidationException(message, errors)
     
     # Generate a JWT token with the user's ID as the identity and 30 days expiration time.
-    access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=30))
+    access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=Config.JWT_EXPIRATION_DAYS))
 
     return create_response_tuple(status=HTTPStatus.OK, message='User logged in successfully', data={'access_token': access_token})
 
@@ -105,6 +106,7 @@ def logout():
 
 @user_bp.route("/<string:user_identifier>", methods=["GET"])
 @authenticate
+@authorize('users.show')
 @verify_email
 def show(user_identifier: str):
     """
@@ -136,13 +138,7 @@ def show_self():
         data={'user': g.user.to_json()}
     )
 
-@user_bp.route("/<string:user_id>", methods=["PUT"])
-@authenticate
-@verify_email
-def update(user_id: str):
-    """
-    Updates user details by validating input. Returns updated user data or raises HttpException if not found.
-    """
+def _update(user_id: str):
     form = UpdateUserForm(request.form) 
     form.try_validate()
 
@@ -162,6 +158,13 @@ def update(user_id: str):
         data={'user': user.to_json()}
     )
 
+@user_bp.route("/<string:user_id>", methods=["PUT"])
+@authenticate
+@authorize('users.update')
+@verify_email
+def update(user_id: str):
+    return _update(user_id)
+
 @user_bp.route("/self", methods=["PUT"])
 @authenticate
 @verify_email
@@ -170,7 +173,7 @@ def update_self():
     Updates the currently authenticated user's details.
     """
     user = g.user
-    return update(user.id)
+    return _update(user.id)
 
 @user_bp.route("/self/email", methods=["PATCH"])
 @authenticate
@@ -223,7 +226,7 @@ def update_self_password():
         errors = {'current_password': [message]}
         raise ValidationException(message, errors)
 
-    user.set_password(form.password.data)
+    user.password = form.password.data
     db.session.commit()
 
     return create_response_tuple(
@@ -247,7 +250,7 @@ def reset_self_password():
 
     otp_service.verify(email=user.email, code=form.code.data)
 
-    user.set_password(form.password.data)
+    user.password = form.password.data
     db.session.commit()
 
     return create_response_tuple(
