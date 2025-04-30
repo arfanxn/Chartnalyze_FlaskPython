@@ -29,7 +29,7 @@ class UserSeeder(Seeder):
             user.username = user_map['username']
             user.birth_date = date(2000, 1, 1)
             user.email = user_map['username']+'@chartnalyze.edu'
-            user.set_password('11112222')
+            user.password = '11112222'
             user.roles.extend(user_map['roles'])
             db.session.add(user)        
 
