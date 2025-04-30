@@ -25,14 +25,14 @@ class UserSeeder(Seeder):
             }
         ]
 
-        for user_map in user_list: 
+        for user_dict in user_list: 
             user = User()
-            user.name = user_map['username'].capitalize()
-            user.username = user_map['username']
+            user.name = user_dict['username'].capitalize()
+            user.username = user_dict['username']
             user.birth_date = date(2000, 1, 1)
-            user.email = user_map['username']+'@chartnalyze.edu'
+            user.email = user_dict['username']+'@chartnalyze.edu'
             user.password = '11112222'
-            user.roles.extend(user_map['roles'])
+            user.roles.extend(user_dict['roles'])
             db.session.add(user)        
 
         db.session.commit()
