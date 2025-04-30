@@ -17,6 +17,7 @@ class Otp(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     updated_at = db.Column(db.DateTime, onupdate=datetime.now())
 
+    @property
     def expiration_minutes(self):
         return math.ceil((self.expired_at - datetime.now()).total_seconds() / 60)
 

@@ -4,32 +4,55 @@ from datetime import datetime
 import bcrypt
 import ulid
 
+# ==========================================
+# User Model Definition
+# ==========================================
 class User(db.Model):
     __tablename__ = 'users'
 
+    # ==========================================
+    # Columns Definition
+    # ==========================================
     id = db.Column(db.CHAR(26), primary_key=True, default=lambda: ulid.new().str)
     name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(16), nullable=False, unique=True)
     birth_date = db.Column(db.Date, nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     email_verified_at = db.Column(db.DateTime, nullable=True)
-    password = db.Column(db.String(255), nullable=False)
+    _password = db.Column('password', db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     updated_at = db.Column(db.DateTime, onupdate=datetime.now())
 
+    # ==========================================
+    # Relationships
+    # ==========================================
     roles = db.relationship(
         'Role', 
         secondary='role_user',  # Use table name as string
         back_populates='users'  # Match the name in Role model
     )
 
-    def set_password(self, password):
-        hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
-        self.password = hashed_password
+    # ==========================================
+    # Password Handling
+    # ==========================================
+    @property
+    def password(self):
+        """Returns the hashed password."""
+        return self._password
+
+    @password.setter
+    def password(self, password):
+        """Hashes and sets the password."""
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        self._password = hashed_password
 
     def check_password(self, password):
-        return bcrypt.checkpw(password=password, hashed_password=self.password)
+        """Checks if the provided password matches the stored hashed password."""
+        return bcrypt.checkpw(password.encode('utf-8'), self._password)
 
+    # ==========================================
+    # Permission Checking
+    # ==========================================
     def has_permissions(self, *permissions) -> bool:
         """
         Check if the user has ANY of the specified permissions.
@@ -52,6 +75,7 @@ class User(db.Model):
                 else:
                     names.add(perm)
 
+        # Query to check if any permission matches
         query = db.session.query(db.exists().where(
             db.and_(
                 RoleUser.user_id == self.id,
@@ -62,12 +86,14 @@ class User(db.Model):
                     Permission.name.in_(names)
                 )
             )
-
         ))
-
         return db.session.scalar(query)
 
+    # ==========================================
+    # Serialization to JSON
+    # ==========================================
     def to_json(self):
+        """Convert the User model instance to a JSON-serializable dictionary."""
         return {
             'id': self.id,
             'name': self.name,

@@ -1,3 +1,4 @@
+from app.services import Service
 from app.extensions import db
 from app.models.otp import Otp
 from app.exceptions.http_exception import HttpException
@@ -7,10 +8,8 @@ from sqlalchemy import and_
 from datetime import datetime
 from http import HTTPStatus
 
-class OtpService :
-    def __init__(self):
-        pass
-
+class OtpService(Service) :
+    
     def send(self, email):
         try: 
             Otp.query.filter(Otp.email == email).update(
@@ -29,13 +28,13 @@ class OtpService :
         send_mail(
             subject=f"{Config.APP_NAME} | OTP",
             recipients=[otp.email],  # List of recipient email addresses
-            body=f"Your OTP is [ {otp.code} ], valid for {otp.expiration_minutes()} minutes"
+            body=f"Your OTP is [ {otp.code} ], valid for {otp.expiration_minutes} minutes"
         )
 
         return otp
 
-    def verify (self, email, code):
-        otp = Otp.query.filter(
+    def verify(self, email, code):
+        updated_rows = Otp.query.filter(
             and_(
                 Otp.email == email,
                 Otp.code == code,
@@ -43,10 +42,14 @@ class OtpService :
                 Otp.revoked_at == None,
                 Otp.expired_at > datetime.now()
             )
-        ).first()
-                
-        if otp == None: 
+        ).update(
+            {Otp.used_at: datetime.now()},
+            synchronize_session=False
+        )
+        
+        if updated_rows == 0:
             raise HttpException(message='OTP is invalid', status=HTTPStatus.UNPROCESSABLE_ENTITY)
         
-        otp.used_at = datetime.now()
         db.session.commit()
+
+        return True
