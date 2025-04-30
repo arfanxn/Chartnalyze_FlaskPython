@@ -101,6 +101,7 @@ def verify_self_email():
     return create_response_tuple(status=HTTPStatus.OK, message='Email verified successfully')
 
 @user_bp.route('/self/logout', methods=['DELETE'])
+@limiter.limit("10 per minute")
 @authenticate
 def logout():
     """
@@ -149,12 +150,18 @@ def _update(user_id: str):
     user: User = User.query.filter_by(id=user_id).first()
     if user is None:
         raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
-    
-    user.name = form.name.data if form.name.data else user.name
-    user.username = form.username.data if form.username.data else user.username
-    user.birth_date = form.birth_date.data if form.birth_date.data else user.birth_date
+        
+    user.name = form.name.data
+    if form.username.data != user.username: # TODO: fix bug on updating username with the same username occurs error
+        user.username = form.username.data
+    user.birth_date = form.birth_date.data
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except IntegrityError as e:
+        message = 'Username already exists' 
+        errors = {'username': [message]}
+        raise ValidationException(message, errors)
 
     return create_response_tuple(
         status=HTTPStatus.OK,
@@ -241,7 +248,6 @@ def update_self_password():
 
 @user_bp.route("/self/password/reset", methods=["PATCH"])
 @authenticate
-@verify_email
 def reset_self_password():
     """
     Resets the currently authenticated user's password by validating input and verifying an OTP code sent to the user's email.

@@ -14,7 +14,7 @@ class User(db.Model):
     # Columns Definition
     # ==========================================
     id = db.Column(db.CHAR(26), primary_key=True, default=lambda: ulid.new().str)
-    name = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(50), nullable=True)
     username = db.Column(db.String(16), nullable=False, unique=True)
     birth_date = db.Column(db.Date, nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
