@@ -48,7 +48,9 @@ class OtpService(Service) :
         )
         
         if updated_rows == 0:
-            raise HttpException(message='OTP is invalid', status=HTTPStatus.UNPROCESSABLE_ENTITY)
+            message='Code is invalid'
+            status=HTTPStatus.UNPROCESSABLE_ENTITY
+            raise HttpException(message=message, status=status, additionals={'errors': {'code': [message]}})
         
         db.session.commit()
 
