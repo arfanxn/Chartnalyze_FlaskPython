@@ -20,6 +20,7 @@ from app.helpers.response_helpers import create_response_tuple
 from app.middlewares import (
     authenticate,
     authorize,
+    verify_api_key,
     verify_email
 )
 from app.models.user import User
@@ -59,6 +60,7 @@ def register():
 
 @user_bp.route('/login', methods=['POST'])
 @limiter.limit("10 per minute")
+@verify_api_key
 def login():
     """
     Handles user login by validating credentials and returning a JWT token if successful.
