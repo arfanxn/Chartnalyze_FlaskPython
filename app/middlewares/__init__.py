@@ -1,3 +1,4 @@
 from .authenticate_middleware import authenticate
 from .authorize_middleware import authorize
+from .verify_api_key_middleware import verify_api_key
 from .verify_email_middleware import verify_email

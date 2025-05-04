@@ -3,6 +3,7 @@ import os
 class Config:
     # The environment variables that are injected into application
     APP_NAME = os.getenv('APP_NAME')
+    API_KEY= os.getenv('API_KEY')
     SECRET_KEY = os.getenv('SECRET_KEY')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS', 'True') == 'True'
