@@ -1,5 +1,5 @@
 from flask import Flask
-from app.extensions import db, jwt, limiter, mail, migrate
+from app.extensions import cors,db, jwt, limiter, mail, migrate
 from app.config import Config
 from app.controllers import register_blueprints
 from app.commands import register_commands
@@ -9,6 +9,8 @@ def create_app():
     app.config.from_object(Config)
 
     # Initialize extensions
+
+    cors.init_app(app)
     db.init_app(app)
     jwt.init_app(app)
     limiter.init_app(app)
