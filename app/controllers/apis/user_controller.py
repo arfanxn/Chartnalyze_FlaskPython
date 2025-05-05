@@ -30,6 +30,7 @@ otp_service = OtpService()
 user_bp = Blueprint('user', __name__, url_prefix='/users')
 
 @user_bp.route('/register', methods=['POST'])
+@verify_api_key
 def register():
     """
     Registers a new user by validating input and saving to the database.
@@ -59,8 +60,8 @@ def register():
         data={'user': user.to_json()})
 
 @user_bp.route('/login', methods=['POST'])
-@limiter.limit("10 per minute")
 @verify_api_key
+@limiter.limit("10 per minute")
 def login():
     """
     Handles user login by validating credentials and returning a JWT token if successful.
@@ -85,6 +86,7 @@ def login():
     return create_response_tuple(status=HTTPStatus.OK, message='User logged in successfully', data={'access_token': access_token})
 
 @user_bp.route('/self/email/verify', methods=['POST'])
+@verify_api_key
 @authenticate
 def verify_self_email():
     form = OtpCodeForm(request.form)
@@ -103,6 +105,7 @@ def verify_self_email():
     return create_response_tuple(status=HTTPStatus.OK, message='Email verified successfully')
 
 @user_bp.route('/self/logout', methods=['DELETE'])
+@verify_api_key
 @limiter.limit("10 per minute")
 @authenticate
 def logout():
@@ -112,6 +115,7 @@ def logout():
     return create_response_tuple(status=HTTPStatus.OK, message='User logged out successfully')
 
 @user_bp.route("/<string:user_identifier>", methods=["GET"])
+@verify_api_key
 @authenticate
 @authorize('users.show')
 @verify_email
@@ -134,6 +138,7 @@ def show(user_identifier: str):
     )
 
 @user_bp.route("/self", methods=["GET"])
+@verify_api_key
 @authenticate
 def show_self():
     """
@@ -172,6 +177,7 @@ def _update(user_id: str):
     )
 
 @user_bp.route("/<string:user_id>", methods=["PUT"])
+@verify_api_key
 @authenticate
 @authorize('users.update')
 @verify_email
@@ -179,6 +185,7 @@ def update(user_id: str):
     return _update(user_id)
 
 @user_bp.route("/self", methods=["PUT"])
+@verify_api_key
 @authenticate
 @verify_email
 def update_self():
@@ -189,6 +196,7 @@ def update_self():
     return _update(user.id)
 
 @user_bp.route("/self/email", methods=["PATCH"])
+@verify_api_key
 @authenticate
 @verify_email
 def update_self_email():
@@ -222,6 +230,7 @@ def update_self_email():
     )
 
 @user_bp.route("/self/password", methods=["PATCH"])
+@verify_api_key
 @authenticate
 @verify_email
 def update_self_password():
@@ -249,6 +258,7 @@ def update_self_password():
 
 
 @user_bp.route("/self/password/reset", methods=["PATCH"])
+@verify_api_key
 @authenticate
 def reset_self_password():
     """
