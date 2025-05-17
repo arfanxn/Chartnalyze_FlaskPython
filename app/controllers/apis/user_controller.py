@@ -114,6 +114,23 @@ def logout():
     """
     return create_response_tuple(status=HTTPStatus.OK, message='User logged out successfully')
 
+@user_bp.route("/reset-password", methods=["PATCH"])
+@verify_api_key
+def reset_password():
+    form = ResetUserPasswordForm(request.form)
+    form.try_validate()
+    
+    otp_service.verify(email=form.email.data, code=form.code.data)
+
+    user = User.query.filter_by(email=form.email.data).first()  
+    user.password = form.password.data
+    db.session.commit()
+
+    return create_response_tuple(
+        status=HTTPStatus.OK, 
+        message='Password updated successfully',
+    )
+
 @user_bp.route("/<string:user_identifier>", methods=["GET"])
 @verify_api_key
 @authenticate
@@ -213,19 +230,18 @@ def update_self_email():
     form = UpdateUserEmailForm(request.form)
     form.try_validate()
     
-    old_email = g.user.email
     new_email = form.email.data
 
-    otp_service.verify(email=old_email, code=form.code.data)   
+    otp_service.verify(email=new_email, code=form.code.data)   
 
     user: User = g.user
     user.email = new_email
-    user.email_verified_at = None
+    user.email_verified_at = datetime.now()
     db.session.commit()
 
     return create_response_tuple(
         status=HTTPStatus.OK, 
-        message='Email updated successfully, please verify your new email', 
+        message='Email updated successfully', 
         data={'user': user.to_json()}
     )
 
@@ -279,4 +295,3 @@ def reset_self_password():
         status=HTTPStatus.OK, 
         message='Password updated successfully',
     )
-
