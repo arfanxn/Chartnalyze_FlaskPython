@@ -271,27 +271,3 @@ def update_self_password():
         status=HTTPStatus.OK, 
         message='Password updated successfully',
     )
-
-
-@user_bp.route("/self/password/reset", methods=["PATCH"])
-@verify_api_key
-@authenticate
-def reset_self_password():
-    """
-    Resets the currently authenticated user's password by validating input and verifying an OTP code sent to the user's email.
-    Returns a success message if successful, raises ValidationException if OTP code does not match.
-    """
-    form = ResetUserPasswordForm(request.form)
-    form.try_validate()
-    
-    user: User = g.user
-
-    otp_service.verify(email=user.email, code=form.code.data)
-
-    user.password = form.password.data
-    db.session.commit()
-
-    return create_response_tuple(
-        status=HTTPStatus.OK, 
-        message='Password updated successfully',
-    )
