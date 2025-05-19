@@ -14,14 +14,14 @@ class User(db.Model):
     # Columns Definition
     # ==========================================
     id = db.Column(db.CHAR(26), primary_key=True, default=lambda: ulid.new().str)
-    name = db.Column(db.String(50), nullable=True)
+    name = db.Column(db.String(50))
     username = db.Column(db.String(16), nullable=False, unique=True)
-    birth_date = db.Column(db.Date, nullable=True)
+    birth_date = db.Column(db.Date)
     email = db.Column(db.String(50), nullable=False, unique=True)
-    email_verified_at = db.Column(db.DateTime, nullable=True)
+    email_verified_at = db.Column(db.DateTime)
     _password = db.Column('password', db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
-    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now())
+    updated_at = db.Column(db.DateTime, onupdate=lambda: datetime.now())
 
     # ==========================================
     # Relationships

@@ -11,11 +11,11 @@ class Otp(db.Model):
     id = db.Column(db.CHAR(26), primary_key=True, default=lambda: ulid.new().str)
     email = db.Column(db.String(50), nullable=False)
     code = db.Column(db.Integer(), nullable=False, default=lambda: random.randint(100000, 999999))  # 6-digit OTP code
-    used_at = db.Column(db.DateTime, nullable=True)
-    revoked_at = db.Column(db.DateTime, nullable=True)
-    expired_at = db.Column(db.DateTime, nullable=False, default=datetime.now() + timedelta(minutes=Config.OTP_EXPIRATION_MINUTES))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
-    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
+    used_at = db.Column(db.DateTime)
+    revoked_at = db.Column(db.DateTime)
+    expired_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now() + timedelta(minutes=Config.OTP_EXPIRATION_MINUTES))
+    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now())
+    updated_at = db.Column(db.DateTime, onupdate=lambda: datetime.now())
 
     @property
     def expiration_minutes(self):

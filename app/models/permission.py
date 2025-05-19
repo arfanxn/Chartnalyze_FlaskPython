@@ -7,8 +7,8 @@ class Permission(db.Model):
 
     id = db.Column(db.CHAR(26), primary_key=True, default=lambda: ulid.new().str)
     name = db.Column(db.String(50), nullable=False, unique=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
-    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now())
+    updated_at = db.Column(db.DateTime, onupdate=lambda: datetime.now())
 
     roles = db.relationship(
         'Role', 
