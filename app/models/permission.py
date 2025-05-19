@@ -12,6 +12,7 @@ class Permission(db.Model):
 
     roles = db.relationship(
         'Role', 
+        lazy='dynamic',
         secondary='permission_role', 
         back_populates='permissions'
     )
