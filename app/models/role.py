@@ -13,11 +13,13 @@ class Role(db.Model):
 
     users = db.relationship(
         'User', 
+        lazy='dynamic',
         secondary='role_user', 
         back_populates='roles'
     )
     permissions = db.relationship(
         'Permission', 
+        lazy='dynamic',
         secondary='permission_role', 
         back_populates='roles'
     )
