@@ -19,8 +19,8 @@ def upgrade():
     op.create_table('permissions',
         sa.Column('id', sa.CHAR(length=26), primary_key=True),
         sa.Column('name', sa.String(length=50), nullable=False, unique=True),
-        sa.Column('created_at', sa.DateTime, nullable=False, default=sa.func.now()),
-        sa.Column('updated_at', sa.DateTime),
+        sa.Column('created_at', sa.DateTime, nullable=False, server_default=sa.func.now()),
+        sa.Column('updated_at', sa.DateTime, server_onupdate=sa.func.now()),
     )
 
 def downgrade():

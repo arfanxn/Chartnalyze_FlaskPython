@@ -1,7 +1,7 @@
 """create role_user table
 
 Revision ID: 602e94c6a08d
-Revises: 50c3059cc908
+Revises: e87586e228aa
 Create Date: 2025-04-29 14:55:10.468631
 
 """
@@ -11,7 +11,7 @@ from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
 revision = '602e94c6a08d'
-down_revision = '50c3059cc908'
+down_revision = 'e87586e228aa'
 branch_labels = None
 depends_on = None
 

@@ -21,11 +21,11 @@ def upgrade():
         sa.Column('id', sa.CHAR(length=26), primary_key=True),
         sa.Column('email', sa.String(length=50), nullable=False),
         sa.Column('code', sa.Integer, nullable=False),  # 6 digits OTP code, don't start with 0 to avoid truncation
-        sa.Column('used_at', sa.DateTime, nullable=True),
-        sa.Column('revoked_at', sa.DateTime, nullable=True),
+        sa.Column('used_at', sa.DateTime),
+        sa.Column('revoked_at', sa.DateTime),
         sa.Column('expired_at', sa.DateTime, nullable=False),
-        sa.Column('created_at', sa.DateTime, nullable=False, default=sa.func.now()),
-        sa.Column('updated_at', sa.DateTime),
+        sa.Column('created_at', sa.DateTime, nullable=False, server_default=sa.func.now()),
+        sa.Column('updated_at', sa.DateTime, server_onupdate=sa.func.now()),
     )
     pass
 
