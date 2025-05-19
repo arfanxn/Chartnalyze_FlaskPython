@@ -19,8 +19,8 @@ depends_on = None
 def upgrade():
     op.create_table('countries',
         sa.Column('id', sa.CHAR(26), primary_key=True),
-        sa.Column('name', sa.VARCHAR(50), nullable=False),
-        sa.Column('iso_code', sa.CHAR(2), nullable=False),
+        sa.Column('name', sa.VARCHAR(50), nullable=False, unique=True), 
+        sa.Column('iso_code', sa.CHAR(2), nullable=False, unique=True),
         sa.Column('created_at', sa.DateTime, nullable=False, server_default=sa.func.now()),
         sa.Column('updated_at', sa.DateTime, server_onupdate=sa.func.now()),
     )
