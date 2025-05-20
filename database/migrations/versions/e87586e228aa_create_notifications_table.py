@@ -9,6 +9,8 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
+from app.enums.notification_enums import NotifiableType
+
 # revision identifiers, used by Alembic.
 revision = 'e87586e228aa'
 down_revision = '7d5428f57960'
@@ -19,14 +21,12 @@ depends_on = None
 def upgrade():
     op.create_table('notifications',
         sa.Column('id', sa.CHAR(26), primary_key=True),
-        sa.Column('notified_id', sa.CHAR(26), sa.ForeignKey('users.id'), nullable=False),
-        sa.Column('notified_type', sa.Enum('user', name='notified_type'), nullable=False),
-        sa.Column('notifier_id', sa.CHAR(26), sa.ForeignKey('users.id')),
-        sa.Column('notifier_type', sa.Enum('system', 'user', name='notifier_type'), nullable=False),
+        sa.Column('notifiable_id', sa.CHAR(26), nullable=False),
+        sa.Column('notifiable_type', sa.Enum(*[e.value for e in NotifiableType], name='notifiable_types'), nullable=False),
         sa.Column('type', sa.Integer, nullable=False),
-        sa.Column('title', sa.VARCHAR(50), nullable=False),
+        sa.Column('title', sa.VARCHAR(50)),
         sa.Column('message', sa.VARCHAR(255), nullable=False),
-        sa.Column('data', sa.Text, nullable=False),
+        sa.Column('data', sa.Text),
         sa.Column('read_at', sa.DateTime),
         sa.Column('created_at', sa.DateTime, nullable=False, server_default=sa.func.now()),
         sa.Column('updated_at', sa.DateTime, server_onupdate=sa.func.now())

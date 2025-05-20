@@ -1,5 +1,5 @@
 from app.extensions import db
-from app.models import role_user
+from app.enums.notification_enums import NotifiableType
 from datetime import datetime
 import ulid
 
@@ -13,15 +13,21 @@ class Role(db.Model):
 
     users = db.relationship(
         'User', 
-        lazy='dynamic',
         secondary='role_user', 
         back_populates='roles'
     )
     permissions = db.relationship(
         'Permission', 
-        lazy='dynamic',
         secondary='permission_role', 
         back_populates='roles'
+    )
+    notifications = db.relationship(
+        'Notification',
+        foreign_keys='Notification.notifiable_id',
+        primaryjoin="and_(Notification.notifiable_id == Role.id, Notification.notifiable_type == '{}')".format(NotifiableType.ROLE.value),
+        back_populates='notifiable_role',
+        overlaps="notifiable_user,notifications",
+        lazy='dynamic'
     )
 
     def to_json(self):

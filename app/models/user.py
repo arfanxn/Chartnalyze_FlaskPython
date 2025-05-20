@@ -1,4 +1,5 @@
 from app.extensions import db
+from app.enums.notification_enums import NotifiableType
 from app.helpers.string_helpers import is_ulid
 from datetime import datetime
 import bcrypt
@@ -14,6 +15,7 @@ class User(db.Model):
     # Columns Definition
     # ==========================================
     id = db.Column(db.CHAR(26), primary_key=True, default=lambda: ulid.new().str)
+    country_id = db.Column(db.CHAR(26), db.ForeignKey('countries.id'))
     name = db.Column(db.String(50))
     username = db.Column(db.String(16), nullable=False, unique=True)
     birth_date = db.Column(db.Date)
@@ -26,11 +28,21 @@ class User(db.Model):
     # ==========================================
     # Relationships
     # ==========================================
+    country = db.relationship('Country', back_populates='users')
     roles = db.relationship(
         'Role', 
         secondary='role_user',  # Use table name as string
         back_populates='users'  # Match the name in Role model
     )
+    notifications = db.relationship(
+        'Notification',
+        foreign_keys='Notification.notifiable_id',
+        primaryjoin="and_(Notification.notifiable_id == User.id, Notification.notifiable_type == '{}')".format(NotifiableType.USER.value),
+        back_populates='notifiable_user',
+        overlaps="notifiable_role,notifications",
+        lazy='dynamic'
+    )
+
 
     # ==========================================
     # Password Handling
@@ -94,13 +106,16 @@ class User(db.Model):
     # ==========================================
     def to_json(self):
         """Convert the User model instance to a JSON-serializable dictionary."""
-        return {
+        data = {
             'id': self.id,
+            'country_id': self.country_id,
             'name': self.name,
             'username': self.username,
             'birth_date': self.birth_date.isoformat() if self.birth_date is not None else None,
             'email': self.email,
             'email_verified_at': self.email_verified_at.isoformat() if self.email_verified_at is not None else None,
             'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat() if self.updated_at is not None else None
+            'updated_at': self.updated_at.isoformat() if self.updated_at is not None else None,
         }
+
+        return data
