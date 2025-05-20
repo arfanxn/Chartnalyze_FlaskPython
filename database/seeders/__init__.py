@@ -5,6 +5,8 @@ from database.seeders.user_seeder import UserSeeder
 from database.seeders.notification_seeder import NotificationSeeder
 from database.seeders.follow_seeder import FollowSeeder
 from database.seeders.post_seeder import PostSeeder 
+from database.seeders.comment_seeder import CommentSeeder 
+from database.seeders.like_seeder import LikeSeeder
 from database.seeders.seeder import Seeder
 
 _registered_seeders: list[Seeder] = [
@@ -15,6 +17,8 @@ _registered_seeders: list[Seeder] = [
     NotificationSeeder(),
     FollowSeeder(),
     PostSeeder(),
+    CommentSeeder(),
+    LikeSeeder(),
 ]
 
 def run_registered_seeders ():
