@@ -43,6 +43,23 @@ class User(db.Model):
         lazy='dynamic'
     )
 
+    followers = db.relationship(
+        'User',
+        secondary='follows',
+        primaryjoin="User.id == Follow.followed_id",
+        secondaryjoin="User.id == Follow.follower_id",
+        viewonly=True,
+        lazy='dynamic'
+    )
+
+    followeds = db.relationship(
+        'User',
+        secondary='follows',
+        primaryjoin="User.id == Follow.follower_id",
+        secondaryjoin="User.id == Follow.followed_id",
+        viewonly=True,
+        lazy='dynamic'
+    )
 
     # ==========================================
     # Password Handling
