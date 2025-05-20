@@ -36,6 +36,11 @@ class Post(db.Model):
         foreign_keys='Save.saveable_id',
         primaryjoin="and_(Post.id == Save.saveable_id, Save.saveable_type == '{}')".format(SaveableType.POST.value),
     )
+    medias = db.relationship(
+        'Media',
+        foreign_keys='Media.model_id',
+        primaryjoin="and_(Post.id == Media.model_id, Media.model_type == '{}')".format(SaveableType.POST.value),
+    )
 
     # ==========================================
     # Serialization to JSON

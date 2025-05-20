@@ -1,5 +1,6 @@
 from app.extensions import db
 from app.enums.notification_enums import NotifiableType
+from app.enums.media_enums import ModelType  
 from app.helpers.string_helpers import is_ulid
 from datetime import datetime
 import bcrypt
@@ -59,6 +60,11 @@ class User(db.Model):
     comments = db.relationship('Comment', back_populates='user')
     likes = db.relationship('Like', back_populates='user')
     saves = db.relationship('Save', back_populates='user')
+    medias = db.relationship(
+        'Media',
+        foreign_keys='Media.model_id',
+        primaryjoin="and_(User.id == Media.model_id, Media.model_type == '{}')".format(ModelType.USER.value),
+    )
 
     # ==========================================
     # Password Handling
