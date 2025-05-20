@@ -9,3 +9,4 @@ from .role import Role
 from .permission import Permission
 from .otp import Otp
 from .notification import Notification
+from .follow import Follow
