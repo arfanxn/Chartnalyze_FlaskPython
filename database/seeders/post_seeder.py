@@ -11,19 +11,13 @@ class PostSeeder(Seeder):
     def run(self):
         super().run()
 
-        # Exclude admin users
-        users = User.query.options(db.joinedload(User.roles)).filter(User.roles.any(Role.name != RoleName.ADMIN.value)).all()
+        users = User.query.options(db.joinedload(User.roles)).all()
 
         posts = []
 
         for user in users:
 
-            post_count = None
-
-            if user.roles[0].name == RoleName.ANALYST.value:
-                post_count = fake.random_int(min=1, max=5, step=1)
-            elif user.roles[0].name == RoleName.USER.value:
-                post_count = fake.random_int(min=0, max=5, step=1)
+            post_count = fake.random_int(min=0, max=5, step=1)
 
             for _ in range(post_count):
                 title = ' '.join(fake.words(nb=fake.random_int(min=1, max=4))) if fake.boolean() else None
