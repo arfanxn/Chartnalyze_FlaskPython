@@ -20,7 +20,7 @@ def upgrade():
     op.create_table('posts',
         sa.Column('id', sa.CHAR(26), primary_key=True),
         sa.Column('user_id', sa.CHAR(26), sa.ForeignKey('users.id'), nullable=False),
-        sa.Column('title', sa.VARCHAR(50), nullable=False),
+        sa.Column('title', sa.VARCHAR(50)),
         sa.Column('slug', sa.VARCHAR(50), nullable=False),
         sa.Column('body', sa.Text, nullable=False),
         sa.Column('created_at', sa.DateTime, nullable=False, server_default=sa.func.now()),
