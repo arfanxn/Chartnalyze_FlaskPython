@@ -1,10 +1,8 @@
 from app.extensions import db
-from app.models import User, Country, Role, RoleUser
+from app.models import User, Country, Rol
 from app.enums.role_enums import RoleName
 from database.seeders.seeder import Seeder
 from faker import Faker
-import ulid
-from datetime import date
 
 fake = Faker()
 
