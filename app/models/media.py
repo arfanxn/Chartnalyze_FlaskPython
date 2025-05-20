@@ -7,7 +7,6 @@ class Media(db.Model):
     __tablename__ = 'medias'
 
     id = db.Column(db.CHAR(26), primary_key=True, default=lambda: ulid.new().str)
-    user_id = db.Column(db.CHAR(26), db.ForeignKey('users.id'), nullable=False)
     model_id = db.Column(db.CHAR(26), nullable=False)
     model_type = db.Column(db.Enum(*[e.value for e in ModelType], name='model_types'), nullable=False)
     collection_name = db.Column(db.String(50), nullable=False)
@@ -54,6 +53,16 @@ class Media(db.Model):
     def to_json(self):
         data = {
             'id': self.id,
+            'model_id': self.model_id,
+            'model_type': self.model_type,
+            'collection_name': self.collection_name,
+            'name': self.name,
+            'file_name': self.file_name,
+            'mime_type': self.mime_type,
+            'disk': self.disk,
+            'size': self.size,
+            'data': self.data,
+            'order': self.order,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
