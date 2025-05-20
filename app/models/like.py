@@ -49,9 +49,8 @@ class Like(db.Model):
         data = {
             'id': self.id,
             'user_id': self.user_id,
-            'title': self.title if self.title else None,
-            'slug': self.slug,
-            'body': self.body,
+            'likeable_id': self.likeable_id,
+            'likeable_type': self.likeable_type,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
