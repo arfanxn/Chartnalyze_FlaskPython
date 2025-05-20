@@ -9,6 +9,8 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
+from app.enums.media_enums import ModelType
+
 # revision identifiers, used by Alembic.
 revision = '0398109cca9f'
 down_revision = '68d5fa430e52'
@@ -20,7 +22,7 @@ def upgrade():
     op.create_table('medias',
         sa.Column('id', sa.CHAR(26), primary_key=True),
         sa.Column('model_id', sa.CHAR(26), nullable=False),
-        sa.Column('model_type', sa.Enum('user', 'post', name='model_type'), nullable=False),
+        sa.Column('model_type', sa.Enum(*[e.value for e in ModelType], name='model_types'), nullable=False),
         sa.Column('collection_name', sa.VARCHAR(50), nullable=False),
         sa.Column('name', sa.VARCHAR(50), nullable=False),
         sa.Column('file_name', sa.VARCHAR(255), nullable=False),
