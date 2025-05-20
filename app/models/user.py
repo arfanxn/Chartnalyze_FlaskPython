@@ -58,6 +58,7 @@ class User(db.Model):
     posts = db.relationship('Post', back_populates='user')
     comments = db.relationship('Comment', back_populates='user')
     likes = db.relationship('Like', back_populates='user')
+    saves = db.relationship('Save', back_populates='user')
 
     # ==========================================
     # Password Handling

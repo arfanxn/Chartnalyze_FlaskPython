@@ -1,6 +1,7 @@
 from app.extensions import db
 from app.enums.comment_enums import CommentableType
 from app.enums.like_enums import LikeableType
+from app.enums.save_enums import SaveableType 
 from datetime import datetime
 import ulid
 
@@ -29,6 +30,11 @@ class Post(db.Model):
         foreign_keys='Like.likeable_id',
         primaryjoin="and_(Post.id==Like.likeable_id, Like.likeable_type=='{}')".format(LikeableType.POST.value),
         overlaps="likeable_post"
+    )
+    saves = db.relationship(
+        'Save',
+        foreign_keys='Save.saveable_id',
+        primaryjoin="and_(Post.id == Save.saveable_id, Save.saveable_type == '{}')".format(SaveableType.POST.value),
     )
 
     # ==========================================
