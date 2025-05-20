@@ -42,7 +42,6 @@ class User(db.Model):
         overlaps="notifiable_role,notifications",
         lazy='dynamic'
     )
-
     followers = db.relationship(
         'User',
         secondary='follows',
@@ -51,7 +50,6 @@ class User(db.Model):
         viewonly=True,
         lazy='dynamic'
     )
-
     followeds = db.relationship(
         'User',
         secondary='follows',
@@ -60,6 +58,7 @@ class User(db.Model):
         viewonly=True,
         lazy='dynamic'
     )
+    posts = db.relationship('Post', back_populates='user')
 
     # ==========================================
     # Password Handling
