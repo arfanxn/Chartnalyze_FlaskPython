@@ -11,3 +11,5 @@ from .otp import Otp
 from .notification import Notification
 from .follow import Follow
 from .post import Post
+from .comment import Comment
+from .like import Like
