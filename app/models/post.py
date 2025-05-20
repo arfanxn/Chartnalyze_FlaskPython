@@ -1,4 +1,6 @@
 from app.extensions import db
+from app.enums.comment_enums import CommentableType
+from app.enums.like_enums import LikeableType
 from datetime import datetime
 import ulid
 
@@ -17,6 +19,17 @@ class Post(db.Model):
     # Relationships
     # ==========================================
     user = db.relationship('User', back_populates='posts')
+    comments = db.relationship(
+        'Comment',
+        primaryjoin="and_(Comment.commentable_id == Post.id, Comment.commentable_type == '{}')".format(CommentableType.POST.value),
+        foreign_keys='Comment.commentable_id',
+    )
+    likes = db.relationship(
+        'Like',
+        foreign_keys='Like.likeable_id',
+        primaryjoin="and_(Post.id==Like.likeable_id, Like.likeable_type=='{}')".format(LikeableType.POST.value),
+        overlaps="likeable_post"
+    )
 
     # ==========================================
     # Serialization to JSON

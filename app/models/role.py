@@ -22,12 +22,11 @@ class Role(db.Model):
         back_populates='roles'
     )
     notifications = db.relationship(
-        'Notification',
-        foreign_keys='Notification.notifiable_id',
-        primaryjoin="and_(Notification.notifiable_id == Role.id, Notification.notifiable_type == '{}')".format(NotifiableType.ROLE.value),
-        back_populates='notifiable_role',
-        overlaps="notifiable_user,notifications",
-        lazy='dynamic'
+        "Notification",
+        foreign_keys="Notification.notifiable_id",
+        primaryjoin="and_(Role.id == Notification.notifiable_id,Notification.notifiable_type == '{}')".format(NotifiableType.ROLE.value),
+        back_populates="notifiable_role",
+        overlaps="notifiable_user,notifications"
     )
 
     def to_json(self):

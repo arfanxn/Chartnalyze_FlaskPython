@@ -32,33 +32,32 @@ class User(db.Model):
     roles = db.relationship(
         'Role', 
         secondary='role_user',  # Use table name as string
-        back_populates='users'  # Match the name in Role model
+        back_populates='users',  # Match the name in Role model
     )
     notifications = db.relationship(
-        'Notification',
-        foreign_keys='Notification.notifiable_id',
-        primaryjoin="and_(Notification.notifiable_id == User.id, Notification.notifiable_type == '{}')".format(NotifiableType.USER.value),
-        back_populates='notifiable_user',
-        overlaps="notifiable_role,notifications",
-        lazy='dynamic'
+        "Notification",
+        foreign_keys="Notification.notifiable_id",
+        primaryjoin="and_(User.id == Notification.notifiable_id,Notification.notifiable_type == '{}')".format(NotifiableType.USER.value),    
+        back_populates="notifiable_user",
+        overlaps="notifiable_role,notifications"
     )
-    followers = db.relationship(
+    follower_users = db.relationship(
         'User',
         secondary='follows',
         primaryjoin="User.id == Follow.followed_id",
-        secondaryjoin="User.id == Follow.follower_id",
+        secondaryjoin="Follow.follower_id == User.id",
         viewonly=True,
-        lazy='dynamic'
     )
-    followeds = db.relationship(
+    followed_users = db.relationship(
         'User',
         secondary='follows',
         primaryjoin="User.id == Follow.follower_id",
-        secondaryjoin="User.id == Follow.followed_id",
+        secondaryjoin="Follow.followed_id == User.id",
         viewonly=True,
-        lazy='dynamic'
     )
     posts = db.relationship('Post', back_populates='user')
+    comments = db.relationship('Comment', back_populates='user')
+    likes = db.relationship('Like', back_populates='user')
 
     # ==========================================
     # Password Handling

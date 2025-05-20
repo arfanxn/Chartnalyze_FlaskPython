@@ -28,14 +28,14 @@ class Notification(db.Model):
         foreign_keys='Notification.notifiable_id',
         primaryjoin="and_(Notification.notifiable_id == User.id, Notification.notifiable_type == '{}')".format(NotifiableType.USER.value),
         back_populates='notifications',
-        overlaps="notifiable_role"
+        overlaps="notifications,notifiable_role"
     )
     notifiable_role = db.relationship(
         'Role',
         foreign_keys='Notification.notifiable_id',
         primaryjoin="and_(Notification.notifiable_id == Role.id, Notification.notifiable_type == '{}')".format(NotifiableType.ROLE.value),
         back_populates='notifications',
-        overlaps="notifiable_user"
+        overlaps="notifications,notifiable_user"
     )
     @property   
     def notifiable(self):
