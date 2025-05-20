@@ -27,16 +27,16 @@ class Media(db.Model):
     model_user = db.relationship(
         'User',
         foreign_keys='Media.model_id',
-        primaryjoin="and_(Media.model_id == User.id, Media.model_type == '{}')".format(ModelType.User.value),
+        primaryjoin="and_(Media.model_id == User.id, Media.model_type == '{}')".format(ModelType.USER.value),
         back_populates='medias',
-        # overlaps="" # * Now is not needed unless we add another polymorphic relation
+        overlaps="medias,model_post"
     )
     model_post = db.relationship(
         'Post',
         foreign_keys='Media.model_id',
         primaryjoin="and_(Media.model_id == Post.id, Media.model_type == '{}')".format(ModelType.POST.value),
         back_populates='medias',
-        # overlaps="" # * Now is not needed unless we add another polymorphic relation
+        overlaps="medias,model_user" 
     )
     @property   
     def model(self):

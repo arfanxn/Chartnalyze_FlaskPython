@@ -40,6 +40,7 @@ class Post(db.Model):
         'Media',
         foreign_keys='Media.model_id',
         primaryjoin="and_(Post.id == Media.model_id, Media.model_type == '{}')".format(SaveableType.POST.value),
+        overlaps="medias"
     )
 
     # ==========================================

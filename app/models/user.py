@@ -64,6 +64,7 @@ class User(db.Model):
         'Media',
         foreign_keys='Media.model_id',
         primaryjoin="and_(User.id == Media.model_id, Media.model_type == '{}')".format(ModelType.USER.value),
+        overlaps="medias"
     )
 
     # ==========================================
