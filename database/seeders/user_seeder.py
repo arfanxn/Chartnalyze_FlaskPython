@@ -1,5 +1,5 @@
 from app.extensions import db
-from app.models import User, Country, Rol
+from app.models import User, Country, Role
 from app.enums.role_enums import RoleName
 from database.seeders.seeder import Seeder
 from faker import Faker
