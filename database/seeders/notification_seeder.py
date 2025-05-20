@@ -18,7 +18,7 @@ class NotificationSeeder(Seeder):
         notifications = []
         
         for user in users:
-            for _ in range(10):            
+            for _ in range(5):            
                 created_at = fake.date_time_between(start_date='-1y', end_date='now')
                 read_at = fake.date_time_between(start_date=created_at, end_date='now') if fake.boolean() else None
                 title = ' '.join(fake.words(nb=fake.random_int(min=1, max=4, step=1))) if fake.boolean() else None
@@ -40,7 +40,7 @@ class NotificationSeeder(Seeder):
             for _ in range(5):            
                 created_at = fake.date_time_between(start_date='-1y', end_date='now')
                 read_at = fake.date_time_between(start_date=created_at, end_date='now') if fake.boolean() else None
-                title = ' '.join(fake.words(nb=2)) if fake.boolean() else None
+                title = ' '.join(fake.words(nb=fake.random_int(min=1, max=4, step=1))) if fake.boolean() else None
                 data = fake.json() if fake.boolean() else None
 
                 notifications.append(Notification(

@@ -19,7 +19,7 @@ class UserSeeder(Seeder):
         for i in range(len(roles)):
             role = roles[i]
 
-            for j in range(0, 10):
+            for j in range(5):
                 country_id = fake.random_element(elements=countries).id if fake.boolean() else None
                 email_verified_at = fake.date_time_between(start_date='-1y', end_date='now') if fake.boolean() else None
 

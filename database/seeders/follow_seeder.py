@@ -18,6 +18,8 @@ class FollowSeeder(Seeder):
 
         for analyst_user in analyst_users:
             for user in users:
+                if fake.boolean == False: continue
+
                 follow = Follow()
                 follow.follower_id = user.id,
                 follow.followed_id = analyst_user.id,
