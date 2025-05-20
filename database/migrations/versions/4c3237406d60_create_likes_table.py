@@ -9,6 +9,8 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
+from app.enums.like_enums import LikeableType
+
 # revision identifiers, used by Alembic.
 revision = '4c3237406d60'
 down_revision = '0e67adb4ab0a'
@@ -20,8 +22,8 @@ def upgrade():
     op.create_table('likes',
         sa.Column('id', sa.CHAR(26), primary_key=True),
         sa.Column('user_id', sa.CHAR(26), sa.ForeignKey('users.id'), nullable=False),
-        sa.Column('likeable_id', sa.CHAR(26), sa.ForeignKey('posts.id'), nullable=False),
-        sa.Column('likeable_type', sa.Enum('post', name='likeable_type'), nullable=False),
+        sa.Column('likeable_id', sa.CHAR(26), nullable=False),
+        sa.Column('likeable_type', sa.Enum(*[e.value for e in LikeableType], name='likeable_types'), nullable=False),
         sa.Column('created_at', sa.DateTime, nullable=False, server_default=sa.func.now()),
         sa.Column('updated_at', sa.DateTime, server_onupdate=sa.func.now())
     )

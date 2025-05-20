@@ -9,6 +9,8 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
+from app.enums.comment_enums import CommentableType
+
 # revision identifiers, used by Alembic.
 revision = '68d5fa430e52'
 down_revision = 'e9111394ed36'
@@ -20,8 +22,8 @@ def upgrade():
     op.create_table('comments',
         sa.Column('id', sa.CHAR(26), primary_key=True),
         sa.Column('user_id', sa.CHAR(26), sa.ForeignKey('users.id'), nullable=False),
-        sa.Column('commentable_id', sa.CHAR(26), sa.ForeignKey('posts.id'), nullable=False),
-        sa.Column('commentable_type', sa.Enum('post', name='commentable_type'), nullable=False),
+        sa.Column('commentable_id', sa.CHAR(26), nullable=False),
+        sa.Column('commentable_type', sa.Enum(*[e.value for e in CommentableType], name='commentable_types'), nullable=False),
         sa.Column('parent_id', sa.CHAR(26), sa.ForeignKey('comments.id'), nullable=True),
         sa.Column('body', sa.Text, nullable=False),
         sa.Column('created_at', sa.DateTime, nullable=False, server_default=sa.func.now()),
