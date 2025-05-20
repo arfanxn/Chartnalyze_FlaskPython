@@ -1,5 +1,4 @@
 from app.extensions import db
-from sqlalchemy import inspect
 from datetime import datetime
 import ulid
 
@@ -15,7 +14,7 @@ class Country(db.Model):
     # ==========================================
     # Relationships
     # ==========================================
-    users = db.relationship('User', lazy='dynamic', back_populates='country')
+    users = db.relationship('User', back_populates='country')
 
     # ==========================================
     # Serialization to JSON
@@ -28,10 +27,5 @@ class Country(db.Model):
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
-
-        # Relationships
-        insp = inspect(self)
-        if (insp.attrs.users.loaded and self.users):
-            data['users'] = [user.to_json() for user in self.users]
 
         return data
