@@ -5,7 +5,6 @@ from .login_form import LoginForm
 from .register_form import RegisterForm
 
 from .update_user_form import UpdateUserForm
-from .update_user_avatar_form import UpdateUserAvatarForm
 from .update_user_email_form import UpdateUserEmailForm
 from .update_user_password_form import UpdateUserPasswordForm
 from .reset_user_password_form import ResetUserPasswordForm
