@@ -12,12 +12,8 @@ from app.forms import (
     UpdateUserPasswordForm,
 )
 from app.helpers.response_helpers import create_response_tuple
-from app.middlewares import (
-    authenticated,
-    authorized,
-    api_key_verified,
-    email_verified,
-)
+from app.middlewares import authenticated, authorized, api_key_verified, email_verified
+
 from app.services import UserService
 
 user_service = UserService()
