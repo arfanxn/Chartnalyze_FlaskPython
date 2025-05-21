@@ -34,3 +34,23 @@ def try_validate (form: Form):
         raise ValidationException(message, form.errors)
     
     return True
+
+def allowed_file(filename: str, allowed_extensions: list[str]) -> bool:
+    """
+    Check if a file has an allowed extension.
+
+    :param filename: The filename to check.
+    :type filename: str
+    :param allowed_extensions: The list of allowed extensions.
+    :type allowed_extensions: list[str]
+    :return: True if the file has an allowed extension, False otherwise.
+    :rtype: bool
+
+    Example:
+
+        >>> allowed_file('example.txt', ['txt', 'pdf'])
+        True
+        >>> allowed_file('example.exe', ['txt', 'pdf'])
+        False
+    """
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
