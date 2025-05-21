@@ -66,6 +66,13 @@ class User(db.Model):
         primaryjoin="and_(User.id == Media.model_id, Media.model_type == '{}')".format(ModelType.USER.value),
         overlaps="medias"
     )
+    avatar = db.relationship(
+        'Media',
+        foreign_keys='Media.model_id',
+        primaryjoin="and_(User.id == Media.model_id, Media.model_type == '{}', Media.collection_name == 'avatar')".format(ModelType.USER.value),
+        overlaps="medias",
+        uselist=False
+    )
 
     # ==========================================
     # Password Handling
