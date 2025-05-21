@@ -1,18 +1,14 @@
 from app.config import Config
 from app.services import Service
 from app.actions import VerifyOtpAction
-from app.repositories import UserRepository
 from app.forms import RegisterForm, LoginForm, OtpCodeForm, ResetUserPasswordForm, UpdateUserForm, UpdateUserEmailForm, UpdateUserPasswordForm
-from app.models import User, Otp
+from app.models import User
 from app.extensions import db
 from app.exceptions import HttpException, ValidationException
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from flask import g
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
 from datetime import timedelta, datetime
-
-user_repository = UserRepository()
 
 class UserService(Service):
     def __init__(self):
