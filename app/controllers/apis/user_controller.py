@@ -13,10 +13,10 @@ from app.forms import (
 )
 from app.helpers.response_helpers import create_response_tuple
 from app.middlewares import (
-    authenticate,
-    authorize,
-    verify_api_key,
-    verify_email
+    authenticated,
+    authorized,
+    api_key_verified,
+    email_verified,
 )
 from app.services import UserService
 
@@ -25,7 +25,7 @@ user_service = UserService()
 user_bp = Blueprint('user', __name__, url_prefix='/users')
 
 @user_bp.route('/register', methods=['POST'])
-@verify_api_key
+@api_key_verified
 def register():
     """
     Registers a new user by validating input and saving to the database.
@@ -42,7 +42,7 @@ def register():
         data={'user': user.to_json()})
 
 @user_bp.route('/login', methods=['POST'])
-@verify_api_key
+@api_key_verified
 @limiter.limit("10 per minute")
 def login():
     """
@@ -57,8 +57,8 @@ def login():
     return create_response_tuple(status=HTTPStatus.OK, message='User logged in successfully', data={'access_token': access_token})
 
 @user_bp.route('/self/email/verify', methods=['POST'])
-@verify_api_key
-@authenticate
+@api_key_verified
+@authenticated
 def verify_self_email():
     form = OtpCodeForm(request.form)
     form.try_validate()
@@ -70,9 +70,9 @@ def verify_self_email():
     return create_response_tuple(status=HTTPStatus.OK, message='Email verified successfully', data={'user': user.to_json()})
 
 @user_bp.route('/self/logout', methods=['DELETE'])
-@verify_api_key
+@api_key_verified
 @limiter.limit("10 per minute")
-@authenticate
+@authenticated
 def logout():
     """
     Logs out the authenticated user and returns a success message.
@@ -80,7 +80,7 @@ def logout():
     return create_response_tuple(status=HTTPStatus.OK, message='User logged out successfully')
 
 @user_bp.route("/reset-password", methods=["PATCH"])
-@verify_api_key
+@api_key_verified
 def reset_password():
     form = ResetUserPasswordForm(request.form)
     form.try_validate()
@@ -93,10 +93,10 @@ def reset_password():
     )
 
 @user_bp.route("/<string:user_identifier>", methods=["GET"])
-@verify_api_key
-@authenticate
-@authorize('users.show')
-@verify_email
+@api_key_verified
+@authenticated
+@authorized('users.show')
+@email_verified
 def show(user_identifier: str):
     """
     Retrieves the user by ID or email/username. Returns user data or raises HttpException if not found.
@@ -110,8 +110,8 @@ def show(user_identifier: str):
     )
 
 @user_bp.route("/self", methods=["GET"])
-@verify_api_key
-@authenticate
+@api_key_verified
+@authenticated
 def show_self():
     """
     Retrieves the currently authenticated user's data.
@@ -127,10 +127,10 @@ def show_self():
     )
 
 @user_bp.route("/<string:user_id>", methods=["PUT"])
-@verify_api_key
-@authenticate
-@authorize('users.update')
-@verify_email
+@api_key_verified
+@authenticated
+@authorized('users.update')
+@email_verified
 def update(user_id: str):
     form = UpdateUserForm(request.form) 
     form.try_validate()
@@ -144,9 +144,9 @@ def update(user_id: str):
     )
 
 @user_bp.route("/self", methods=["PUT"])
-@verify_api_key
-@authenticate
-@verify_email
+@api_key_verified
+@authenticated
+@email_verified
 def update_self():
     """
     Updates the currently authenticated user's details.
@@ -165,9 +165,9 @@ def update_self():
     )
 
 @user_bp.route("/self/avatar", methods=["PATCH"])
-@verify_api_key
-@authenticate
-@verify_email
+@api_key_verified
+@authenticated
+@email_verified
 def update_self_avatar():
     form = UpdateUserAvatarForm(request.form)
     form.try_validate()
@@ -183,9 +183,9 @@ def update_self_avatar():
     )   
 
 @user_bp.route("/self/email", methods=["PATCH"])
-@verify_api_key
-@authenticate
-@verify_email
+@api_key_verified
+@authenticated
+@email_verified
 def update_self_email():
     """
     Updates the currently authenticated user's email address by validating input and sending an OTP code to the old email.
@@ -209,9 +209,9 @@ def update_self_email():
     )
 
 @user_bp.route("/self/password", methods=["PATCH"])
-@verify_api_key
-@authenticate
-@verify_email
+@api_key_verified
+@authenticated
+@email_verified
 def update_self_password():
     """
     Updates the currently authenticated user's password by validating input and verifying the current password.

@@ -8,7 +8,7 @@ from app.helpers.response_helpers import create_response_tuple
 from http import HTTPStatus
 
 
-def verify_api_key(f):
+def api_key_verified(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         # Get API key from header

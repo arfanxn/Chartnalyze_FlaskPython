@@ -4,7 +4,7 @@ from app.models import User
 from app.exceptions import HttpException
 from http import HTTPStatus
 
-def authorize(permissions):
+def authorized(permissions):
     """
     Decorator for routes that require specific permissions.
 

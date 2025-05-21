@@ -4,7 +4,7 @@ from app.exceptions import HttpException
 from app.models.user import User
 from http import HTTPStatus
 
-def verify_email(func):
+def email_verified(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         user: User = g.user

@@ -5,7 +5,7 @@ from app.models.user import User
 from app.exceptions import HttpException
 from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
 
-def authenticate(f):
+def authenticated(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         message, status = ('Unauthorized action', HTTPStatus.UNAUTHORIZED)
