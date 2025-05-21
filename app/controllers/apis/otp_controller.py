@@ -7,6 +7,7 @@ from flask import Blueprint, request
 from http import HTTPStatus
 
 otp_service = OtpService()
+
 otp_bp = Blueprint('otp', __name__)
 
 @otp_bp.route('/otps/send', methods=['POST'])
@@ -15,5 +16,7 @@ otp_bp = Blueprint('otp', __name__)
 def send():
     form = SendOtpForm(request.form)
     form.try_validate()
-    otp_service.send(form.email.data)
+
+    otp_service.send(form)
+    
     return create_response_tuple(status=HTTPStatus.OK, message=f"OTP sent successfully")

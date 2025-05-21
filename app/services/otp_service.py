@@ -3,55 +3,21 @@ from app.extensions import db
 from app.models.otp import Otp
 from app.exceptions import HttpException
 from app.helpers.mail_helpers import send_mail
+from app.actions import SendOtpAction, VerifyOtpAction
+from app.forms import SendOtpForm
 from app.config import Config
 from sqlalchemy import and_
 from datetime import datetime
 from http import HTTPStatus
 
-class OtpService(Service) :
+class OtpService(Service):
+
+    def __init__(self):
+        super().__init__()
     
-    def send(self, email):
-        try: 
-            Otp.query.filter(Otp.email == email).update(
-                {Otp.revoked_at: datetime.now()},
-                synchronize_session=False
-            )
+    def send(self, form: SendOtpForm):
+        send_otp = SendOtpAction()
+        send_otp(email=form.email.data)
 
-            otp = Otp()
-            otp.email = email
-            db.session.add(otp)
-            db.session.commit()
-        except Exception as e:
-            db.session.rollback()
-            raise HttpException(message='OTP sent failed', status=HTTPStatus.INTERNAL_SERVER_ERROR)
-
-        send_mail(
-            subject=f"{Config.APP_NAME} | OTP",
-            recipients=[otp.email],  # List of recipient email addresses
-            body=f"Your OTP is [ {otp.code} ], valid for {otp.expiration_minutes} minutes"
-        )
-
-        return otp
-
-    def verify(self, email, code):
-        updated_rows = Otp.query.filter(
-            and_(
-                Otp.email == email,
-                Otp.code == code,
-                Otp.used_at == None,
-                Otp.revoked_at == None,
-                Otp.expired_at > datetime.now()
-            )
-        ).update(
-            {Otp.used_at: datetime.now()},
-            synchronize_session=False
-        )
-        
-        if updated_rows == 0:
-            message='Code is invalid'
-            status=HTTPStatus.UNPROCESSABLE_ENTITY
-            raise HttpException(message=message, status=status, additionals={'errors': {'code': [message]}})
-        
         db.session.commit()
 
-        return True

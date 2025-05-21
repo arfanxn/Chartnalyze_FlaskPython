@@ -1,17 +1,12 @@
-from datetime import datetime, timedelta
 from flask import Blueprint, g, request
-from flask_jwt_extended import create_access_token
 from http import HTTPStatus
-from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-
-from app.config import Config
-from app.exceptions import HttpException, ValidationException
-from app.extensions import db, limiter
+from app.extensions import limiter
 from app.forms import (
     LoginForm,
     OtpCodeForm,
     RegisterForm,
     ResetUserPasswordForm,
+    UpdateUserAvatarForm,
     UpdateUserEmailForm,
     UpdateUserForm,
     UpdateUserPasswordForm,
@@ -23,10 +18,10 @@ from app.middlewares import (
     verify_api_key,
     verify_email
 )
-from app.models.user import User
-from app.services.otp_service import OtpService
+from app.services import UserService
 
-otp_service = OtpService()
+user_service = UserService()
+
 user_bp = Blueprint('user', __name__, url_prefix='/users')
 
 @user_bp.route('/register', methods=['POST'])
@@ -39,20 +34,7 @@ def register():
     form = RegisterForm(request.form) 
     form.try_validate()
 
-    user = User()
-    user.name = form.name.data
-    user.username = form.username.data
-    user.birth_date = form.birth_date.data
-    user.email = form.email.data
-    user.password = form.password.data 
-
-    try:
-        db.session.add(user)
-        db.session.commit()    
-    except IntegrityError as e:
-        message = 'Email or username already exists' 
-        errors = {'email': [message]}
-        raise ValidationException(message, errors)
+    user, = user_service.register(form)
 
     return create_response_tuple(
         status=HTTPStatus.CREATED, 
@@ -69,19 +51,8 @@ def login():
     """
     form = LoginForm(request.form)
     form.try_validate()
-    
-    user = User.query.filter(
-        (User.email == form.identifier.data) | 
-        (User.username == form.identifier.data)
-    ).first()
 
-    if (user is None) or (user.check_password(form.password.data) == False):
-        message = 'Credentials do not match'
-        errors = {'password': [message]}
-        raise ValidationException(message, errors)
-    
-    # Generate a JWT token with the user's ID as the identity and 30 days expiration time.
-    access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=Config.JWT_EXPIRATION_DAYS))
+    _, access_token = user_service.login(form)
 
     return create_response_tuple(status=HTTPStatus.OK, message='User logged in successfully', data={'access_token': access_token})
 
@@ -92,17 +63,11 @@ def verify_self_email():
     form = OtpCodeForm(request.form)
     form.try_validate()
     
-    try:
-        otp_service.verify(email=g.user.email, code=form.code.data)
+    email = g.user.email
 
-        user:User = g.user
-        user.email_verified_at = datetime.now()
-        db.session.commit()
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        raise HttpException(message='Email verification failed', status=HTTPStatus.INTERNAL_SERVER_ERROR)
+    user, = user_service.verify_email(form=form, email=email)
 
-    return create_response_tuple(status=HTTPStatus.OK, message='Email verified successfully')
+    return create_response_tuple(status=HTTPStatus.OK, message='Email verified successfully', data={'user': user.to_json()})
 
 @user_bp.route('/self/logout', methods=['DELETE'])
 @verify_api_key
@@ -119,12 +84,8 @@ def logout():
 def reset_password():
     form = ResetUserPasswordForm(request.form)
     form.try_validate()
-    
-    otp_service.verify(email=form.email.data, code=form.code.data)
 
-    user = User.query.filter_by(email=form.email.data).first()  
-    user.password = form.password.data
-    db.session.commit()
+    user_service.reset_password(form)
 
     return create_response_tuple(
         status=HTTPStatus.OK, 
@@ -140,13 +101,7 @@ def show(user_identifier: str):
     """
     Retrieves the user by ID or email/username. Returns user data or raises HttpException if not found.
     """
-    user = User.query.filter(
-        (User.id == user_identifier) | 
-        (User.email == user_identifier) | 
-        (User.username == user_identifier)
-    ).first()
-    if user is None:
-        raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
+    user, = user_service.show(user_identifier)
 
     return create_response_tuple(
         status=HTTPStatus.OK,
@@ -161,35 +116,13 @@ def show_self():
     """
     Retrieves the currently authenticated user's data.
     """
+    user_id = g.user.id
+
+    user, = user_service.show(identifier=user_id)
+
     return create_response_tuple(
         status=HTTPStatus.OK,
         message='User found successfully',
-        data={'user': g.user.to_json()}
-    )
-
-def _update(user_id: str):
-    form = UpdateUserForm(request.form) 
-    form.try_validate()
-
-    user: User = User.query.filter_by(id=user_id).first()
-    if user is None:
-        raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
-        
-    user.name = form.name.data
-    if form.username.data != user.username: # TODO: fix bug on updating username with the same username occurs error
-        user.username = form.username.data
-    user.birth_date = form.birth_date.data
-
-    try:
-        db.session.commit()
-    except IntegrityError as e:
-        message = 'Username already exists' 
-        errors = {'username': [message]}
-        raise ValidationException(message, errors)
-
-    return create_response_tuple(
-        status=HTTPStatus.OK,
-        message='User updated successfully',
         data={'user': user.to_json()}
     )
 
@@ -199,7 +132,16 @@ def _update(user_id: str):
 @authorize('users.update')
 @verify_email
 def update(user_id: str):
-    return _update(user_id)
+    form = UpdateUserForm(request.form) 
+    form.try_validate()
+
+    user, = user_service.update(form=form, user_id=user_id)
+
+    return create_response_tuple(
+        status=HTTPStatus.OK,
+        message='User updated successfully',
+        data={'user': user.to_json()}
+    )
 
 @user_bp.route("/self", methods=["PUT"])
 @verify_api_key
@@ -209,8 +151,36 @@ def update_self():
     """
     Updates the currently authenticated user's details.
     """
-    user = g.user
-    return _update(user.id)
+    form = UpdateUserForm(request.form) 
+    form.try_validate()
+
+    user_id = g.user.id
+
+    user, = user_service.update(form=form, user_id=user_id) 
+
+    return create_response_tuple(
+        status=HTTPStatus.OK,
+        message='User updated successfully',
+        data={'user': user.to_json()}
+    )
+
+@user_bp.route("/self/avatar", methods=["PATCH"])
+@verify_api_key
+@authenticate
+@verify_email
+def update_self_avatar():
+    form = UpdateUserAvatarForm(request.form)
+    form.try_validate()
+
+    user_id = g.user.id
+
+    user, = user_service.update_avatar(form=form, user_id=user_id)
+
+    return create_response_tuple(
+        status=HTTPStatus.OK, 
+        message='Avatar updated successfully', 
+        data={'user': user.to_json()}
+    )   
 
 @user_bp.route("/self/email", methods=["PATCH"])
 @verify_api_key
@@ -229,15 +199,8 @@ def update_self_email():
     """
     form = UpdateUserEmailForm(request.form)
     form.try_validate()
-    
-    new_email = form.email.data
 
-    otp_service.verify(email=new_email, code=form.code.data)   
-
-    user: User = g.user
-    user.email = new_email
-    user.email_verified_at = datetime.now()
-    db.session.commit()
+    user, = user_service.update_email(form=form, user_id=g.user.id)
 
     return create_response_tuple(
         status=HTTPStatus.OK, 
@@ -256,16 +219,10 @@ def update_self_password():
     """
     form = UpdateUserPasswordForm(request.form)
     form.try_validate()
+
+    user_id = g.user.id
     
-    user: User = g.user
-
-    if (user.check_password(form.current_password.data) == False):
-        message = 'Current password does not match'
-        errors = {'current_password': [message]}
-        raise ValidationException(message, errors)
-
-    user.password = form.password.data
-    db.session.commit()
+    user_service.update_password(form=form, user_id=user_id)
 
     return create_response_tuple(
         status=HTTPStatus.OK, 
