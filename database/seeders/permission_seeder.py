@@ -1,7 +1,7 @@
 from app.extensions import db
 from app.models import Permission
+from app.enums.permission_enums import PermissionName
 from database.seeders.seeder import Seeder
-from datetime import date
 
 class PermissionSeeder(Seeder):
 
@@ -9,10 +9,25 @@ class PermissionSeeder(Seeder):
         super().run()
         
         permissionNames = [
-            '*', 
-            'users.index', 'users.show', 'users.store', 'users.update', 'users.destroy',
-            'roles.index', 'roles.show', 'roles.store', 'roles.update', 'roles.destroy',
-            'permissions.index', 'permissions.show', 'permissions.store', 'permissions.update', 'permissions.destroy'
+            PermissionName.ALL.value,
+
+            PermissionName.USERS_INDEX.value,
+            PermissionName.USERS_SHOW.value,
+            PermissionName.USERS_STORE.value,
+            PermissionName.USERS_UPDATE.value,
+            PermissionName.USERS_DESTROY.value,
+
+            PermissionName.ROLES_INDEX.value,
+            PermissionName.ROLES_SHOW.value,
+            PermissionName.ROLES_STORE.value,
+            PermissionName.ROLES_UPDATE.value,
+            PermissionName.ROLES_DESTROY.value,
+
+            PermissionName.PERMISSIONS_INDEX.value,
+            PermissionName.PERMISSIONS_SHOW.value,
+            PermissionName.PERMISSIONS_STORE.value,
+            PermissionName.PERMISSIONS_UPDATE.value,
+            PermissionName.PERMISSIONS_DESTROY.value
         ]
         for permissionName in permissionNames:
             permission = Permission()
