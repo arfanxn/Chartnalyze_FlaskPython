@@ -2,9 +2,10 @@ from app.config import Config
 from app.services import Service
 from app.actions import VerifyOtpAction
 from app.forms import RegisterForm, LoginForm, OtpCodeForm, ResetUserPasswordForm, UpdateUserForm, UpdateUserEmailForm, UpdateUserPasswordForm
-from app.models import User
+from app.models import User, Role
 from app.extensions import db
 from app.exceptions import HttpException, ValidationException
+from app.enums.role_enums import RoleName
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
@@ -14,14 +15,17 @@ class UserService(Service):
     def __init__(self):
         super().__init__()
 
-    def register(form: RegisterForm) -> tuple[User]: 
+    def register(self, form: RegisterForm) -> tuple[User]: 
         try:
+            role = Role.query.filter_by(name=RoleName.USER.value).first()
+
             user = User()
             user.name = form.name.data
             user.username = form.username.data
             user.birth_date = form.birth_date.data
             user.email = form.email.data
             user.password = form.password.data 
+            user.roles.extend([role]) 
             db.session.add(user)
 
             db.session.commit()    
@@ -108,7 +112,7 @@ class UserService(Service):
 
         return (user)
     
-    def update_avatar ():
+    def update_avatar (self):
         # TODO: implement avatar update
         pass
 
