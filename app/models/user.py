@@ -29,7 +29,7 @@ class User(db.Model):
     # ==========================================
     # Relationships
     # ==========================================
-    country = db.relationship('Country', back_populates='users')
+    country = db.relationship('Country', back_populates='users', lazy='joined')
     roles = db.relationship(
         'Role', 
         secondary='role_user',  # Use table name as string
