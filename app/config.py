@@ -9,6 +9,7 @@ class Config:
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS', 'True') == 'True'
     SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_EXPIRE_ON_COMMIT = os.getenv('SQLALCHEMY_EXPIRE_ON_COMMIT', 'True') == 'True'
     MAIL_SERVER = os.getenv('MAIL_SERVER')
     MAIL_PORT = int(os.getenv('MAIL_PORT'))  # Make sure PORT is int
     MAIL_USE_TLS = os.getenv('MAIL_USE_TLS', 'True') == 'True'
