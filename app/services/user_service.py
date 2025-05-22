@@ -2,14 +2,20 @@ from app.config import Config
 from app.services import Service
 from app.actions import VerifyOtpAction
 from app.forms import RegisterForm, LoginForm, OtpCodeForm, ResetUserPasswordForm, UpdateUserForm, UpdateUserEmailForm, UpdateUserPasswordForm
-from app.models import User, Role
+from app.models import User, Role, Media
 from app.extensions import db
 from app.exceptions import HttpException, ValidationException
 from app.enums.role_enums import RoleName
+from app.enums.media_enums import ModelType
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from werkzeug.datastructures import FileStorage
+from app.helpers.file_helpers import get_file_size, get_file_extension
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
 from datetime import timedelta, datetime
+import ulid
+import os
+
 
 class UserService(Service):
     def __init__(self):
@@ -29,12 +35,12 @@ class UserService(Service):
             db.session.add(user)
 
             db.session.commit()    
+
+            return (user, )
         except IntegrityError as e:
             message = 'Email or username already exists' 
             errors = {'email': [message]}
             raise ValidationException(message, errors)
-
-        return (user, )
 
     def login(self, form: LoginForm) -> tuple[User, str]:
         user = User.query.filter(
@@ -110,11 +116,34 @@ class UserService(Service):
             errors = {'username': [message]}
             raise ValidationException(message, errors)
 
-        return (user)
-    
-    def update_avatar (self):
-        # TODO: implement avatar update
-        pass
+        return (user, )
+
+    def update_avatar (self, avatar: (FileStorage | None), user_id: str) -> tuple[User]:
+        user = User.query.options(db.joinedload(User.avatar)).filter(User.id==user_id).first()
+        if user is None:
+            raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
+        
+        if user.avatar is None:
+            user.avatar = Media(
+                model_id=user_id,
+                model_type=ModelType.USER.value,
+                collection_name='avatar'
+            )
+        
+        file_extension = get_file_extension(file=avatar)
+        file_size = get_file_size(file=avatar)
+        media_file_name = ulid.new().str + file_extension
+
+        user.avatar.name = avatar.filename
+        user.avatar.file_name = media_file_name 
+        user.avatar.mime_type = avatar.mimetype
+        user.avatar.size = file_size
+
+        avatar.save(os.path.join(Config.UPLOAD_FOLDER, 'images/avatars', media_file_name))
+
+        db.session.commit()
+
+        return (user, )
 
     def update_email (self, form: UpdateUserEmailForm, user_id: str) -> tuple[User] :
         new_email = form.email.data
