@@ -6,15 +6,15 @@ from app.forms import (
     OtpCodeForm,
     RegisterForm,
     ResetUserPasswordForm,
-    UpdateUserAvatarForm,
     UpdateUserEmailForm,
     UpdateUserForm,
     UpdateUserPasswordForm,
 )
+from app.resources import UserResource
 from app.helpers.response_helpers import create_response_tuple
 from app.middlewares import authenticated, authorized, api_key_verified, email_verified
-
 from app.services import UserService
+from app.config import Config
 
 user_service = UserService()
 
@@ -163,19 +163,19 @@ def update_self():
 @user_bp.route("/self/avatar", methods=["PATCH"])
 @api_key_verified
 @authenticated
-@email_verified
+@email_verified 
 def update_self_avatar():
-    form = UpdateUserAvatarForm(request.form)
-    form.try_validate()
+    avatar = request.files.get('avatar')
 
     user_id = g.user.id
 
-    user, = user_service.update_avatar(form=form, user_id=user_id)
+    user, = user_service.update_avatar(avatar=avatar, user_id=user_id)
+    user_json = UserResource(user).to_json()
 
     return create_response_tuple(
         status=HTTPStatus.OK, 
         message='Avatar updated successfully', 
-        data={'user': user.to_json()}
+        data={'user': user_json }
     )   
 
 @user_bp.route("/self/email", methods=["PATCH"])
