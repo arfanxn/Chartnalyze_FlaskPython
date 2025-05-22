@@ -1,7 +1,7 @@
 from app.config import Config
 from app.services import Service
 from app.actions import VerifyOtpAction
-from app.forms import RegisterForm, LoginForm, OtpCodeForm, ResetUserPasswordForm, UpdateUserForm, UpdateUserEmailForm, UpdateUserPasswordForm
+from app.forms import QueryForm, RegisterForm, LoginForm, OtpCodeForm, ResetUserPasswordForm, UpdateUserForm, UpdateUserEmailForm, UpdateUserPasswordForm
 from app.models import User, Role, Media
 from app.extensions import db
 from app.exceptions import HttpException, ValidationException
@@ -87,6 +87,39 @@ class UserService(Service):
         except SQLAlchemyError as e:
             db.session.rollback()
             raise HttpException(message='Password reset failed', status=HTTPStatus.INTERNAL_SERVER_ERROR)   
+        
+    def index (self, form: QueryForm) -> tuple[User, dict]:
+        query = User.query.order_by(User.created_at.desc())
+        
+        if (form.keyword.data is not None):
+            query = query.filter(
+                db.or_(
+                    User.name.like(f'%{form.keyword.data}%'), 
+                    User.email.like(f'%{form.keyword.data}%')
+                )
+            )
+
+        pagination = query.paginate(
+            page=form.page.data,
+            per_page=form.per_page.data,
+            error_out=False,
+        )
+
+        users = pagination.items
+
+        meta = {
+            'page': pagination.page,
+            'per_page': pagination.per_page,    
+            'total_pages': pagination.pages,
+            'has_prev': pagination.has_prev,
+            'has_next': pagination.has_next,
+            'total': pagination.total,
+        }
+
+        if len(users) == 0: 
+            raise HttpException(message='Users not found', status=HTTPStatus.NOT_FOUND)
+
+        return (users, meta)
     
     def show(self, identifier: str) -> tuple[User]:
         user = User.query.filter(

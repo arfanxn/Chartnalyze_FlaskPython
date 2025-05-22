@@ -2,6 +2,7 @@ from flask import Blueprint, g, request
 from http import HTTPStatus
 from app.extensions import limiter
 from app.forms import (
+    QueryForm,
     LoginForm,
     OtpCodeForm,
     RegisterForm,
@@ -88,6 +89,25 @@ def reset_password():
     return create_response_tuple(
         status=HTTPStatus.OK, 
         message='Password updated successfully',
+    )
+
+@user_bp.route("", methods=["GET"])
+@api_key_verified
+@authenticated
+@authorized('users.index')
+@email_verified
+def index():
+    form = QueryForm(request.args)
+    form.try_validate()
+
+    users, meta = user_service.index(form)
+    users_json = UserResource.collection(users)
+    users_pagination = {'users': users_json, **meta}
+
+    return create_response_tuple(
+        status=HTTPStatus.OK,
+        message='Users paginated successfully',
+        data={ **users_pagination }
     )
 
 @user_bp.route("/<string:user_identifier>", methods=["GET"])
