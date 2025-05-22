@@ -10,7 +10,7 @@ def create_app():
 
     # Initialize extensions
 
-    cors.init_app(app)
+    cors.init_app(app, resources={r"/*": {"origins": "*"}})
     db.init_app(app)
     jwt.init_app(app)
     limiter.init_app(app)
