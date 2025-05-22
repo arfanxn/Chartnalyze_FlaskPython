@@ -24,7 +24,7 @@ class UserResource(Resource):
 
         ins = inspect(model)
         if 'avatar' not in ins.unloaded:
-            avatar = self.avatar
-            data['avatar_url']  = f"{Config.APP_URL}/public/images/avatars/{avatar.file_name}"
+            avatar = self.avatar    
+            data['avatar_url']  = f"{Config.APP_URL}/public/images/avatars/{avatar.file_name}" if avatar is not None else None
 
         return data
