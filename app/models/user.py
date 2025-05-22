@@ -64,13 +64,14 @@ class User(db.Model):
         'Media',
         foreign_keys='Media.model_id',
         primaryjoin="and_(User.id == Media.model_id, Media.model_type == '{}')".format(ModelType.USER.value),
-        overlaps="medias"
+        back_populates='model_user',
+        overlaps="avatar,model_user"
     )
     avatar = db.relationship(
         'Media',
         foreign_keys='Media.model_id',
         primaryjoin="and_(User.id == Media.model_id, Media.model_type == '{}', Media.collection_name == 'avatar')".format(ModelType.USER.value),
-        overlaps="medias",
+        overlaps="medias,model_user",
         uselist=False
     )
 
