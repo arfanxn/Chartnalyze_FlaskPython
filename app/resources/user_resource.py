@@ -23,8 +23,13 @@ class UserResource(Resource):
         }
 
         ins = inspect(model)
+
         if 'avatar' not in ins.unloaded:
-            avatar = self.avatar    
+            avatar = model.avatar    
             data['avatar_url']  = f"{Config.APP_URL}/public/images/avatars/{avatar.file_name}" if avatar is not None else None
+
+        if 'country' not in ins.unloaded:
+            from app.resources import CountryResource
+            data['country']  = CountryResource(model.country).to_json() if model.country is not None else None
 
         return data

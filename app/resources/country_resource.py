@@ -1,7 +1,6 @@
 from app.resources import Resource
 from app.models import Country
-from sqlalchemy import inspect  # Add this import
-from app.config import Config
+from sqlalchemy import inspect
 
 class CountryResource(Resource): 
     def __init__(self, model: Country):
@@ -19,7 +18,8 @@ class CountryResource(Resource):
         }
 
         ins = inspect(model)
-        if 'user' not in ins.unloaded:
-            data['user']  = model.user    
+        if 'users' not in ins.unloaded:
+            from app.resources import UserResource
+            data['users']  = UserResource.collection(model.users) 
 
         return data
