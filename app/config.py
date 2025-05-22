@@ -3,6 +3,7 @@ import os
 class Config:
     # The environment variables that are injected into application
     APP_NAME = os.getenv('APP_NAME')
+    APP_URL = os.getenv('APP_URL')
     API_KEY= os.getenv('API_KEY')
     SECRET_KEY = os.getenv('SECRET_KEY')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
