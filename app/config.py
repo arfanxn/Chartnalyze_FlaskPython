@@ -16,6 +16,7 @@ class Config:
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
 
     # The environment variables that are used without injection
+    UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
     LIMITER_DEFAULT_LIMITS = os.getenv('LIMITER_DEFAULT_LIMITS').split(',')
     OTP_EXPIRATION_MINUTES = int(os.getenv('OTP_EXPIRATION_MINUTES'))
     JWT_EXPIRATION_DAYS = int(os.getenv('JWT_EXPIRATION_DAYS'))
