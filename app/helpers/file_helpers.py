@@ -11,6 +11,12 @@ def get_file_size (file: (FileStorage | None)):
     file.stream.seek(pos)  # kembalikan posisi pointer ke awal
     return file_size
 
+def get_file_extension(file: (FileStorage | None)) -> (str | None): 
+    if file == None: 
+        return None
+    _, file_extension = os.path.splitext(file.filename)
+    return file_extension
+
 def get_app_root_path() -> str:
     """Return the absolute path to the Flask app root directory."""
     return current_app.root_path
