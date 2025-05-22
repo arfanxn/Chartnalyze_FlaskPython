@@ -31,11 +31,12 @@ def register():
     form.try_validate()
 
     user, = user_service.register(form)
+    user_json = UserResource(user).to_json()
 
     return create_response_tuple(
         status=HTTPStatus.CREATED, 
         message='User registered successfully', 
-        data={'user': user.to_json()})
+        data={'user': user_json})
 
 @user_bp.route('/login', methods=['POST'])
 @api_key_verified
@@ -62,8 +63,9 @@ def verify_self_email():
     email = g.user.email
 
     user, = user_service.verify_email(form=form, email=email)
+    user_json = UserResource(user).to_json()
 
-    return create_response_tuple(status=HTTPStatus.OK, message='Email verified successfully', data={'user': user.to_json()})
+    return create_response_tuple(status=HTTPStatus.OK, message='Email verified successfully', data={'user': user_json})
 
 @user_bp.route('/self/logout', methods=['DELETE'])
 @api_key_verified
@@ -98,11 +100,12 @@ def show(user_identifier: str):
     Retrieves the user by ID or email/username. Returns user data or raises HttpException if not found.
     """
     user, = user_service.show(user_identifier)
+    user_json = UserResource(user).to_json()
 
     return create_response_tuple(
         status=HTTPStatus.OK,
         message='User found successfully',
-        data={'user': user.to_json()}
+        data={'user': user_json}
     )
 
 @user_bp.route("/self", methods=["GET"])
@@ -115,11 +118,12 @@ def show_self():
     user_id = g.user.id
 
     user, = user_service.show(identifier=user_id)
+    user_json = UserResource(user).to_json()
 
     return create_response_tuple(
         status=HTTPStatus.OK,
         message='User found successfully',
-        data={'user': user.to_json()}
+        data={'user': user_json}
     )
 
 @user_bp.route("/<string:user_id>", methods=["PUT"])
@@ -132,11 +136,12 @@ def update(user_id: str):
     form.try_validate()
 
     user, = user_service.update(form=form, user_id=user_id)
+    user_json = UserResource(user).to_json()
 
     return create_response_tuple(
         status=HTTPStatus.OK,
         message='User updated successfully',
-        data={'user': user.to_json()}
+        data={'user': user_json}
     )
 
 @user_bp.route("/self", methods=["PUT"])
@@ -153,11 +158,12 @@ def update_self():
     user_id = g.user.id
 
     user, = user_service.update(form=form, user_id=user_id) 
+    user_json = UserResource(user).to_json()
 
     return create_response_tuple(
         status=HTTPStatus.OK,
         message='User updated successfully',
-        data={'user': user.to_json()}
+        data={'user': user_json}
     )
 
 @user_bp.route("/self/avatar", methods=["PATCH"])
@@ -197,11 +203,12 @@ def update_self_email():
     form.try_validate()
 
     user, = user_service.update_email(form=form, user_id=g.user.id)
+    user_json = UserResource(user).to_json()
 
     return create_response_tuple(
         status=HTTPStatus.OK, 
         message='Email updated successfully', 
-        data={'user': user.to_json()}
+        data={'user': user_json}
     )
 
 @user_bp.route("/self/password", methods=["PATCH"])
