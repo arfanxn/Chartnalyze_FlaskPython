@@ -72,7 +72,8 @@ class User(db.Model):
         foreign_keys='Media.model_id',
         primaryjoin="and_(User.id == Media.model_id, Media.model_type == '{}', Media.collection_name == 'avatar')".format(ModelType.USER.value),
         overlaps="medias,model_user",
-        uselist=False
+        uselist=False,
+        lazy='joined'
     )
 
     # ==========================================
