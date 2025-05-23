@@ -1,4 +1,4 @@
-from app.middlewares import api_key_verified, authenticated, authorized, email_verified
+from app.middlewares import api_key_verified, authenticated, email_verified
 from app.resources import UserResource
 from app.services import FollowService 
 from app.extensions import limiter
@@ -13,7 +13,6 @@ follow_bp = Blueprint('follow', __name__)
 
 @follow_bp.route('/users/<string:user_id>/followers', methods=['GET'])
 @api_key_verified
-@authenticated
 @authenticated
 @email_verified
 def followers_index(user_id: str):
@@ -34,7 +33,6 @@ def followers_index(user_id: str):
 @follow_bp.route('/users/<string:user_id>/followeds', methods=['GET'])
 @api_key_verified
 @authenticated
-@authenticated
 @email_verified
 def followeds_index(user_id: str):
     form = QueryForm(request.args)
@@ -52,7 +50,6 @@ def followeds_index(user_id: str):
 
 @follow_bp.route('/users/self/toggle-follow/<followed_id>', methods=['PATCH'])
 @api_key_verified
-@authenticated
 @authenticated
 @email_verified
 def self_toggle_follow (followed_id: str):
