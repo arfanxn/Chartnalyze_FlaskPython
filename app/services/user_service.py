@@ -88,7 +88,7 @@ class UserService(Service):
             db.session.rollback()
             raise HttpException(message='Password reset failed', status=HTTPStatus.INTERNAL_SERVER_ERROR)   
         
-    def index (self, form: QueryForm) -> tuple[User, dict]:
+    def index (self, form: QueryForm) -> tuple[list[User], dict]:
         query = User.query.order_by(User.created_at.desc())
         
         if (form.keyword.data is not None):
