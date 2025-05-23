@@ -14,4 +14,6 @@ from .reset_user_password_form import ResetUserPasswordForm
 from .send_otp_form import SendOtpForm
 from .otp_code_form import OtpCodeForm
 
+from .assign_user_role import AssignUserRoleForm
+
 Form.try_validate = try_validate
