@@ -110,6 +110,97 @@
 							]
 						},
 						{
+							"name": "Update Self Avatar",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "postman-cloud:///1f03665a-64d3-4580-a596-045ce286c1ec"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self/avatar",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self",
+										"avatar"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "avatar",
+													"type": "file",
+													"src": "postman-cloud:///1f03665a-64d3-4580-a596-045ce286c1ec"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/self/avatar",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"self",
+												"avatar"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 22 May 2025 18:44:35 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "538"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"user\": {\n            \"avatar_url\": \"http://localhost:8000/public/images/avatars/01JVWMZGAEKCWR3GSNEJRATR41.png\",\n            \"birth_date\": \"1967-07-18\",\n            \"country_id\": \"01JVVR1VGTXE3J15ST3A1BT369\",\n            \"created_at\": \"2025-05-22T17:19:10\",\n            \"email\": \"xhull@example.net\",\n            \"email_verified_at\": \"2025-05-22T17:21:04\",\n            \"id\": \"01JVVR20WTMR222H8XP5QEQTHT\",\n            \"name\": \"Laura Dunn\",\n            \"updated_at\": null,\n            \"username\": \"kingisaac\"\n        }\n    },\n    \"message\": \"Avatar updated successfully\",\n    \"status\": 200\n}"
+								}
+							]
+						},
+						{
 							"name": "Update Self Password",
 							"request": {
 								"method": "PATCH",
@@ -213,182 +304,6 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"Email not verified\",\n    \"status\": 403\n}"
-								}
-							]
-						},
-						{
-							"name": "Reset Self Password",
-							"request": {
-								"method": "PATCH",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "code",
-											"value": "876957",
-											"type": "text"
-										},
-										{
-											"key": "password",
-											"value": "11114444",
-											"type": "text"
-										},
-										{
-											"key": "confirm_password",
-											"value": "11114444",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/api/users/self/password/reset",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"api",
-										"users",
-										"self",
-										"password",
-										"reset"
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "OTP Is Invalid",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "code",
-													"value": "941880",
-													"type": "text"
-												},
-												{
-													"key": "password",
-													"value": "11114444",
-													"type": "text"
-												},
-												{
-													"key": "confirm_password",
-													"value": "11114444",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "{{BASE_URL}}/api/users/self/password/reset",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"api",
-												"users",
-												"self",
-												"password",
-												"reset"
-											]
-										}
-									},
-									"status": "UNPROCESSABLE ENTITY",
-									"code": 422,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Server",
-											"value": "Werkzeug/3.1.3 Python/3.11.9"
-										},
-										{
-											"key": "Date",
-											"value": "Wed, 30 Apr 2025 15:07:08 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Content-Length",
-											"value": "51"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"message\": \"OTP is invalid\",\n    \"status\": 422\n}"
-								},
-								{
-									"name": "200",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "code",
-													"value": "876957",
-													"type": "text"
-												},
-												{
-													"key": "password",
-													"value": "11114444",
-													"type": "text"
-												},
-												{
-													"key": "confirm_password",
-													"value": "11114444",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "{{BASE_URL}}/api/users/self/password/reset",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"api",
-												"users",
-												"self",
-												"password",
-												"reset"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Server",
-											"value": "Werkzeug/3.1.3 Python/3.11.9"
-										},
-										{
-											"key": "Date",
-											"value": "Wed, 30 Apr 2025 15:09:15 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Content-Length",
-											"value": "66"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"message\": \"Password updated successfully\",\n    \"status\": 200\n}"
 								}
 							]
 						},
@@ -646,13 +561,18 @@
 											"type": "text"
 										},
 										{
+											"key": "birth_date",
+											"value": "2000-01-01",
+											"type": "text"
+										},
+										{
 											"key": "username",
 											"value": "jack1111",
 											"type": "text"
 										},
 										{
-											"key": "birth_date",
-											"value": "2000-01-01",
+											"key": "email",
+											"value": "jacknew@gm.com",
 											"type": "text"
 										}
 									]
@@ -738,6 +658,768 @@
 							]
 						},
 						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/users?joins=country,posts",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "joins",
+											"value": "country,posts",
+											"description": "Optional field, (not implemented yet)"
+										},
+										{
+											"key": "filters",
+											"value": "",
+											"description": "Optional field, (not implemented yet)",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": "Optional field",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Optional field",
+											"disabled": true
+										},
+										{
+											"key": "keyword",
+											"value": "",
+											"description": "Optional field",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/users?keyword=debracummings11241232",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users"
+											],
+											"query": [
+												{
+													"key": "joins",
+													"value": "country,posts",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "debracummings11241232"
+												}
+											]
+										}
+									},
+									"status": "NOT FOUND",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 22 May 2025 20:23:55 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "52"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Users not found\",\n    \"status\": 404\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/users",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users"
+											],
+											"query": [
+												{
+													"key": "joins",
+													"value": "country,posts",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 22 May 2025 20:24:21 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "5357"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"has_next\": true,\n        \"has_prev\": false,\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total\": 15,\n        \"total_pages\": 2,\n        \"users\": [\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1987-04-24\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VG60A5YY5CKQQ4EH4Z0\",\n                    \"iso_code\": \"FI\",\n                    \"name\": \"Finland\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VG60A5YY5CKQQ4EH4Z0\",\n                \"created_at\": \"2025-05-23T03:09:26\",\n                \"email\": \"donaldramos@example.org\",\n                \"email_verified_at\": \"2024-06-29T14:03:59\",\n                \"id\": \"01JVVR20WY4J0Q119XVFHBBDNA\",\n                \"name\": \"Donald Crawford\",\n                \"updated_at\": null,\n                \"username\": \"tranconnie\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"2020-02-19\",\n                \"country\": null,\n                \"country_id\": null,\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"raven84@example.net\",\n                \"email_verified_at\": \"2024-12-26T14:24:03\",\n                \"id\": \"01JVVR20WNQEHJW0QXMMQ6G97P\",\n                \"name\": \"Benjamin Hudson\",\n                \"updated_at\": null,\n                \"username\": \"flawrence\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1967-07-18\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VGTXE3J15ST3A1BT369\",\n                    \"iso_code\": \"UG\",\n                    \"name\": \"Uganda\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VGTXE3J15ST3A1BT369\",\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"xhull@example.net\",\n                \"email_verified_at\": \"2025-05-22T17:21:04\",\n                \"id\": \"01JVVR20WTMR222H8XP5QEQTHT\",\n                \"name\": \"Laura Dunn\",\n                \"updated_at\": null,\n                \"username\": \"kingisaac\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1976-10-07\",\n                \"country\": null,\n                \"country_id\": null,\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"debracummings@example.com\",\n                \"email_verified_at\": \"2025-02-20T23:02:25\",\n                \"id\": \"01JVVR20WTNJ8HR18R1VT52GJF\",\n                \"name\": \"Donald Alexander\",\n                \"updated_at\": null,\n                \"username\": \"hfloyd\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1935-11-09\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VG2FKRGR3XEAMFJCF73\",\n                    \"iso_code\": \"CD\",\n                    \"name\": \"Congo, The Democratic Republic of the\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VG2FKRGR3XEAMFJCF73\",\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"williamgarcia@example.com\",\n                \"email_verified_at\": \"2025-01-26T21:06:05\",\n                \"id\": \"01JVVR20WV52EDJD1C789MKJMG\",\n                \"name\": \"Abigail Henderson\",\n                \"updated_at\": null,\n                \"username\": \"april58\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1970-05-05\",\n                \"country\": null,\n                \"country_id\": null,\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"robert00@example.org\",\n                \"email_verified_at\": null,\n                \"id\": \"01JVVR20WVDFHH88X6EKMBYQ85\",\n                \"name\": \"Ethan Hawkins\",\n                \"updated_at\": null,\n                \"username\": \"bbrock\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1954-12-30\",\n                \"country\": null,\n                \"country_id\": null,\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"william38@example.org\",\n                \"email_verified_at\": null,\n                \"id\": \"01JVVR20WVSVECXG9XZVQAKD89\",\n                \"name\": \"Thomas Bowen\",\n                \"updated_at\": null,\n                \"username\": \"sandersjose\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1950-11-20\",\n                \"country\": null,\n                \"country_id\": null,\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"cjones@example.org\",\n                \"email_verified_at\": null,\n                \"id\": \"01JVVR20WW32BJB2QKZGRYS7AP\",\n                \"name\": \"David Woods\",\n                \"updated_at\": null,\n                \"username\": \"daniel42\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1956-09-18\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VFR7BGJNJ952759AK74\",\n                    \"iso_code\": \"AD\",\n                    \"name\": \"Andorra\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VFR7BGJNJ952759AK74\",\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"rittersandra@example.org\",\n                \"email_verified_at\": null,\n                \"id\": \"01JVVR20WW5Q91DC0H37D6NC4H\",\n                \"name\": \"Danielle Lester\",\n                \"updated_at\": null,\n                \"username\": \"mcdowellmegan\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1956-06-29\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VG022D4S9XJDSJ10KH0\",\n                    \"iso_code\": \"CF\",\n                    \"name\": \"Central African Republic\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VG022D4S9XJDSJ10KH0\",\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"rthompson@example.net\",\n                \"email_verified_at\": \"2025-01-20T06:03:47\",\n                \"id\": \"01JVVR20WWWZ4NEZ3TAN7A6RG6\",\n                \"name\": \"Anthony Knight\",\n                \"updated_at\": null,\n                \"username\": \"ashley56\"\n            }\n        ]\n    },\n    \"message\": \"Users paginated successfully\",\n    \"status\": 200\n}"
+								}
+							]
+						},
+						{
+							"name": "Followers Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/followers",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{USER_ID}}",
+										"followers"
+									],
+									"query": [
+										{
+											"key": "joins",
+											"value": "country,posts",
+											"description": "Optional field, (not implemented yet)",
+											"disabled": true
+										},
+										{
+											"key": "filters",
+											"value": "",
+											"description": "Optional field, (not implemented yet)",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": "Optional field",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Optional field",
+											"disabled": true
+										},
+										{
+											"key": "keyword",
+											"value": "hillnancy",
+											"description": "Optional field",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/followers",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"{{USER_ID}}",
+												"followers"
+											],
+											"query": [
+												{
+													"key": "joins",
+													"value": "country,posts",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "hillnancy",
+													"description": "Optional field",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 05:29:08 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "3114"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"has_next\": false,\n        \"has_prev\": false,\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total\": 5,\n        \"total_pages\": 1,\n        \"users\": [\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1987-04-24\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VG60A5YY5CKQQ4EH4Z0\",\n                    \"iso_code\": \"FI\",\n                    \"name\": \"Finland\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VG60A5YY5CKQQ4EH4Z0\",\n                \"created_at\": \"2025-05-23T03:09:26\",\n                \"email\": \"donaldramos@example.org\",\n                \"email_verified_at\": \"2024-06-29T14:03:59\",\n                \"id\": \"01JVVR20WY4J0Q119XVFHBBDNA\",\n                \"name\": \"Donald Crawford\",\n                \"updated_at\": null,\n                \"username\": \"tranconnie\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1958-07-01\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VGJ8WRD5S3DC71KDDFF\",\n                    \"iso_code\": \"MP\",\n                    \"name\": \"Northern Mariana Islands\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VGJ8WRD5S3DC71KDDFF\",\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"jacob57@example.com\",\n                \"email_verified_at\": \"2024-11-13T04:13:47\",\n                \"id\": \"01JVVR20WXJKG4HEMKMDSPKGN5\",\n                \"name\": \"Daniel Klein\",\n                \"updated_at\": null,\n                \"username\": \"powellapril\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1915-12-18\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VGC2EQ1RCEPWDGGPNPJ\",\n                    \"iso_code\": \"IE\",\n                    \"name\": \"Ireland\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VGC2EQ1RCEPWDGGPNPJ\",\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"hillnancy@example.org\",\n                \"email_verified_at\": null,\n                \"id\": \"01JVVR20WX48NJVWXXADMME0H2\",\n                \"name\": \"Felicia Williams\",\n                \"updated_at\": null,\n                \"username\": \"audreynorman\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1995-11-29\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VGMY6PRBM8SPDPXV994\",\n                    \"iso_code\": \"PA\",\n                    \"name\": \"Panama\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VGMY6PRBM8SPDPXV994\",\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"frederick01@example.net\",\n                \"email_verified_at\": null,\n                \"id\": \"01JVVR20WXPSJ59H4ZQ1A9VQXC\",\n                \"name\": \"Donald Stewart Jr.\",\n                \"updated_at\": null,\n                \"username\": \"isaac88\"\n            },\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"2011-10-04\",\n                \"country\": null,\n                \"country_id\": null,\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"tonivazquez@example.net\",\n                \"email_verified_at\": \"2025-03-03T05:40:24\",\n                \"id\": \"01JVVR20WXXVE3230JB9S354EZ\",\n                \"name\": \"Collin Charles\",\n                \"updated_at\": null,\n                \"username\": \"harold12\"\n            }\n        ]\n    },\n    \"message\": \"Followers paginated successfully\",\n    \"status\": 200\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/followers?keyword=NOT FOUND",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"{{USER_ID}}",
+												"followers"
+											],
+											"query": [
+												{
+													"key": "joins",
+													"value": "country,posts",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "NOT FOUND",
+													"description": "Optional field"
+												}
+											]
+										}
+									},
+									"status": "NOT FOUND",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 05:29:27 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "52"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Users not found\",\n    \"status\": 404\n}"
+								}
+							]
+						},
+						{
+							"name": "Followeds Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/followeds",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{USER_ID}}",
+										"followeds"
+									],
+									"query": [
+										{
+											"key": "joins",
+											"value": "country,posts",
+											"description": "Optional field, (not implemented yet)",
+											"disabled": true
+										},
+										{
+											"key": "filters",
+											"value": "",
+											"description": "Optional field, (not implemented yet)",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": "Optional field",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Optional field",
+											"disabled": true
+										},
+										{
+											"key": "keyword",
+											"value": "donaldramos@example.org",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/followeds",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"{{USER_ID}}",
+												"followeds"
+											],
+											"query": [
+												{
+													"key": "joins",
+													"value": "country,posts",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "donaldramos@example.org",
+													"description": "Optional field",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 05:32:29 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "861"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"has_next\": false,\n        \"has_prev\": false,\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total\": 1,\n        \"total_pages\": 1,\n        \"users\": [\n            {\n                \"avatar_url\": null,\n                \"birth_date\": \"1958-07-01\",\n                \"country\": {\n                    \"created_at\": \"2025-05-22T17:19:04\",\n                    \"id\": \"01JVVR1VGJ8WRD5S3DC71KDDFF\",\n                    \"iso_code\": \"MP\",\n                    \"name\": \"Northern Mariana Islands\",\n                    \"updated_at\": null\n                },\n                \"country_id\": \"01JVVR1VGJ8WRD5S3DC71KDDFF\",\n                \"created_at\": \"2025-05-22T17:19:10\",\n                \"email\": \"jacob57@example.com\",\n                \"email_verified_at\": \"2024-11-13T04:13:47\",\n                \"id\": \"01JVVR20WXJKG4HEMKMDSPKGN5\",\n                \"name\": \"Daniel Klein\",\n                \"updated_at\": null,\n                \"username\": \"powellapril\"\n            }\n        ]\n    },\n    \"message\": \"Followeds paginated successfully\",\n    \"status\": 200\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/followeds?keyword=NOT FOUND",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"{{USER_ID}}",
+												"followeds"
+											],
+											"query": [
+												{
+													"key": "joins",
+													"value": "country,posts",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "NOT FOUND",
+													"description": "Optional field"
+												}
+											]
+										}
+									},
+									"status": "NOT FOUND",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 05:33:56 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "52"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Users not found\",\n    \"status\": 404\n}"
+								}
+							]
+						},
+						{
+							"name": "Toggle Follow",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self/toggle-follow/01JVVR20WXJKG4HEMKMDSPKGN5",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self",
+										"toggle-follow",
+										"01JVVR20WXJKG4HEMKMDSPKGN5"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Followed successfully",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/self/toggle-follow/01JVVR20WXJKG4HEMKMDSPKGN5",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"self",
+												"toggle-follow",
+												"01JVVR20WXJKG4HEMKMDSPKGN5"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 05:32:27 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Followed successfully\",\n    \"status\": 200\n}"
+								},
+								{
+									"name": "Unfollowed successfully",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/self/toggle-follow/01JVVR20WXJKG4HEMKMDSPKGN5",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"self",
+												"toggle-follow",
+												"01JVVR20WXJKG4HEMKMDSPKGN5"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 05:34:48 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "60"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Unfollowed successfully\",\n    \"status\": 200\n}"
+								}
+							]
+						},
+						{
 							"name": "Show Self",
 							"request": {
 								"method": "GET",
@@ -808,14 +1490,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/users/01JSS6R4SYZD42VPY39CS79YKG<NOT_FOUND>",
+									"raw": "{{BASE_URL}}/api/users/01JVVR20WNQEHJW0QXMMQ6G97P",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"api",
 										"users",
-										"01JSS6R4SYZD42VPY39CS79YKG<NOT_FOUND>"
+										"01JVVR20WNQEHJW0QXMMQ6G97P"
 									]
 								}
 							},
@@ -878,16 +1560,20 @@
 										{
 											"key": "name",
 											"value": "Jack",
-											"type": "text"
-										},
-										{
-											"key": "username",
-											"value": "jack1111",
-											"type": "text"
+											"description": "Optional field",
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "birth_date",
 											"value": "2000-01-01",
+											"description": "Optional field",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "username",
+											"value": "jack1111",
 											"type": "text"
 										},
 										{
@@ -1110,7 +1796,7 @@
 									"formdata": [
 										{
 											"key": "identifier",
-											"value": "jack@gm.com",
+											"value": "jeremy25",
 											"description": "Login via email or username",
 											"type": "text"
 										},
@@ -1268,7 +1954,7 @@
 									"formdata": [
 										{
 											"key": "code",
-											"value": "112233",
+											"value": "506735",
 											"type": "text"
 										}
 									]
@@ -1549,6 +2235,186 @@
 									"body": "{\n    \"message\": \"User logged out successfully\",\n    \"status\": 200\n}"
 								}
 							]
+						},
+						{
+							"name": "Reset Password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "jack@gm.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "11114444",
+											"type": "text"
+										},
+										{
+											"key": "confirm_password",
+											"value": "11114444",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "876957",
+											"description": "OTP code to reset the password",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/reset-password",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"reset-password"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OTP Is Invalid",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "code",
+													"value": "941880",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11114444",
+													"type": "text"
+												},
+												{
+													"key": "confirm_password",
+													"value": "11114444",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/self/password/reset",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"self",
+												"password",
+												"reset"
+											]
+										}
+									},
+									"status": "UNPROCESSABLE ENTITY",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 30 Apr 2025 15:07:08 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "51"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"OTP is invalid\",\n    \"status\": 422\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "code",
+													"value": "876957",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11114444",
+													"type": "text"
+												},
+												{
+													"key": "confirm_password",
+													"value": "11114444",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/self/password/reset",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"self",
+												"password",
+												"reset"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 30 Apr 2025 15:09:15 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "66"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Password updated successfully\",\n    \"status\": 200\n}"
+								}
+							]
 						}
 					]
 				},
@@ -1566,8 +2432,7 @@
 										{
 											"key": "email",
 											"value": "jack@gm.com",
-											"type": "text",
-											"disabled": true
+											"type": "text"
 										},
 										{
 											"key": "email",
@@ -1716,17 +2581,793 @@
 							]
 						}
 					]
+				},
+				{
+					"name": "Roles",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/roles?keyword=designer&joins=permissions",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"roles"
+									],
+									"query": [
+										{
+											"key": "filters",
+											"value": "",
+											"description": "Optional field, (not implemented yet)",
+											"disabled": true
+										},
+										{
+											"key": "keyword",
+											"value": "designer",
+											"description": "Optional field"
+										},
+										{
+											"key": "joins",
+											"value": "permissions",
+											"description": "Optional field"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/roles?joins=permissions",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"roles"
+											],
+											"query": [
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "joins",
+													"value": "permissions",
+													"description": "Optional field"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:03:40 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "4464"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"roles\": [\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW817K11B8G66BSZJT1HK\",\n                \"name\": \"admin\",\n                \"permissions\": [\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810D1TB7VRR2TM95VKZ\",\n                        \"name\": \"users.store\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8109GRRBE644X4DXPVR\",\n                        \"name\": \"roles.store\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810926A5XAD49A5YK2W\",\n                        \"name\": \"roles.index\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW811QQWYZSJZSXMP4VBN\",\n                        \"name\": \"permissions.store\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW81056W8873B5RGHSKKY\",\n                        \"name\": \"users.update\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8119J7K7WB3T8EJV160\",\n                        \"name\": \"permissions.show\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW80Z94SKT0A8YGKJRDCB\",\n                        \"name\": \"*\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW81193Y84TVKGHKF4BZD\",\n                        \"name\": \"permissions.destroy\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8104RM6ZN8G01K14C4Q\",\n                        \"name\": \"users.show\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8117E5TWFYYZB417D0Y\",\n                        \"name\": \"permissions.index\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW811770DQ0P8YH9GEZ09\",\n                        \"name\": \"permissions.update\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8101SX3063BTCVFZBYP\",\n                        \"name\": \"roles.update\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810ZCS2PEQGT8AE6H9S\",\n                        \"name\": \"roles.destroy\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW80ZSB6YA0646EHQX1DR\",\n                        \"name\": \"users.index\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810TK16SS6S9VSBS4YV\",\n                        \"name\": \"users.destroy\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810EF7W6ZHQ5Y1ZNP8M\",\n                        \"name\": \"roles.show\",\n                        \"updated_at\": null\n                    }\n                ],\n                \"updated_at\": null\n            },\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW8180B6625GRQEQQZ09Z\",\n                \"name\": \"analyst\",\n                \"permissions\": [\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8104RM6ZN8G01K14C4Q\",\n                        \"name\": \"users.show\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW80ZSB6YA0646EHQX1DR\",\n                        \"name\": \"users.index\",\n                        \"updated_at\": null\n                    }\n                ],\n                \"updated_at\": null\n            },\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW818DYH39WFPFWD1PKAQ\",\n                \"name\": \"user\",\n                \"permissions\": [\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8104RM6ZN8G01K14C4Q\",\n                        \"name\": \"users.show\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW80ZSB6YA0646EHQX1DR\",\n                        \"name\": \"users.index\",\n                        \"updated_at\": null\n                    }\n                ],\n                \"updated_at\": null\n            }\n        ]\n    },\n    \"message\": \"Roles fetched successfully\",\n    \"status\": 200\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/roles?keyword=designer&joins=permissions",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"roles"
+											],
+											"query": [
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "designer",
+													"description": "Optional field"
+												},
+												{
+													"key": "joins",
+													"value": "permissions",
+													"description": "Optional field"
+												}
+											]
+										}
+									},
+									"status": "NOT FOUND",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:05:14 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "52"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Roles not found\",\n    \"status\": 404\n}"
+								}
+							]
+						},
+						{
+							"name": "Assign to user",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "role_id",
+											"value": "01JVXTW8180B6625GRQEQQZ09Z",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/roles",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{USER_ID}}",
+										"roles"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/roles?joins=permissions",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"roles"
+											],
+											"query": [
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "joins",
+													"value": "permissions",
+													"description": "Optional field"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:03:40 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "4464"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"roles\": [\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW817K11B8G66BSZJT1HK\",\n                \"name\": \"admin\",\n                \"permissions\": [\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810D1TB7VRR2TM95VKZ\",\n                        \"name\": \"users.store\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8109GRRBE644X4DXPVR\",\n                        \"name\": \"roles.store\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810926A5XAD49A5YK2W\",\n                        \"name\": \"roles.index\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW811QQWYZSJZSXMP4VBN\",\n                        \"name\": \"permissions.store\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW81056W8873B5RGHSKKY\",\n                        \"name\": \"users.update\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8119J7K7WB3T8EJV160\",\n                        \"name\": \"permissions.show\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW80Z94SKT0A8YGKJRDCB\",\n                        \"name\": \"*\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW81193Y84TVKGHKF4BZD\",\n                        \"name\": \"permissions.destroy\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8104RM6ZN8G01K14C4Q\",\n                        \"name\": \"users.show\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8117E5TWFYYZB417D0Y\",\n                        \"name\": \"permissions.index\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW811770DQ0P8YH9GEZ09\",\n                        \"name\": \"permissions.update\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8101SX3063BTCVFZBYP\",\n                        \"name\": \"roles.update\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810ZCS2PEQGT8AE6H9S\",\n                        \"name\": \"roles.destroy\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW80ZSB6YA0646EHQX1DR\",\n                        \"name\": \"users.index\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810TK16SS6S9VSBS4YV\",\n                        \"name\": \"users.destroy\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW810EF7W6ZHQ5Y1ZNP8M\",\n                        \"name\": \"roles.show\",\n                        \"updated_at\": null\n                    }\n                ],\n                \"updated_at\": null\n            },\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW8180B6625GRQEQQZ09Z\",\n                \"name\": \"analyst\",\n                \"permissions\": [\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8104RM6ZN8G01K14C4Q\",\n                        \"name\": \"users.show\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW80ZSB6YA0646EHQX1DR\",\n                        \"name\": \"users.index\",\n                        \"updated_at\": null\n                    }\n                ],\n                \"updated_at\": null\n            },\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW818DYH39WFPFWD1PKAQ\",\n                \"name\": \"user\",\n                \"permissions\": [\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW8104RM6ZN8G01K14C4Q\",\n                        \"name\": \"users.show\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"created_at\": \"2025-05-23T12:46:55\",\n                        \"id\": \"01JVXTW80ZSB6YA0646EHQX1DR\",\n                        \"name\": \"users.index\",\n                        \"updated_at\": null\n                    }\n                ],\n                \"updated_at\": null\n            }\n        ]\n    },\n    \"message\": \"Roles fetched successfully\",\n    \"status\": 200\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/roles?keyword=designer&joins=permissions",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"roles"
+											],
+											"query": [
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field, (not implemented yet)",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "designer",
+													"description": "Optional field"
+												},
+												{
+													"key": "joins",
+													"value": "permissions",
+													"description": "Optional field"
+												}
+											]
+										}
+									},
+									"status": "NOT FOUND",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:05:14 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "52"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Roles not found\",\n    \"status\": 404\n}"
+								}
+							]
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/roles/{{ROLE_ID}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"roles",
+										"{{ROLE_ID}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/roles/{{ROLE_ID}}",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"roles",
+												"{{ROLE_ID}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:10:37 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "3107"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"role\": {\n            \"created_at\": \"2025-05-23T12:46:55\",\n            \"id\": \"01JVXTW817K11B8G66BSZJT1HK\",\n            \"name\": \"admin\",\n            \"permissions\": [\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW810D1TB7VRR2TM95VKZ\",\n                    \"name\": \"users.store\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW8109GRRBE644X4DXPVR\",\n                    \"name\": \"roles.store\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW810926A5XAD49A5YK2W\",\n                    \"name\": \"roles.index\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW811QQWYZSJZSXMP4VBN\",\n                    \"name\": \"permissions.store\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW81056W8873B5RGHSKKY\",\n                    \"name\": \"users.update\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW8119J7K7WB3T8EJV160\",\n                    \"name\": \"permissions.show\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW80Z94SKT0A8YGKJRDCB\",\n                    \"name\": \"*\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW81193Y84TVKGHKF4BZD\",\n                    \"name\": \"permissions.destroy\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW8104RM6ZN8G01K14C4Q\",\n                    \"name\": \"users.show\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW8117E5TWFYYZB417D0Y\",\n                    \"name\": \"permissions.index\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW811770DQ0P8YH9GEZ09\",\n                    \"name\": \"permissions.update\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW8101SX3063BTCVFZBYP\",\n                    \"name\": \"roles.update\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW810ZCS2PEQGT8AE6H9S\",\n                    \"name\": \"roles.destroy\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW80ZSB6YA0646EHQX1DR\",\n                    \"name\": \"users.index\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW810TK16SS6S9VSBS4YV\",\n                    \"name\": \"users.destroy\",\n                    \"updated_at\": null\n                },\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW810EF7W6ZHQ5Y1ZNP8M\",\n                    \"name\": \"roles.show\",\n                    \"updated_at\": null\n                }\n            ],\n            \"updated_at\": null\n        }\n    },\n    \"message\": \"Role retrieved successfully\",\n    \"status\": 200\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/roles/{{ROLE_ID}}NOT_FOUND",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"roles",
+												"{{ROLE_ID}}NOT_FOUND"
+											]
+										}
+									},
+									"status": "NOT FOUND",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:11:22 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "51"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Role not found\",\n    \"status\": 404\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Permissions",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/permissions",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"permissions"
+									],
+									"query": [
+										{
+											"key": "joins",
+											"value": "roles",
+											"description": "Optional field",
+											"disabled": true
+										},
+										{
+											"key": "filters",
+											"value": "",
+											"description": "Optional field",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": "Optional field",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "keyword",
+											"value": "app.destroy",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/permissions?page=2",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"permissions"
+											],
+											"query": [
+												{
+													"key": "joins",
+													"value": "roles",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": "2"
+												},
+												{
+													"key": "keyword",
+													"value": "",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:53:20 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1220"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"has_next\": false,\n        \"has_prev\": true,\n        \"page\": 2,\n        \"per_page\": 10,\n        \"permissions\": [\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW8101SX3063BTCVFZBYP\",\n                \"name\": \"roles.update\",\n                \"updated_at\": null\n            },\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW810TK16SS6S9VSBS4YV\",\n                \"name\": \"users.destroy\",\n                \"updated_at\": null\n            },\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW80ZSB6YA0646EHQX1DR\",\n                \"name\": \"users.index\",\n                \"updated_at\": null\n            },\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW8104RM6ZN8G01K14C4Q\",\n                \"name\": \"users.show\",\n                \"updated_at\": null\n            },\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW810D1TB7VRR2TM95VKZ\",\n                \"name\": \"users.store\",\n                \"updated_at\": null\n            },\n            {\n                \"created_at\": \"2025-05-23T12:46:55\",\n                \"id\": \"01JVXTW81056W8873B5RGHSKKY\",\n                \"name\": \"users.update\",\n                \"updated_at\": null\n            }\n        ],\n        \"total\": 16,\n        \"total_pages\": 2\n    },\n    \"message\": \"Permissions paginated successfully\",\n    \"status\": 200\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/permissions?keyword=app.destroy",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"permissions"
+											],
+											"query": [
+												{
+													"key": "joins",
+													"value": "roles",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "filters",
+													"value": "",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"disabled": true
+												},
+												{
+													"key": "keyword",
+													"value": "app.destroy"
+												}
+											]
+										}
+									},
+									"status": "NOT FOUND",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:53:59 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Permissions not found\",\n    \"status\": 404\n}"
+								}
+							]
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/permissions/{{PERMISSION_ID}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"permissions",
+										"{{PERMISSION_ID}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/permissions/{{PERMISSION_ID}}",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"permissions",
+												"{{PERMISSION_ID}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:55:39 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "451"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"permission\": {\n            \"created_at\": \"2025-05-23T12:46:55\",\n            \"id\": \"01JVXTW81193Y84TVKGHKF4BZD\",\n            \"name\": \"permissions.destroy\",\n            \"roles\": [\n                {\n                    \"created_at\": \"2025-05-23T12:46:55\",\n                    \"id\": \"01JVXTW817K11B8G66BSZJT1HK\",\n                    \"name\": \"admin\",\n                    \"updated_at\": null\n                }\n            ],\n            \"updated_at\": null\n        }\n    },\n    \"message\": \"Permission found successfully\",\n    \"status\": 200\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/permissions/{{PERMISSION_ID}}NOT_FOUND",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"permissions",
+												"{{PERMISSION_ID}}NOT_FOUND"
+											]
+										}
+									},
+									"status": "NOT FOUND",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 23 May 2025 09:56:05 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "57"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Permission not found\",\n    \"status\": 404\n}"
+								}
+							]
+						}
+					]
 				}
 			],
 			"auth": {
-				"type": "bearer",
-				"bearer": [
-					{
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NjAyNTMyOSwianRpIjoiOWRiYTFiNzQtNTdiYy00NWY5LTk2ZGEtMjFiYzI5Mjc4MzA5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjAxSlQzS0czVkI2UkpYNFNQWU01UFY1QVFGIiwibmJmIjoxNzQ2MDI1MzI5LCJjc3JmIjoiZjBkMTgzYmMtY2Q4ZS00OWE0LWE2NmEtMjY3ODdmZWJkNzFmIiwiZXhwIjoxNzQ4NjE3MzI5fQ.M4nDM1fhPqQtuEnyTu9LBnqQ2yhcl6kkiWSpKHefMbI",
-						"type": "string"
-					}
-				]
+				"type": "noauth"
 			},
 			"event": [
 				{
@@ -1735,7 +3376,14 @@
 						"type": "text/javascript",
 						"packages": {},
 						"exec": [
-							""
+							"pm.request.headers.add({",
+							"  key: \"Authorization\",",
+							"  value: \"Bearer {{ACCESS_TOKEN}}\"",
+							"});",
+							"pm.request.headers.add({",
+							"  key: \"X-API-Key\",",
+							"  value: \"{{API_KEY}}\"",
+							"});"
 						]
 					}
 				},
