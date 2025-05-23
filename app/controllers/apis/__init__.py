@@ -3,6 +3,7 @@ from .user_controller import user_bp
 from .otp_controller import otp_bp
 from .follow_controller import follow_bp    
 from .role_controller import role_bp
+from .permission_controller import permission_bp
 from app.exceptions import ValidationException, HttpException
 from app.helpers.response_helpers import create_response_tuple
 from http import HTTPStatus
@@ -15,6 +16,7 @@ api_bp.register_blueprint(otp_bp)
 api_bp.register_blueprint(user_bp)
 api_bp.register_blueprint(follow_bp)
 api_bp.register_blueprint(role_bp)
+api_bp.register_blueprint(permission_bp)
 
 # Register error handlers for the API blueprint
 @api_bp.errorhandler(ValidationException)
