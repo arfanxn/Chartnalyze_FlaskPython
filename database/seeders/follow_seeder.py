@@ -25,6 +25,11 @@ class FollowSeeder(Seeder):
                 follow.followed_id = analyst_user.id,
                 follows.append(follow)
 
+            follow = Follow()
+            follow.follower_id = analyst_user.id
+            follow.followed_id = fake.random_element(users).id
+            follows.append(follow)
+
         try:
             db.session.bulk_save_objects(follows)
             db.session.commit()
