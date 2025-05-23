@@ -20,7 +20,7 @@ class RoleResource(Resource):
         ins = inspect(model)
 
         if 'permissions' not in ins.unloaded:
-            from app.resources import RoleResource
-            data['permissions']  = RoleResource.collection(model.permissions) if model.permissions is not None and len(model.permissions) > 0 else []
+            from app.resources import PermissionResource
+            data['permissions']  = PermissionResource.collection(model.permissions) if model.permissions is not None and len(model.permissions) > 0 else []
 
         return data
