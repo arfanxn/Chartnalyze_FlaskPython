@@ -55,7 +55,7 @@ def followeds_index(user_id: str):
 @authenticated
 @authenticated
 @email_verified
-def toggle_follow (followed_id: str):
+def self_toggle_follow (followed_id: str):
     follower_id = g.user.id
 
     is_following = follow_service.toggle_follow(follower_id=follower_id, followed_id=followed_id)
