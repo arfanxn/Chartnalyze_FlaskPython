@@ -1,3 +1,4 @@
+from app.config import Config   
 from app.extensions import db
 from app.models import User, Country, Role
 from app.enums.role_enums import RoleName
@@ -26,9 +27,17 @@ class UserSeeder(Seeder):
                 user = User()
                 user.country_id = country_id
                 user.name = fake.name()
-                user.username = fake.user_name()[:16]
                 user.birth_date = fake.date_of_birth()
-                user.email = fake.email()
+                
+                # the first user in each role group will have the role name as their username and email
+                # so that we can easily login as each role when testing
+                if j == 0:
+                    user.username = role.name
+                    user.email = f"{role.name}@{Config.APP_NAME}.edu".lower()
+                else :
+                    user.username = fake.user_name()
+                    user.email = fake.email()
+
                 user.email_verified_at = email_verified_at
                 user.password = '11112222'   
                 user.roles.extend([role]) 
