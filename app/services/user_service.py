@@ -88,7 +88,7 @@ class UserService(Service):
             db.session.rollback()
             raise HttpException(message='Password reset failed', status=HTTPStatus.INTERNAL_SERVER_ERROR)   
         
-    def index (self, form: QueryForm) -> tuple[list[User], dict]:
+    def paginate (self, form: QueryForm) -> tuple[list[User], dict]:
         query = User.query.order_by(User.created_at.desc())
         
         if (form.keyword.data is not None):
@@ -123,9 +123,7 @@ class UserService(Service):
     
     def show(self, identifier: str) -> tuple[User]:
         user = User.query.filter(
-            (User.id == identifier) | 
-            (User.email == identifier) | 
-            (User.username == identifier)
+            db.or_(User.id == identifier, User.email == identifier, User.username == identifier)
         ).first()
         if user is None:
             raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)

@@ -15,6 +15,7 @@ from app.resources import UserResource
 from app.helpers.response_helpers import create_response_tuple
 from app.middlewares import authenticated, authorized, api_key_verified, email_verified
 from app.services import UserService
+from app.enums.permission_enums import PermissionName
 from app.config import Config
 
 user_service = UserService()
@@ -94,13 +95,13 @@ def reset_password():
 @user_bp.route("", methods=["GET"])
 @api_key_verified
 @authenticated
-@authorized('users.index')
+@authorized(PermissionName.USERS_INDEX.value)
 @email_verified
 def index():
     form = QueryForm(request.args)
     form.try_validate()
 
-    users, meta = user_service.index(form)
+    users, meta = user_service.paginate(form)
     users_json = UserResource.collection(users)
     users_pagination = {'users': users_json, **meta}
 
@@ -113,7 +114,7 @@ def index():
 @user_bp.route("/<string:user_identifier>", methods=["GET"])
 @api_key_verified
 @authenticated
-@authorized('users.show')
+@authorized(PermissionName.USERS_SHOW.value)
 @email_verified
 def show(user_identifier: str):
     """
@@ -149,7 +150,7 @@ def show_self():
 @user_bp.route("/<string:user_id>", methods=["PUT"])
 @api_key_verified
 @authenticated
-@authorized('users.update')
+@authorized(PermissionName.USERS_UPDATE.value)
 @email_verified
 def update(user_id: str):
     form = UpdateUserForm(request.form) 
