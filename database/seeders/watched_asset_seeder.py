@@ -17,7 +17,7 @@ class WatchedAssetSeeder(Seeder):
         watched_assets = []
 
         for user in users:
-            for i in range(fake.random_int(min=0, max=9, step=1)):
+            for i in range(fake.random_int(min=3, max=9, step=1)):
                 symbol, name = fake.cryptocurrency()
                 key = name.lower()
                 image_url = fake.image_url(width=40, height=40)
