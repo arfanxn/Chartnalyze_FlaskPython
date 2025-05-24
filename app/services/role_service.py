@@ -47,7 +47,7 @@ class RoleService(Service):
         
         if user is None:
             raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
-        elif user.roles[0].name == RoleName.ADMIN.value:
+        elif user.role.name == RoleName.ADMIN.value:
             raise HttpException(message='Cannot assign role to admin user', status=HTTPStatus.FORBIDDEN)
         
         role = Role.query.filter(Role.name == role_name).first()
