@@ -3,6 +3,7 @@ from app.enums.notification_enums import NotifiableType
 from app.enums.media_enums import ModelType  
 from app.helpers.string_helpers import is_ulid
 from datetime import datetime
+from sqlalchemy import inspect
 import bcrypt
 import ulid
 
@@ -77,6 +78,16 @@ class User(db.Model):
     )
 
     # ==========================================
+    # Properties
+    # ==========================================
+    @property
+    def role(self):
+        """
+        The first role that the user belongs to, or None if the user does not belong to any roles.
+        """
+        return self.roles[0] if self.roles and len(self.roles) > 0 else None
+
+    # ==========================================
     # Password Handling
     # ==========================================
     @property
@@ -105,10 +116,8 @@ class User(db.Model):
         """
         if not permissions:
             return False  # Edge case: no permissions specified
-
-        # LOCAL IMPORT to break circular dependency
+        
         from app.models import Permission, PermissionRole, RoleUser
-
         names, ids = set(), set()
         for perm in permissions:
             if isinstance(perm, Permission):
@@ -119,19 +128,58 @@ class User(db.Model):
                 else:
                     names.add(perm)
 
-        # Query to check if any permission matches
-        query = db.session.query(db.exists().where(
+        ins = inspect(self)
+
+        if 'permissions' not in ins.unloaded:
+            return any(perm.id in ids or perm.name in names for perm in self.permissions)
+        else: 
+            query = db.session.query(db.exists().where(
+                db.and_(
+                    RoleUser.user_id == self.id,
+                    RoleUser.role_id == PermissionRole.role_id,
+                    PermissionRole.permission_id == Permission.id,
+                    db.or_(
+                        Permission.id.in_(ids),
+                        Permission.name.in_(names)
+                    )
+                )
+            ))
+            return db.session.scalar(query)
+    
+    # ==========================================
+    # Role Checking
+    # ==========================================
+    def has_roles(self, *roles) -> bool:
+        if not roles:
+            return False  # Edge case: no roles specified
+
+        from app.models import Role, RoleUser
+        names, ids = set(), set()
+        for role in roles:
+            if isinstance(role, Role):
+                ids.add(role.id)
+            elif isinstance(role, str):
+                if is_ulid(role):  # detects if ulid
+                    ids.add(role)
+                else:
+                    names.add(role)
+
+        ins = inspect(self)
+
+        if 'roles' not in ins.unloaded:
+            return any(role.id in ids or role.name in names for role in self.roles)
+        else: 
+            query = db.session.query(db.exists().where(
             db.and_(
                 RoleUser.user_id == self.id,
-                RoleUser.role_id == PermissionRole.role_id,
-                PermissionRole.permission_id == Permission.id,
+                RoleUser.role_id == Role.id,
                 db.or_(
-                    Permission.id.in_(ids),
-                    Permission.name.in_(names)
+                    Role.id.in_(ids),
+                    Role.name.in_(names)
                 )
             )
-        ))
-        return db.session.scalar(query)
+            ))
+            return db.session.scalar(query)
 
     # ==========================================
     # Serialization to JSON
