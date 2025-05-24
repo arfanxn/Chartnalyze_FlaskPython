@@ -1,6 +1,7 @@
 from functools import wraps
 from flask import request, g, jsonify
 from http import HTTPStatus
+from app.extensions import db
 from app.models.user import User
 from app.exceptions import HttpException
 from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
@@ -18,7 +19,7 @@ def authenticated(f):
             user_id = get_jwt_identity()
 
             # Check if the user exists in the database
-            user = User.query.filter_by(id=user_id).first()
+            user = User.query.options(db.joinedload(User.roles)).filter_by(id=user_id).first()
             if not user:
                 raise HttpException(message=message,status=status)
 
