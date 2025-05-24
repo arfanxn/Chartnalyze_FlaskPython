@@ -19,7 +19,7 @@ class WatchedAssetService(Service):
     def all_watched_assets_by_self (self, form: QueryForm) -> tuple[list[object]]:
         user_id = g.user.id
 
-        watched_assets, = wa_repository.all_by_user_id(user_id=user_id)
+        watched_assets, = wa_repository.all_by_user_id(user_id=user_id, keyword=form.keyword.data)
 
         return (watched_assets, )
     
