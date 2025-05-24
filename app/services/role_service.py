@@ -21,8 +21,6 @@ class RoleService(Service):
         if (form.keyword.data is not None):
             query = query.options().filter(db.or_(Role.name.like(f'%{form.keyword.data}%'), ))
         roles = query.all()
-        if len(roles) == 0: 
-            raise NotFound('Roles not found')
         return (roles, )
     
     def show(self, role_identifier: str) -> tuple[Role]:

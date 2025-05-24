@@ -36,11 +36,6 @@ class FollowService(Service):
             error_out=False,
         )
 
-        items_length = len(pagination.items)
-
-        if items_length == 0:
-            raise NotFound('Users not found')
-
         meta = {
             'page': pagination.page,
             'per_page': pagination.per_page,

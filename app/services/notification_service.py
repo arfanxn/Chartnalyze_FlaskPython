@@ -45,9 +45,6 @@ class NotificationService(Service):
             'total': pagination.total,
         }
 
-        if len(notifications) == 0: 
-            raise NotFound('Notifications not found')
-
         return (notifications, meta)
     
     def show(self, notification_id: str) -> tuple[Notification]:

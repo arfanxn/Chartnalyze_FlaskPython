@@ -29,9 +29,6 @@ class PermissionService(Service):
 
         permissions = pagination.items
 
-        if len(permissions) == 0: 
-            raise NotFound('Permissions not found')
-
         meta = {
             'page': pagination.page,
             'per_page': pagination.per_page,    

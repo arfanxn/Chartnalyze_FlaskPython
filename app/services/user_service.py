@@ -111,9 +111,6 @@ class UserService(Service):
             'total': pagination.total,
         }
 
-        if len(users) == 0: 
-            raise NotFound('Users not found')
-
         return (users, meta)
     
     def show(self, identifier: str) -> tuple[User]:
