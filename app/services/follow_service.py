@@ -11,7 +11,7 @@ class FollowService(Service):
     def __init__(self):
         super().__init__()
 
-    def index(
+    def paginate_by_user(
         self,
         query_form: QueryForm,
         user_id: str,
@@ -64,13 +64,16 @@ class FollowService(Service):
             return follows, meta
 
 
-    def followers_index(self, form: QueryForm, user_id: str) -> tuple[list[User], dict]:
-        return self.index(form, only_followers=True, user_id=user_id)
+    def paginate_followers_by_user(self, form: QueryForm, user_id: str) -> tuple[list[User], dict]:
+        return self.paginate_by_user(form, only_followers=True, user_id=user_id)
     
-    def followeds_index(self, form: QueryForm, user_id: str) -> tuple[list[User], dict]:
-        return self.index(form, only_followeds=True, user_id=user_id)
+    def paginate_followeds_by_user(self, form: QueryForm, user_id: str) -> tuple[list[User], dict]:
+        return self.paginate_by_user(form, only_followeds=True, user_id=user_id)
     
     def toggle_follow(self, follower_id: str, followed_id: str) -> tuple[bool]:
+        if follower_id == followed_id:
+            raise HttpException(message='You cannot follow yourself', status=HTTPStatus.BAD_REQUEST)
+
         follow = Follow.query.filter(
             db.and_(Follow.follower_id == follower_id, Follow.followed_id == followed_id)
         ).first()

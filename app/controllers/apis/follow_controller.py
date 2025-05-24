@@ -19,7 +19,7 @@ def followers_index(user_id: str):
     form = QueryForm(request.args)
     form.try_validate()
 
-    users, meta = follow_service.followers_index(form=form, user_id=user_id)
+    users, meta = follow_service.paginate_followers_by_user(form=form, user_id=user_id)
     users_json = UserResource.collection(users)
     users_pagination = {'users': users_json, **meta}
 
@@ -38,7 +38,7 @@ def followeds_index(user_id: str):
     form = QueryForm(request.args)
     form.try_validate()
 
-    users, meta = follow_service.followeds_index(form=form, user_id=user_id)
+    users, meta = follow_service.paginate_followeds_by_user(form=form, user_id=user_id)
     users_json = UserResource.collection(users)
     users_pagination = {'users': users_json, **meta}
 
