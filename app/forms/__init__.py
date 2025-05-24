@@ -16,4 +16,6 @@ from .otp_code_form import OtpCodeForm
 
 from .assign_user_role import AssignUserRoleForm
 
+from .store_watched_asset import StoreWatchedAssetForm
+
 Form.try_validate = try_validate
