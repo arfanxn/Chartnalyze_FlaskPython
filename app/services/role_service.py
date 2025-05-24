@@ -1,13 +1,11 @@
 from app.services import Service
-from app.helpers.mail_helpers import send_mail
 from app.enums.role_enums import RoleName
 from app.enums.notification_enums import NotifiableType, Type as NotificationType
 from app.models import Role, User, Notification
 from app.forms import QueryForm, AssignUserRoleForm
 from app.extensions import db
-from app.exceptions import HttpException, ValidationException
+from werkzeug.exceptions import NotFound, Forbidden, Conflict, UnprocessableEntity
 from datetime import datetime, timedelta
-from http import HTTPStatus
 
 class RoleService(Service):
 
@@ -24,7 +22,7 @@ class RoleService(Service):
             query = query.options().filter(db.or_(Role.name.like(f'%{form.keyword.data}%'), ))
         roles = query.all()
         if len(roles) == 0: 
-            raise HttpException(message='Roles not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Roles not found')
         return (roles, )
     
     def show(self, role_identifier: str) -> tuple[Role]:
@@ -34,7 +32,7 @@ class RoleService(Service):
                 db.or_(Role.id == role_identifier, Role.name == role_identifier)
             ).first()
         if role is None:
-            raise HttpException(message='Role not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Role not found')
         return (role, )
     
     def assign_to_user (self, form: AssignUserRoleForm) -> tuple[Role, User]: 
@@ -46,20 +44,18 @@ class RoleService(Service):
             .first()
         
         if user is None:
-            raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('User not found')
         elif user.role.name == RoleName.ADMIN.value:
-            raise HttpException(message='Cannot assign role to admin user', status=HTTPStatus.FORBIDDEN)
+            raise Forbidden('Cannot assign role to admin user')
         
         role = Role.query.filter(Role.name == role_name).first()
 
         if role is None:
-            raise HttpException(message='Role not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Role not found')
         elif role.name == RoleName.ADMIN.value:
-            message = 'Cannot assign admin role to user'
-            raise ValidationException(message=message, errors={'role_name': [message]})
+            raise UnprocessableEntity({'role_name': ['Cannot assign admin role to user']})
         elif any(r.id == role.id for r in user.roles):
-            message = 'User already has this role'
-            raise ValidationException(message=message, errors={'role_name': [message]})
+            raise UnprocessableEntity({'role_name': ['User already has this role']})
         
         user.roles = [role]
         db.session.commit()
@@ -71,7 +67,7 @@ class RoleService(Service):
 
         user = User.query.filter(User.id == user_id).first()
         if user is None:
-            raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('User not found')
         user_json = {'id': user.id, 'name': user.name,' email': user.email, 'username': user.username}
 
         does_exist = db.session.query(
@@ -86,11 +82,10 @@ class RoleService(Service):
         ).scalar()
 
         if does_exist:
-            raise HttpException(
+            raise Conflict(
                 # the error message should be descriptive enough for the user to understand
                 # what they need to do to resolve the issue
-                message='You have already requested to be an analyst in the last 30 days',
-                status=HTTPStatus.CONFLICT,
+                'You have already requested to be an analyst in the last 30 days',
             )
         
         notification = Notification(

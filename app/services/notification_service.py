@@ -1,12 +1,10 @@
-from app.exceptions import HttpException
 from app.services import Service
-from app.models import Follow, User, Notification
+from app.models import  Notification
 from app.forms import QueryForm
 from app.policies import NotificationPolicy
 from app.extensions import db
-from sqlalchemy.orm import aliased
+from werkzeug.exceptions import NotFound, Forbidden
 from flask import g
-from http import HTTPStatus
 from datetime import datetime
 
 notification_policy = NotificationPolicy()
@@ -48,7 +46,7 @@ class NotificationService(Service):
         }
 
         if len(notifications) == 0: 
-            raise HttpException(message='Notifications not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Notifications not found')
 
         return (notifications, meta)
     
@@ -58,10 +56,10 @@ class NotificationService(Service):
         notification = query.first()
         
         if notification is None:
-            raise HttpException(message='Notification not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Notification not found')
         
         if not notification_policy.show(user=g.user, notification=notification):
-            raise HttpException(message='Unauthorized', status=HTTPStatus.UNAUTHORIZED)
+            raise Forbidden('You are not allowed to view this notification')
 
         return (notification, )
 
@@ -71,10 +69,10 @@ class NotificationService(Service):
         notification = query.first()
 
         if notification is None:
-            raise HttpException(message='Notification not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Notification not found')
         
         if not notification_policy.toggle_read(user=g.user, notification=notification):
-            raise HttpException(message='Unauthorized', status=HTTPStatus.UNAUTHORIZED)
+            raise Forbidden('You are not allowed to mark this notification as read')
         
         notification.read_at = None if notification.read_at else datetime.now()
         

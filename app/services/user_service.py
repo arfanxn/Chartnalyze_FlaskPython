@@ -4,14 +4,13 @@ from app.actions import VerifyOtpAction
 from app.forms import QueryForm, RegisterForm, LoginForm, OtpCodeForm, ResetUserPasswordForm, UpdateUserForm, UpdateUserEmailForm, UpdateUserPasswordForm
 from app.models import User, Role, Media
 from app.extensions import db
-from app.exceptions import HttpException, ValidationException
 from app.enums.role_enums import RoleName
 from app.enums.media_enums import ModelType
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from werkzeug.exceptions import InternalServerError, NotFound, UnprocessableEntity
 from werkzeug.datastructures import FileStorage
 from app.helpers.file_helpers import get_file_size, get_file_extension
 from flask_jwt_extended import create_access_token
-from http import HTTPStatus
 from datetime import timedelta, datetime
 import ulid
 import os
@@ -38,9 +37,7 @@ class UserService(Service):
 
             return (user, )
         except IntegrityError as e:
-            message = 'Email or username already exists' 
-            errors = {'email': [message]}
-            raise ValidationException(message, errors)
+            raise UnprocessableEntity({'email' : ['Email or username already exists']})
 
     def login(self, form: LoginForm) -> tuple[User, str]:
         user = User.query.filter(
@@ -49,9 +46,7 @@ class UserService(Service):
         ).first()
 
         if (user is None) or (user.check_password(form.password.data) == False):
-            message = 'Credentials do not match'
-            errors = {'password': [message]}
-            raise ValidationException(message, errors)
+            raise UnprocessableEntity({'password': ['Credentials do not match']})
         
         # Generate a JWT token with the user's ID as the identity and 30 days expiration time.
         access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=Config.JWT_EXPIRATION_DAYS))
@@ -71,7 +66,7 @@ class UserService(Service):
             return (user, )
         except SQLAlchemyError as e:
             db.session.rollback()
-            raise HttpException(message='Email verification failed', status=HTTPStatus.INTERNAL_SERVER_ERROR)
+            raise InternalServerError('Email verification failed')
         
     def reset_password(self, form: ResetUserPasswordForm) -> tuple[User]:
         try:
@@ -86,7 +81,7 @@ class UserService(Service):
             return (user, )
         except SQLAlchemyError as e:
             db.session.rollback()
-            raise HttpException(message='Password reset failed', status=HTTPStatus.INTERNAL_SERVER_ERROR)   
+            raise InternalServerError('Password reset failed')
         
     def paginate (self, form: QueryForm) -> tuple[list[User], dict]:
         query = User.query.order_by(User.created_at.desc())
@@ -117,7 +112,7 @@ class UserService(Service):
         }
 
         if len(users) == 0: 
-            raise HttpException(message='Users not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Users not found')
 
         return (users, meta)
     
@@ -126,14 +121,14 @@ class UserService(Service):
             db.or_(User.id == identifier, User.email == identifier, User.username == identifier)
         ).first()
         if user is None:
-            raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('User not found')
 
         return (user, )
     
     def update(self, form: UpdateUserForm, user_id: str) -> tuple[User]:
         user: User = User.query.filter_by(id=user_id).first()
         if user is None:
-            raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('User not found')
             
         user.name = form.name.data
         if form.username.data != user.username: 
@@ -143,16 +138,14 @@ class UserService(Service):
         try:
             db.session.commit()
         except IntegrityError as e:
-            message = 'Username already exists' 
-            errors = {'username': [message]}
-            raise ValidationException(message, errors)
+            raise UnprocessableEntity({'email' : ['Username already exists']})
 
         return (user, )
 
     def update_avatar (self, avatar: (FileStorage | None), user_id: str) -> tuple[User]:
         user = User.query.options(db.joinedload(User.avatar)).filter(User.id==user_id).first()
         if user is None:
-            raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('User not found')
         
         if user.avatar is None:
             user.avatar = Media(
@@ -189,9 +182,7 @@ class UserService(Service):
         try: 
             db.session.commit()
         except IntegrityError as e: 
-            message = 'Email already exists' 
-            errors = {'email': [message]}
-            raise ValidationException(message, errors)
+            raise UnprocessableEntity({'email' : ['Email already exists']})
 
         return (user, )
 
@@ -199,9 +190,7 @@ class UserService(Service):
         user: User = User.query.filter_by(id=user_id).first()
 
         if (user.check_password(form.current_password.data) == False):
-            message = 'Current password does not match'
-            errors = {'current_password': [message]}
-            raise ValidationException(message, errors)
+            raise UnprocessableEntity({'current_password': ['Current password does not match']})
 
         user.password = form.password.data
         

@@ -1,18 +1,17 @@
 from functools import wraps
 from flask import g
-from app.exceptions import HttpException
 from app.models.user import User
-from http import HTTPStatus
+from werkzeug.exceptions import Unauthorized, Forbidden
 
 def email_verified(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         user: User = g.user
         if user == None:
-            raise HttpException(message='Unauthorized action', status=HTTPStatus.UNAUTHORIZED)
+            raise Unauthorized('Unauthorized action')
 
         if user.email_verified_at == None:
-            raise HttpException(message='Email not verified', status=HTTPStatus.FORBIDDEN)
+            raise Forbidden('Email not verified')
         
         return func(*args, **kwargs)
     return wrapper

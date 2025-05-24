@@ -36,7 +36,7 @@ class WatchedAssetRepository(Repository):
             'key': asset['key']
         })
         if existing_asset:
-            raise Conflict(f"Asset with key {asset['key']} already exists")
+            raise Conflict(f"Asset already exists")
         
         asset.setdefault('order', 0)
         asset.setdefault('created_at', datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
@@ -51,7 +51,7 @@ class WatchedAssetRepository(Repository):
             'key': watched_asset_key
         })
         if not asset:
-            raise NotFound(f'Asset with key {watched_asset_key} not found')
+            raise NotFound(f'Watched asset not found')
         
         result = mongo.db.watched_assets.update_one(
             {'user_id': user_id, 'key': watched_asset_key},
@@ -67,5 +67,5 @@ class WatchedAssetRepository(Repository):
             'key': watched_asset_key
         })
         if result.deleted_count == 0:
-            raise NotFound(f'Asset with key {watched_asset_key} not found')
+            raise NotFound(f'Watched asset not found')
         return (True, result)

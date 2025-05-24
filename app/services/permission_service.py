@@ -2,7 +2,7 @@ from app.services import Service
 from app.forms import QueryForm
 from app.models import Permission
 from app.extensions import db
-from app.exceptions import HttpException
+from werkzeug.exceptions import NotFound
 from http import HTTPStatus
 
 class PermissionService(Service):
@@ -30,7 +30,7 @@ class PermissionService(Service):
         permissions = pagination.items
 
         if len(permissions) == 0: 
-            raise HttpException(message='Permissions not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Permissions not found')
 
         meta = {
             'page': pagination.page,
@@ -48,5 +48,5 @@ class PermissionService(Service):
             .options(db.joinedload(Permission.roles))\
             .filter_by(id=permission_id).first()
         if permission is None:
-            raise HttpException(message='Permission not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Permission not found')
         return (permission, )

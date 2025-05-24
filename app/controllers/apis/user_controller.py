@@ -16,7 +16,6 @@ from app.helpers.response_helpers import create_response_tuple
 from app.middlewares import authenticated, authorized, api_key_verified, email_verified
 from app.services import UserService
 from app.enums.permission_enums import PermissionName
-from app.config import Config
 
 user_service = UserService()
 
@@ -27,7 +26,7 @@ user_bp = Blueprint('user', __name__, url_prefix='/users')
 def register():
     """
     Registers a new user by validating input and saving to the database.
-    Returns a success message if successful, raises ValidationException if email exists.
+    Returns a success message if successful, raises UnprocessableEntity if email exists.
     """
     form = RegisterForm(request.form) 
     form.try_validate()
@@ -46,7 +45,7 @@ def register():
 def login():
     """
     Handles user login by validating credentials and returning a JWT token if successful.
-    Raises ValidationException if credentials do not match.
+    Raises UnprocessableEntity if credentials do not match.
     """
     form = LoginForm(request.form)
     form.try_validate()
@@ -118,7 +117,7 @@ def index():
 @email_verified
 def show(user_identifier: str):
     """
-    Retrieves the user by ID or email/username. Returns user data or raises HttpException if not found.
+    Retrieves the user by ID or email/username. Returns user data or raises NotFound if not found.
     """
     user, = user_service.show(user_identifier)
     user_json = UserResource(user).to_json()
@@ -212,7 +211,6 @@ def update_self_avatar():
 def update_self_email():
     """
     Updates the currently authenticated user's email address by validating input and sending an OTP code to the old email.
-    Returns updated user data or raises HttpException if not found.
 
     Args:
         request.form (dict): request form containing form data
@@ -239,7 +237,7 @@ def update_self_email():
 def update_self_password():
     """
     Updates the currently authenticated user's password by validating input and verifying the current password.
-    Returns a success message if successful, raises ValidationException if current password does not match.
+    Returns a success message if successful, raises UnprocessableEntity if current password does not match.
     """
     form = UpdateUserPasswordForm(request.form)
     form.try_validate()

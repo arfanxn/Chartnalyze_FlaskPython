@@ -6,7 +6,7 @@ from .role_controller import role_bp
 from .permission_controller import permission_bp
 from .notification_controller import notification_bp
 from .watched_asset_controller import watched_asset_bp
-from app.exceptions import ValidationException, HttpException
+from werkzeug.exceptions import HTTPException, UnprocessableEntity, TooManyRequests
 from app.helpers.response_helpers import create_response_tuple
 from http import HTTPStatus
 
@@ -22,26 +22,34 @@ api_bp.register_blueprint(permission_bp)
 api_bp.register_blueprint(notification_bp)
 api_bp.register_blueprint(watched_asset_bp)
 
-# Register error handlers for the API blueprint
-@api_bp.errorhandler(ValidationException)
-def handle_validation_error(e: ValidationException):
+@api_bp.errorhandler(UnprocessableEntity)
+def handle_unprocessable_entity_error(e: UnprocessableEntity):
+    status = HTTPStatus.UNPROCESSABLE_ENTITY
+    errors = e.description
+
+    if not isinstance(errors, dict):
+        message = errors
+        return create_response_tuple(status=status,message=message)
+    
+    for m in errors.values().__iter__().__next__():
+        message=m
+        break
     return create_response_tuple(
-        status=HTTPStatus.UNPROCESSABLE_ENTITY,
-        message=str(e),
-        additionals={'errors': e.errors}
+        status=status,
+        message=message,
+        additionals={'errors': errors}
     )
 
-@api_bp.errorhandler(HttpException)
-def handle_http_error(e: HttpException):
-    return create_response_tuple(
-        status=e.status,
-        message=str(e),
-        additionals=e.additionals if e.additionals is not None else None
-    )
-
-@api_bp.errorhandler(429)
-def handle_limit_error(error):
+@api_bp.errorhandler(TooManyRequests)
+def handle_too_many_requests_error(error: TooManyRequests):
     return create_response_tuple(
         status=HTTPStatus.TOO_MANY_REQUESTS,
         message=f"Too many requests, {error.description}, please try again later",
+    )
+
+@api_bp.errorhandler(HTTPException)
+def handle_http_error(e: HTTPException):
+    return create_response_tuple(
+        status=e.code,
+        message=e.description
     )

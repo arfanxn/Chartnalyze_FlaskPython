@@ -1,9 +1,9 @@
 from app.actions.action import Action
 from app.models import Otp
 from app.extensions import db
-from app.exceptions import HttpException
 from app.helpers.mail_helpers import send_mail
 from app.config import Config
+from werkzeug.exceptions import InternalServerError
 from datetime import datetime
 from http import HTTPStatus
 import threading
@@ -34,7 +34,7 @@ class SendOtpAction(Action):
 
         except Exception as e:
             db.session.rollback()
-            raise HttpException(message='OTP sent failed', status=HTTPStatus.INTERNAL_SERVER_ERROR)
+            raise InternalServerError(description='OTP sent failed', original_exception=e)
 
         # Get actual app object
         app = current_app._get_current_object()

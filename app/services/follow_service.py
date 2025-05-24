@@ -1,10 +1,8 @@
-from app.exceptions import HttpException
 from app.services import Service
 from app.models import Follow, User
 from app.forms import QueryForm
 from app.extensions import db
-from sqlalchemy.orm import aliased
-from http import HTTPStatus
+from werkzeug.exceptions import NotFound, BadRequest
 
 class FollowService(Service):
 
@@ -41,7 +39,7 @@ class FollowService(Service):
         items_length = len(pagination.items)
 
         if items_length == 0:
-            raise HttpException(message='Users not found', status=HTTPStatus.NOT_FOUND)
+            raise NotFound('Users not found')
 
         meta = {
             'page': pagination.page,
@@ -72,7 +70,7 @@ class FollowService(Service):
     
     def toggle_follow(self, follower_id: str, followed_id: str) -> tuple[bool]:
         if follower_id == followed_id:
-            raise HttpException(message='You cannot follow yourself', status=HTTPStatus.BAD_REQUEST)
+            raise BadRequest('You cannot follow yourself')
 
         follow = Follow.query.filter(
             db.and_(Follow.follower_id == follower_id, Follow.followed_id == followed_id)
