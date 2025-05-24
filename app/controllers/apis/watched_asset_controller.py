@@ -56,11 +56,12 @@ def update_order (watched_asset_key: str):
     form.key.data = watched_asset_key
     form.try_validate()
     
-    wa_service.update_order_by_self(form=form)
+    asset, = wa_service.update_order_by_self(form=form)
     
     return create_response_tuple(
         status=HTTPStatus.OK,
         message='Asset order updated successfully',
+        data={'watched_asset': asset}
     )
 
 

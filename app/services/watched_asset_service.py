@@ -40,9 +40,9 @@ class WatchedAssetService(Service):
 
         return (watched_asset, )
     
-    def update_order_by_self(self, form: UpdateWatchedAssetOrderForm) -> tuple[bool]:
+    def update_order_by_self(self, form: UpdateWatchedAssetOrderForm) -> tuple[object, bool]:
         try:
-            wa_repository.\
+            asset, _ = wa_repository.\
                 update_order_by_user_id_and_key(
                     user_id=g.user.id,
                     watched_asset_key=form.key.data,
@@ -51,7 +51,7 @@ class WatchedAssetService(Service):
         except NotFound as e:
             raise HttpException(message='Asset not found', status=HTTPStatus.NOT_FOUND)
 
-        return (True, )
+        return (asset, )
     
     def destroy_by_self_and_key(self, watched_asset_key: str) -> tuple[bool]:        
         user_id = g.user.id

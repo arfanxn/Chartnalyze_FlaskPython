@@ -45,20 +45,20 @@ class WatchedAssetRepository(Repository):
 
         return (asset, result)
     
-    def update_order_by_user_id_and_key(self, user_id: str, watched_asset_key: str, order: int) -> tuple[bool, object]:
-        existing_asset = mongo.db.watched_assets.find_one({
+    def update_order_by_user_id_and_key(self, user_id: str, watched_asset_key: str, order: int) -> tuple[object, object]:
+        asset = mongo.db.watched_assets.find_one({
             'user_id': user_id,
             'key': watched_asset_key
         })
-        if not existing_asset:
+        if not asset:
             raise NotFound(f'Asset with key {watched_asset_key} not found')
         
         result = mongo.db.watched_assets.update_one(
             {'user_id': user_id, 'key': watched_asset_key},
             {'$set': {'order': order, 'updated_at':  datetime.now().strftime("%Y-%m-%dT%H:%M:%S")},}
         )
-        
-        return (result.modified_count > 0, result)
+        asset['order'] = order
+        return (asset, result)
 
     def destroy_by_user_id_and_key\
         (self, user_id: str, watched_asset_key: str) -> tuple[bool, object]:
