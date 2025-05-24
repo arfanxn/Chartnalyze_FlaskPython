@@ -26,14 +26,20 @@ class WatchedAssetRepository(Repository):
             regex_pattern = f".*{keyword}.*"
             find['name'] = {"$regex": regex_pattern, "$options": "i"}
 
-        cursor = mongo.db.watched_assets.find(find).sort([('order', 1), ('created_at', -1)]).limit(100)
+        cursor = mongo.db.watched_assets.find(find).sort([('order', 1), ('created_at', -1)]).limit(10)
         watched_assets = list(cursor)
         return (watched_assets, )
     
     def store(self, asset: object) -> tuple[object, object]:
+        user_id, key = asset['user_id'], asset['key']
+
+        count = mongo.db.watched_assets.count_documents({'user_id': user_id})
+        if count >= 10:
+            raise Conflict("Maximum 10 watched assets allowed per user")
+
         existing_asset = mongo.db.watched_assets.find_one({
-            'user_id': asset['user_id'],
-            'key': asset['key']
+            'user_id': user_id,
+            'key': key
         })
         if existing_asset:
             raise Conflict(f"Asset already exists")

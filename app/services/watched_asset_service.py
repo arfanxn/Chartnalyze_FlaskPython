@@ -20,12 +20,12 @@ class WatchedAssetService(Service):
     
     def store_by_self(self, form: StoreWatchedAssetForm) -> tuple[object]:
         watched_asset = {
-            "user_id": g.user.id,
-            "key": form.key.data,
-            "name": form.name.data,
-            "symbol": form.symbol.data,
-            "order" : form.order.data,
-            "image_url": form.image_url.data,
+            'user_id': g.user.id,
+            'key': form.key.data,
+            'name': form.name.data,
+            'symbol': form.symbol.data,
+            'order' : form.order.data,
+            'image_url': form.image_url.data,
         }
 
         watched_asset, _ = wa_repository.store(asset=watched_asset)

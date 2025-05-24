@@ -1,5 +1,4 @@
 from app.resources import Resource
-from datetime import datetime
 
 class WatchedAssetResource(Resource): 
     def __init__(self, model: object):
@@ -9,7 +8,7 @@ class WatchedAssetResource(Resource):
         doc = self.model
 
         data = {
-            '_id': doc.get('_id'),
+            'id': doc.get('_id').__str__(),
             'user_id': doc.get('user_id'),
             'key': doc.get('key'),
             'name': doc.get('name'),
