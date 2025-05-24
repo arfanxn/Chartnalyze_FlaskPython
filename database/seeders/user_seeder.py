@@ -35,7 +35,7 @@ class UserSeeder(Seeder):
                     user.username = role.name
                     user.email = f"{role.name}@{Config.APP_NAME}.edu".lower()
                 else :
-                    user.username = fake.user_name()
+                    user.username = fake.user_name()[:16]
                     user.email = fake.email()
 
                 user.email_verified_at = email_verified_at
