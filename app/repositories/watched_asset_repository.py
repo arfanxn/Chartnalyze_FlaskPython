@@ -55,7 +55,7 @@ class WatchedAssetRepository(Repository):
         
         result = mongo.db.watched_assets.update_one(
             {'user_id': user_id, 'key': watched_asset_key},
-            {'$set': {'order': order}}
+            {'$set': {'order': order, 'updated_at':  datetime.now().strftime("%Y-%m-%dT%H:%M:%S")},}
         )
         
         return (result.modified_count > 0, result)
