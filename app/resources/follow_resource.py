@@ -4,28 +4,28 @@ from sqlalchemy import inspect  # Add this import
 from app.config import Config
 
 class FollowResource(Resource): 
-    def __init__(self, model: Follow):
-        self.model = model
+    def __init__(self, entity: Follow):
+        self.entity = entity
 
     def to_json(self):
-        model = self.model
+        entity = self.entity
 
         data = {
-            'id': model.id,
-            'follower_id': model.follower_id,
-            'followed_id': model.followed_id,
-            'created_at': model.created_at.isoformat(),
-            'updated_at': model.updated_at.isoformat() if model.updated_at is not None else None,
+            'id': entity.id,
+            'follower_id': entity.follower_id,
+            'followed_id': entity.followed_id,
+            'created_at': entity.created_at.isoformat(),
+            'updated_at': entity.updated_at.isoformat() if entity.updated_at is not None else None,
         }
 
-        ins = inspect(model)
+        ins = inspect(entity)
 
         if 'follower' not in ins.unloaded:
             from app.resources import UserResource
-            data['follower']  = UserResource(model.follower).to_json() if model.follower is not None else None
+            data['follower']  = UserResource(entity.follower).to_json() if entity.follower is not None else None
 
         if 'followed' not in ins.unloaded:
             from app.resources import UserResource
-            data['followed']  = UserResource(model.followed).to_json() if model.followed is not None else None
+            data['followed']  = UserResource(entity.followed).to_json() if entity.followed is not None else None
 
         return data

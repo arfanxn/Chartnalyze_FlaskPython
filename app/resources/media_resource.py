@@ -3,8 +3,8 @@ from app.models import Media
 from app.config import Config
 
 class MediaResource(Resource): 
-    def __init__(self, model: Media):
-        self.model = model
+    def __init__(self, entity: Media):
+        self.entity = entity
 
     def to_json(self):
         data = {

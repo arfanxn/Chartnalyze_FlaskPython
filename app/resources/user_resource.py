@@ -4,32 +4,32 @@ from sqlalchemy import inspect  # Add this import
 from app.config import Config
 
 class UserResource(Resource): 
-    def __init__(self, model: User):
-        self.model = model
+    def __init__(self, entity: User):
+        self.entity = entity
 
     def to_json(self):
-        model = self.model
+        entity = self.entity
 
         data = {
-            'id': model.id,
-            'country_id': model.country_id,
-            'name': model.name,
-            'username': model.username,
-            'birth_date': model.birth_date.isoformat() if model.birth_date is not None else None,
-            'email': model.email,
-            'email_verified_at': model.email_verified_at.isoformat() if model.email_verified_at is not None else None,
-            'created_at': model.created_at.isoformat(),
-            'updated_at': model.updated_at.isoformat() if model.updated_at is not None else None,
+            'id': entity.id,
+            'country_id': entity.country_id,
+            'name': entity.name,
+            'username': entity.username,
+            'birth_date': entity.birth_date.isoformat() if entity.birth_date is not None else None,
+            'email': entity.email,
+            'email_verified_at': entity.email_verified_at.isoformat() if entity.email_verified_at is not None else None,
+            'created_at': entity.created_at.isoformat(),
+            'updated_at': entity.updated_at.isoformat() if entity.updated_at is not None else None,
         }
 
-        ins = inspect(model)
+        ins = inspect(entity)
 
         if 'avatar' not in ins.unloaded:
-            avatar = model.avatar    
+            avatar = entity.avatar    
             data['avatar_url']  = f"{Config.APP_URL}/public/images/avatars/{avatar.file_name}" if avatar is not None else None
 
         if 'country' not in ins.unloaded:
             from app.resources import CountryResource
-            data['country']  = CountryResource(model.country).to_json() if model.country is not None else None
+            data['country']  = CountryResource(entity.country).to_json() if entity.country is not None else None
 
         return data

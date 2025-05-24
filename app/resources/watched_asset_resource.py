@@ -1,11 +1,11 @@
 from app.resources import Resource
 
 class WatchedAssetResource(Resource): 
-    def __init__(self, model: object):
-        self.model = model
+    def __init__(self, entity: object):
+        self.entity = entity
 
     def to_json(self):
-        doc = self.model
+        doc = self.entity
 
         data = {
             'id': doc.get('_id').__str__(),

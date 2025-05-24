@@ -3,23 +3,23 @@ from app.models import Country
 from sqlalchemy import inspect
 
 class CountryResource(Resource): 
-    def __init__(self, model: Country):
-        self.model = model
+    def __init__(self, entity: Country):
+        self.entity = entity
 
     def to_json(self):
-        model = self.model
+        entity = self.entity
 
         data = {
-            'id': model.id,
-            'name': model.name,
-            'iso_code': model.iso_code,
-            'created_at': model.created_at.isoformat(),
-            'updated_at': model.updated_at.isoformat() if model.updated_at is not None else None,
+            'id': entity.id,
+            'name': entity.name,
+            'iso_code': entity.iso_code,
+            'created_at': entity.created_at.isoformat(),
+            'updated_at': entity.updated_at.isoformat() if entity.updated_at is not None else None,
         }
 
-        ins = inspect(model)
+        ins = inspect(entity)
         if 'users' not in ins.unloaded:
             from app.resources import UserResource
-            data['users']  = UserResource.collection(model.users) 
+            data['users']  = UserResource.collection(entity.users) 
 
         return data

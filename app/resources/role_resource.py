@@ -4,23 +4,23 @@ from sqlalchemy import inspect  # Add this import
 from app.config import Config
 
 class RoleResource(Resource): 
-    def __init__(self, model: Role):
-        self.model = model
+    def __init__(self, entity: Role):
+        self.entity = entity
 
     def to_json(self):
-        model = self.model
+        entity = self.entity
 
         data = {
-            'id': model.id,
-            'name': model.name,
-            'created_at': model.created_at.isoformat(),
-            'updated_at': model.updated_at.isoformat() if model.updated_at is not None else None,
+            'id': entity.id,
+            'name': entity.name,
+            'created_at': entity.created_at.isoformat(),
+            'updated_at': entity.updated_at.isoformat() if entity.updated_at is not None else None,
         }
 
-        ins = inspect(model)
+        ins = inspect(entity)
 
         if 'permissions' not in ins.unloaded:
             from app.resources import PermissionResource
-            data['permissions']  = PermissionResource.collection(model.permissions) if model.permissions is not None and len(model.permissions) > 0 else []
+            data['permissions']  = PermissionResource.collection(entity.permissions) if entity.permissions is not None and len(entity.permissions) > 0 else []
 
         return data

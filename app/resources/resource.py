@@ -1,13 +1,13 @@
 class Resource: 
-    def __init__(self, model):
-        self.model = model
+    def __init__(self, entity):
+        self.entity = entity
 
     def __getattr__(self, attr):
-        return getattr(self.model, attr)
+        return getattr(self.entity, attr)
 
     def to_json(self):
         raise NotImplementedError
 
     @classmethod
-    def collection(cls, models):
-        return [cls(model).to_json() for model in models]
+    def collection(cls, entities):
+        return [cls(entity).to_json() for entity in entities]
