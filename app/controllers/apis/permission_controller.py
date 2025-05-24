@@ -21,7 +21,7 @@ def index():
     form = QueryForm(request.args)
     form.try_validate()
     
-    permissions, meta = permission_service.index(form)
+    permissions, meta = permission_service.paginate(form)
     permissions_json = PermissionResource.collection(permissions)
     permissions_pagination = {'permissions': permissions_json, **meta}
 

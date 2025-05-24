@@ -10,7 +10,7 @@ class PermissionService(Service):
     def __init__(self):
         super().__init__()
     
-    def index (self, form: QueryForm) -> tuple[list[Permission], dict]:
+    def paginate (self, form: QueryForm) -> tuple[list[Permission], dict]:
         query = Permission.query
         if form.joins.data is not None: 
             if 'roles' in form.joins.data:
