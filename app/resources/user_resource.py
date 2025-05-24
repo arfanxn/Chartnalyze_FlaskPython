@@ -24,6 +24,15 @@ class UserResource(Resource):
 
         ins = inspect(entity)
 
+        if 'roles' not in ins.unloaded:
+            from app.resources import RoleResource
+            role = entity.role
+            data['role'] = RoleResource(role).to_json()
+
+        if 'permissions' not in ins.unloaded:
+            from app.resources import PermissionResource
+            data['permissions']  = PermissionResource.collection(entity.permissions)
+
         if 'avatar' not in ins.unloaded:
             avatar = entity.avatar    
             data['avatar_url']  = f"{Config.APP_URL}/public/images/avatars/{avatar.file_name}" if avatar is not None else None
