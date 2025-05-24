@@ -1,3 +1,3 @@
 from .repository import Repository
 from .media_repository import MediaRepository
-from .asset_watchlist_repository import AssetWatchlistRepository
+from .watched_asset_repository import WatchedAssetRepository
