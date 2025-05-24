@@ -14,7 +14,7 @@ class RoleService(Service):
     def __init__(self):
         super().__init__()
 
-    def index(self, form: QueryForm) -> tuple[list[Role]]:
+    def all(self, form: QueryForm) -> tuple[list[Role]]:
         query = Role.query
         if form.joins.data is not None: 
             if 'permissions' in form.joins.data:
@@ -72,7 +72,7 @@ class RoleService(Service):
         user = User.query.filter(User.id == user_id).first()
         if user is None:
             raise HttpException(message='User not found', status=HTTPStatus.NOT_FOUND)
-        user_json = {'id': user.id, 'name': user.name,' email': user.email}
+        user_json = {'id': user.id, 'name': user.name,' email': user.email, 'username': user.username}
 
         does_exist = db.session.query(
             db.exists().where(

@@ -20,7 +20,7 @@ def index():
     form = QueryForm(request.args)
     form.try_validate()
 
-    roles, = role_service.index(form=form)
+    roles, = role_service.all(form=form)
     roles_json = RoleResource.collection(roles)
 
     return create_response_tuple(status=HTTPStatus.OK, message=f"Roles retrieved successfully", data={'roles': roles_json})
