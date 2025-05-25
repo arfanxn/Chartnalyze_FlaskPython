@@ -1,73 +1,109 @@
-# Chartnalyze (Flask/Backend)
+# Chartnalyze (Flask Backend)
 
-AI-powered market analysis meets financial education , all in one smart platform.
+**AI-powered market analysis meets financial education — all in one smart platform.**
 
-## Installation
+---
 
-Install all PIP dependencies
+## 🚀 Installation
+
+### 1. Install dependencies
 
 ```sh
- pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
-Create environtment file from the `example.env` file
+### 2. Create environment configuration
 
 ```sh
 cp .env.example .env
 ```
 
-Generate secret key, hash key, or JWT secret key into the `.env` file.
+### 3. Generate secret keys
+
+Automatically generate `SECRET_KEY`, `HASH_KEY`, and `JWT_SECRET_KEY` and insert them into `.env`:
 
 ```sh
 make generate-secret-key
 ```
 
-Migrate Chartnalyze's required tables
+### 4. Run database migrations
+
+Use one of the following commands:
 
 ```sh
-make db-upgrade # to migrate up
-# or
-make db-downgrade # to migrate down
-# or
-make db-fresh # to migrate down and up
-# or
-make db-fresh-seed # to migrate down, up, and seed
+make db-upgrade         # Apply migrations
+make db-downgrade       # Roll back migrations
+make db-fresh           # Reset and re-apply migrations
+make db-fresh-seed      # Reset, re-apply migrations, and seed data
 ```
 
-## Running
+---
 
-Running the application
+## 👟 Running
 
-```
-flask run
-# or
-flask run --debug # run in debug mode
-```
-
-Running the application unit/feature test
-
-```
-# The documentation will be there soon...
-```
-
-## Docker
-
-You can also deploy to docker container (Dockerizing/Containerizing)
-
-```
-# The documentation will be there soon...
-```
-
-## Routes
-
-The application routes are documented in the `postman_collection.json` file.
+### Run the development server
 
 ```sh
-head postman_collection.json # check the routes documentation
+flask run --port 8000                     # Run normally
+flask run --debug --port 8000            # Run in debug mode
 ```
 
-## License
+### Run unit or feature tests
 
-MIT && Chartnalyze
+```sh
+# Documentation for testing is coming soon...
+```
 
-**Open Source**
+---
+
+## 🐳 Docker
+
+### 1. Create environment configuration for Docker
+
+```sh
+cp .env.docker.example .env.docker
+```
+
+### 2. Pass your secret keys manually to the `.env.docker` file
+
+```sh
+vim .env.docker
+```
+
+### 3. Build and run with Docker
+
+```sh
+docker compose up --build -d
+```
+
+Once started, the app will be accessible at:
+
+```
+http://localhost:80
+```
+
+### Seed database in Docker
+
+```sh
+docker compose exec chartnalyze-flask bash -c "make db-fresh-seed"
+```
+
+---
+
+## 📡 Routes
+
+API routes are documented in the `postman_collection.json` file.
+
+Preview the contents:
+
+```sh
+head postman_collection.json
+```
+
+---
+
+## 📄 License
+
+This project is open-source under the **MIT License**.
+
+Made with ❤️ by **Chartnalyze**
