@@ -85,7 +85,7 @@ http://localhost:80
 ### Seed database in Docker
 
 ```sh
-docker compose exec chartnalyze-flask bash -c "make db-fresh-seed"
+docker compose exec chartnalyze_flask make db-fresh-seed
 ```
 
 ---
