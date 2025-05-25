@@ -18,10 +18,10 @@ def register_generator_commands(app: Flask):
                 if os.path.exists(env_file):
                     load_dotenv(env_file)
                     set_key(env_file, key_name, secret_key)
+                    print(f"Secret key written to: {env_file}")
                 else:
-                    set_key(env_file, key_name, secret_key)
-
-                print(f"Secret key generated in: {env_file}")
+                    os.environ[key_name] = secret_key
+                    print(f"{env_file} file not found. Secret key set in environment variable '{key_name}' for current process only.")
             except Exception as e:
                 print('Error:', str(e))
 
