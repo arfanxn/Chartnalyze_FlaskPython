@@ -1,6 +1,7 @@
 *.DS_Store
 **/test_controller.py
 .env
+.env.docker
 .idea/
 .vscode/
 .venv*/
