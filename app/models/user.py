@@ -99,11 +99,11 @@ class User(db.Model):
     def password(self, password):
         """Hashes and sets the password."""
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        self._password = hashed_password
+        self._password = hashed_password.decode('utf-8')
 
     def check_password(self, password):
         """Checks if the provided password matches the stored hashed password."""
-        return bcrypt.checkpw(password.encode('utf-8'), self._password)
+        return bcrypt.checkpw(password.encode('utf-8'), self._password.encode('utf-8'))
 
     # ==========================================
     # Permission Checking
