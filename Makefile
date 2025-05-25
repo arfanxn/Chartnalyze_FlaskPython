@@ -2,9 +2,13 @@
 MIGRATIONS_DIR = database/migrations
 ENV_FILE = .env  # Path to your .env file
 
-# Load environment variables from .env file
-include $(ENV_FILE)
-export $(shell sed 's/=.*//' $(ENV_FILE))
+# Check if .env file exists and load variables from it, else fallback to env vars
+ifneq ("$(wildcard $(ENV_FILE))","")
+    include $(ENV_FILE)
+    export $(shell sed 's/=.*//' $(ENV_FILE))
+else
+    $(info No $(ENV_FILE) file found, using shell environment variables)
+endif
 
 # Initialize migrations directory
 db-init:
@@ -38,6 +42,6 @@ db-fresh-seed:
 	$(MAKE) db-seed
 	
 generate-secret-key:
-	@flask generate-secret-key --env-file $(ENV_FILE)
+	@flask generate-secret-key
 
 .PHONY: db-init db-migrate db-upgrade db-downgrade db-history db-fresh db-seed db-fresh-seed generate-secret-key
