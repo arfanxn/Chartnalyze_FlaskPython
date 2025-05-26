@@ -128,23 +128,18 @@ class User(db.Model):
                 else:
                     names.add(perm)
 
-        ins = inspect(self)
-
-        if 'permissions' not in ins.unloaded:
-            return any(perm.id in ids or perm.name in names for perm in self.permissions)
-        else: 
-            query = db.session.query(db.exists().where(
-                db.and_(
-                    RoleUser.user_id == self.id,
-                    RoleUser.role_id == PermissionRole.role_id,
-                    PermissionRole.permission_id == Permission.id,
-                    db.or_(
-                        Permission.id.in_(ids),
-                        Permission.name.in_(names)
-                    )
+        query = db.session.query(db.exists().where(
+            db.and_(
+                RoleUser.user_id == self.id,
+                RoleUser.role_id == PermissionRole.role_id,
+                PermissionRole.permission_id == Permission.id,
+                db.or_(
+                    Permission.id.in_(ids),
+                    Permission.name.in_(names)
                 )
-            ))
-            return db.session.scalar(query)
+            )
+        ))
+        return db.session.scalar(query)
     
     # ==========================================
     # Role Checking
