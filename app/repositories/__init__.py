@@ -1,2 +1,3 @@
 from .repository import Repository
 from .watched_asset_repository import WatchedAssetRepository
+from .post_repository import PostRepository

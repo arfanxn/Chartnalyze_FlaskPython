@@ -6,3 +6,4 @@ from .role_service import RoleService
 from .permission_service import PermissionService   
 from .notification_service import NotificationService
 from .watched_asset_service import WatchedAssetService
+from .post_service import PostService
