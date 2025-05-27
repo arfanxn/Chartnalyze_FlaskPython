@@ -5,3 +5,6 @@ from .role_resource import RoleResource
 from .permission_resource import PermissionResource
 from .notification_resource import NotificationResource
 from .watched_asset_resource import WatchedAssetResource
+from .post_resource import PostResource
+from .comment_resource import CommentResource
+from .like_resource import LikeResource
