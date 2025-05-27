@@ -2,8 +2,11 @@ from app.extensions import db
 from app.enums.comment_enums import CommentableType
 from app.enums.like_enums import LikeableType
 from app.enums.save_enums import SaveableType 
+from app.enums.media_enums import ModelType 
 from datetime import datetime
+from slugify import slugify
 import ulid
+import random
 
 class Post(db.Model):
     __tablename__ = 'posts'
@@ -39,9 +42,23 @@ class Post(db.Model):
     medias = db.relationship(
         'Media',
         foreign_keys='Media.model_id',
-        primaryjoin="and_(Post.id == Media.model_id, Media.model_type == '{}')".format(SaveableType.POST.value),
+        primaryjoin="and_(Post.id == Media.model_id, Media.model_type == '{}')".format(ModelType.POST.value),
         overlaps="medias"
     )
+    images = db.relationship(
+        'Media',
+        foreign_keys='Media.model_id',
+        primaryjoin="and_(Post.id == Media.model_id, Media.model_type == '{}', Media.collection_name == 'post_images')".format(ModelType.POST.value),
+        overlaps="medias,model_user",
+        lazy='joined'
+    )
+
+    # ==========================================
+    # Slug handling
+    # ==========================================
+    def generate_slug(self):
+        slugable = self.title if self.title is not None else self.body
+        self.slug = slugify(slugable)[:44] + '-' + str(random.randint(100000, 999999))
 
     # ==========================================
     # Serialization to JSON
