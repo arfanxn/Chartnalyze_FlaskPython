@@ -19,4 +19,6 @@ from .assign_user_role import AssignUserRoleForm
 from .store_watched_asset import StoreWatchedAssetForm
 from .update_watched_asset_order import UpdateWatchedAssetOrderForm
 
+from .save_post import SavePostForm
+
 Form.try_validate = try_validate
