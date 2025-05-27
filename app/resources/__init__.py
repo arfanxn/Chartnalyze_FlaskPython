@@ -4,6 +4,7 @@ from .country_resource import CountryResource
 from .role_resource import RoleResource
 from .permission_resource import PermissionResource
 from .notification_resource import NotificationResource
+from .follow_resource import FollowResource
 from .watched_asset_resource import WatchedAssetResource
 from .post_resource import PostResource
 from .comment_resource import CommentResource
