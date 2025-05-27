@@ -20,3 +20,7 @@ class PermissionName(Enum):
     PERMISSIONS_STORE = 'permissions.store'
     PERMISSIONS_UPDATE = 'permissions.update'
     PERMISSIONS_DESTROY = 'permissions.destroy'
+
+    POSTS_DESTROY = 'posts.destroy'
+
+    COMMENTS_DESTROY = 'comments.destroy'
