@@ -28,14 +28,14 @@ class Media(db.Model):
         foreign_keys='Media.model_id',
         primaryjoin="and_(Media.model_id == User.id, Media.model_type == '{}')".format(ModelType.USER.value),
         back_populates='medias',
-        overlaps="model_post,medias,avatar"
+        overlaps='model_post,medias,avatar,images'
     )
     model_post = db.relationship(
         'Post',
         foreign_keys='Media.model_id',
         primaryjoin="and_(Media.model_id == Post.id, Media.model_type == '{}')".format(ModelType.POST.value),
         back_populates='medias',
-        overlaps="medias,model_user,avatar" 
+        overlaps='model_user,medias,avatar,images'
     )
     @property   
     def model(self):

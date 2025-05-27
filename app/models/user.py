@@ -66,13 +66,13 @@ class User(db.Model):
         foreign_keys='Media.model_id',
         primaryjoin="and_(User.id == Media.model_id, Media.model_type == '{}')".format(ModelType.USER.value),
         back_populates='model_user',
-        overlaps="avatar,model_user"
+        overlaps='medias,model_post,images'
     )
     avatar = db.relationship(
         'Media',
         foreign_keys='Media.model_id',
         primaryjoin="and_(User.id == Media.model_id, Media.model_type == '{}', Media.collection_name == 'avatar')".format(ModelType.USER.value),
-        overlaps="medias,model_user",
+        overlaps='medias,model_post,images',
         uselist=False,
         lazy='joined'
     )
@@ -99,7 +99,7 @@ class User(db.Model):
     def password(self, password):
         """Hashes and sets the password."""
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        self._password = hashed_password.decode('utf-8')
+        self._password =  hashed_password.decode('utf-8') if isinstance(hashed_password, bytes) else hashed_password
 
     def check_password(self, password):
         """Checks if the provided password matches the stored hashed password."""

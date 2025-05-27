@@ -43,13 +43,13 @@ class Post(db.Model):
         'Media',
         foreign_keys='Media.model_id',
         primaryjoin="and_(Post.id == Media.model_id, Media.model_type == '{}')".format(ModelType.POST.value),
-        overlaps="medias"
+        overlaps="medias,model_user,avatar"
     )
     images = db.relationship(
         'Media',
         foreign_keys='Media.model_id',
         primaryjoin="and_(Post.id == Media.model_id, Media.model_type == '{}', Media.collection_name == 'post_images')".format(ModelType.POST.value),
-        overlaps="medias,model_user",
+        overlaps='medias,model_user,avatar',
         lazy='joined'
     )
 
