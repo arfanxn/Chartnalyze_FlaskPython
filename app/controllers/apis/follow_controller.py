@@ -1,10 +1,8 @@
 from app.middlewares import api_key_verified, authenticated, email_verified
-from app.resources import UserResource, FollowResource
+from app.resources import FollowResource
 from app.services import FollowService 
-from app.extensions import limiter
-from app.forms import QueryForm
 from app.helpers.response_helpers import create_response_tuple
-from flask import Blueprint, request, g
+from flask import Blueprint, g
 from http import HTTPStatus
 
 follow_service = FollowService()
