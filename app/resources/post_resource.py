@@ -20,10 +20,10 @@ class PostResource(Resource):
             'updated_at': entity.updated_at.isoformat() if entity.updated_at is not None else None,
         }
 
-        if entity.comment_count is not None:
+        if hasattr(entity, 'comment_count') and entity.comment_count is not None:
             data['comment_count'] = entity.comment_count
-
-        if entity.like_count is not None:
+    
+        if hasattr(entity, 'like_count') and entity.like_count is not None:
             data['like_count'] = entity.like_count
 
         ins = inspect(entity)
@@ -39,5 +39,11 @@ class PostResource(Resource):
         if 'likes' not in ins.unloaded:
             from app.resources import LikeResource
             data['likes']  = LikeResource.collection(entity.likes)
+
+        if 'images' not in ins.unloaded:
+            images = entity.images    
+            data['image_urls']  = []
+            for image in images:
+                data['image_urls'].append(f"{Config.APP_URL}/public/images/posts/{image.file_name}")
 
         return data
