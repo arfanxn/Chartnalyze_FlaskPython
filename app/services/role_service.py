@@ -1,34 +1,29 @@
+from app.policies import RolePolicy
+from app.repositories import RoleRepository
 from app.services import Service
 from app.enums.role_enums import RoleName
 from app.enums.notification_enums import NotifiableType, Type as NotificationType
 from app.models import Role, User, Notification
 from app.forms import QueryForm, AssignUserRoleForm
 from app.extensions import db
+from flask import g
 from werkzeug.exceptions import NotFound, Forbidden, Conflict, UnprocessableEntity
 from datetime import datetime, timedelta
+
+role_policy = RolePolicy()
+role_repository = RoleRepository()
 
 class RoleService(Service):
 
     def __init__(self):
         super().__init__()
 
-    def all(self, form: QueryForm) -> tuple[list[Role]]:
-        query = Role.query
-        if form.joins.data is not None: 
-            if 'permissions' in form.joins.data:
-                query = query.options(db.joinedload(Role.permissions))
-        query = query.order_by(Role.name.asc())
-        if (form.keyword.data is not None):
-            query = query.options().filter(db.or_(Role.name.like(f'%{form.keyword.data}%'), ))
-        roles = query.all()
-        return (roles, )
-    
+    def paginate(self) -> tuple[list[Role], dict]:
+        roles, meta = role_repository.paginate()
+        return (roles, meta)
+
     def show(self, role_identifier: str) -> tuple[Role]:
-        role = Role.query\
-            .options(db.joinedload(Role.permissions))\
-            .filter(
-                db.or_(Role.id == role_identifier, Role.name == role_identifier)
-            ).first()
+        role, = role_repository.show(role_identifier=role_identifier)
         if role is None:
             raise NotFound('Role not found')
         return (role, )

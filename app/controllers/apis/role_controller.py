@@ -1,6 +1,6 @@
 from app.enums.permission_enums import PermissionName
 from app.middlewares import authenticated, authorized, api_key_verified, email_verified
-from app.forms import QueryForm, AssignUserRoleForm
+from app.forms import AssignUserRoleForm
 from app.resources import RoleResource  
 from app.services import RoleService
 from app.helpers.response_helpers import create_response_tuple
@@ -17,23 +17,26 @@ role_bp = Blueprint('role', __name__)
 @authorized(PermissionName.ROLES_INDEX.value)
 @email_verified
 def index():
-    form = QueryForm(request.args)
-    form.try_validate()
+    roles, meta = role_service.paginate()
 
-    roles, = role_service.all(form=form)
-    roles_json = RoleResource.collection(roles)
+    return create_response_tuple(
+        status=HTTPStatus.OK, 
+        message=f"Roles paginated successfully",
+        data={'roles': RoleResource.collection(roles), **meta}
+    )
 
-    return create_response_tuple(status=HTTPStatus.OK, message=f"Roles retrieved successfully", data={'roles': roles_json})
-
-@role_bp.route('/roles/<string:role_id>', methods=['GET'])
+@role_bp.route('/roles/<string:role_identifier>', methods=['GET'])
 @api_key_verified
 @authenticated
 @authorized(PermissionName.ROLES_SHOW.value)
 @email_verified
 def show(role_identifier: str):
     role, = role_service.show(role_identifier=role_identifier)
-    role_json = RoleResource(role).to_json()
-    return create_response_tuple(status=HTTPStatus.OK, message=f"Role retrieved successfully", data={'role': role_json})
+    return create_response_tuple(
+        status=HTTPStatus.OK,
+        message=f"Role retrieved successfully", 
+        data={'role': RoleResource(role).to_json()}
+    )
 
 @role_bp.route('/users/<string:user_id>/roles', methods=['PUT'])
 @api_key_verified
