@@ -2,6 +2,7 @@ from .repository import Repository
 from .permission_repository import PermissionRepository
 from .role_repository import RoleRepository
 from .notification_repository import NotificationRepository
+from .user_repository import UserRepository
 from .follow_repository import FollowRepository
 from .watched_asset_repository import WatchedAssetRepository
 from .post_repository import PostRepository
