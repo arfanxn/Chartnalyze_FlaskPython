@@ -15,9 +15,6 @@ class CommentPolicy(Policy):
     
     def store(self, user: User):
         return user is not None
-
-    def update(self, user: User, comment: Comment):
-        return user.id == comment.user_id
     
     def destroy(self, user: User, comment: Comment):
         return user.id == comment.user_id or user.has_permissions(PermissionName.COMMENTS_DESTROY.value)
