@@ -1,11 +1,10 @@
 from app.middlewares import api_key_verified
 from app.services import PermissionService
-from app.forms import QueryForm
 from app.helpers.response_helpers import create_response_tuple
 from app.enums.permission_enums import PermissionName
 from app.middlewares import authenticated, authorized, api_key_verified, email_verified
 from app.resources import PermissionResource
-from flask import Blueprint, request
+from flask import Blueprint
 from http import HTTPStatus
 
 permission_service = PermissionService()
@@ -17,18 +16,13 @@ permission_bp = Blueprint('permission', __name__)
 @authenticated
 @authorized(PermissionName.PERMISSIONS_INDEX.value)
 @email_verified
-def index():
-    form = QueryForm(request.args)
-    form.try_validate()
-    
-    permissions, meta = permission_service.paginate(form)
-    permissions_json = PermissionResource.collection(permissions)
-    permissions_pagination = {'permissions': permissions_json, **meta}
+def index():    
+    permissions, meta = permission_service.paginate()
 
     return create_response_tuple(
         status=HTTPStatus.OK,
         message='Permissions paginated successfully',
-        data={ **permissions_pagination }
+        data={ 'permissions' : PermissionResource.collection(permissions), **meta }
     )
 
 @permission_bp.route('/permissions/<string:permission_id>', methods=['GET'])

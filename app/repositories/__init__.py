@@ -1,4 +1,5 @@
 from .repository import Repository
+from .permission_repository import PermissionRepository
 from .notification_repository import NotificationRepository
 from .follow_repository import FollowRepository
 from .watched_asset_repository import WatchedAssetRepository
