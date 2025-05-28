@@ -8,3 +8,4 @@ from .notification_service import NotificationService
 from .watched_asset_service import WatchedAssetService
 from .post_service import PostService
 from .comment_service import CommentService
+from .like_service import LikeService
