@@ -14,25 +14,22 @@ notification_bp = Blueprint('notification', __name__)
 @api_key_verified
 @authenticated
 @email_verified
-def index():
-    form = QueryForm(request.args)
-    form.try_validate()
+def self_index():
+    notifiable_ids = [g.user.id, g.user.role.id]
 
-    notifications, meta = notification_service.paginate_by_self(form=form)
-    notifications_json = NotificationResource.collection(notifications)
-    notifications_pagination = {'notifications': notifications_json, **meta}
+    notifications, meta = notification_service.paginate(notifiable_ids=notifiable_ids)
 
     return create_response_tuple(
         status=HTTPStatus.OK,
         message='Notifications paginated successfully',
-        data={ **notifications_pagination }
+        data={'notifications': NotificationResource.collection(notifications),  **meta }
     )
 
-@notification_bp.route('/users/self/notifications/<string:notification_id>', methods=['GET'])
+@notification_bp.route('/notifications/<string:notification_id>', methods=['GET'])
 @api_key_verified
 @authenticated
 @email_verified
-def self_show (notification_id: str):
+def show (notification_id: str):
     notification, = notification_service.show(notification_id=notification_id)
     notification_json = NotificationResource(notification).to_json()
 
@@ -42,11 +39,11 @@ def self_show (notification_id: str):
         data={'notification': notification_json}
     )
 
-@notification_bp.route('/users/self/notifications/<string:notification_id>/toggle-read', methods=['PATCH'])
+@notification_bp.route('/notifications/<string:notification_id>/toggle-read', methods=['PATCH'])
 @api_key_verified
 @authenticated
 @email_verified
-def self_toggle_read (notification_id: str):
+def toggle_read (notification_id: str):
     notification, is_read = notification_service.toggle_read(notification_id=notification_id)
     notification_json = NotificationResource(notification).to_json()
 
