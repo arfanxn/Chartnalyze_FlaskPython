@@ -37,4 +37,8 @@ class UserResource(Resource):
             from app.resources import CountryResource
             data['country']  = CountryResource(entity.country).to_json() if entity.country is not None else None
 
+        if 'posts' not in ins.unloaded:
+            from app.resources import PostResource
+            data['posts']  = PostResource.collection(entity.posts)
+
         return data

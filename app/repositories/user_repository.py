@@ -50,6 +50,8 @@ class UserRepository(Repository):
         
         if 'roles' in joins:
             query = query.options(db.joinedload(User.roles))
+        if 'posts' in joins:
+            query = query.options(db.joinedload(User.posts))
 
         return query        
     
