@@ -2,7 +2,6 @@ from flask import Blueprint, g, request
 from http import HTTPStatus
 from app.extensions import limiter
 from app.forms import (
-    QueryForm,
     LoginForm,
     OtpCodeForm,
     RegisterForm,
@@ -97,10 +96,7 @@ def reset_password():
 @authorized(PermissionName.USERS_INDEX.value)
 @email_verified
 def index():
-    form = QueryForm(request.args)
-    form.try_validate()
-
-    users, meta = user_service.paginate(form)
+    users, meta = user_service.paginate()
     users_json = UserResource.collection(users)
     users_pagination = {'users': users_json, **meta}
 
@@ -119,7 +115,7 @@ def show(user_identifier: str):
     """
     Retrieves the user by ID or email/username. Returns user data or raises NotFound if not found.
     """
-    user, = user_service.show(user_identifier)
+    user, = user_service.show(user_identifier=user_identifier)
     user_json = UserResource(user).to_json()
 
     return create_response_tuple(
@@ -137,7 +133,7 @@ def show_self():
     """
     user_id = g.user.id
 
-    user, = user_service.show(identifier=user_id)
+    user, = user_service.show(user_identifier=user_id)
     user_json = UserResource(user).to_json()
 
     return create_response_tuple(

@@ -1,7 +1,16 @@
 from app.config import Config
+from app.repositories import UserRepository
 from app.services import Service
 from app.actions import VerifyOtpAction
-from app.forms import QueryForm, RegisterForm, LoginForm, OtpCodeForm, ResetUserPasswordForm, UpdateUserForm, UpdateUserEmailForm, UpdateUserPasswordForm
+from app.forms import (
+    RegisterForm,
+    LoginForm,
+    OtpCodeForm,
+    ResetUserPasswordForm, 
+    UpdateUserForm,
+    UpdateUserEmailForm,
+    UpdateUserPasswordForm
+)
 from app.models import User, Role, Media
 from app.extensions import db
 from app.enums.role_enums import RoleName
@@ -15,6 +24,7 @@ from datetime import timedelta, datetime
 import ulid
 import os
 
+user_repository = UserRepository()
 
 class UserService(Service):
     def __init__(self):
@@ -83,40 +93,12 @@ class UserService(Service):
             db.session.rollback()
             raise InternalServerError('Password reset failed')
         
-    def paginate (self, form: QueryForm) -> tuple[list[User], dict]:
-        query = User.query.order_by(User.created_at.desc())
-        
-        if (form.keyword.data is not None):
-            query = query.filter(
-                db.or_(
-                    User.name.like(f'%{form.keyword.data}%'), 
-                    User.email.like(f'%{form.keyword.data}%')
-                )
-            )
-
-        pagination = query.paginate(
-            page=form.page.data,
-            per_page=form.per_page.data,
-            error_out=False,
-        )
-
-        users = pagination.items
-
-        meta = {
-            'page': pagination.page,
-            'per_page': pagination.per_page,    
-            'total_pages': pagination.pages,
-            'has_prev': pagination.has_prev,
-            'has_next': pagination.has_next,
-            'total': pagination.total,
-        }
-
+    def paginate (self) -> tuple[list[User], dict]:
+        users, meta = user_repository.paginate()
         return (users, meta)
     
-    def show(self, identifier: str) -> tuple[User]:
-        user = User.query.filter(
-            db.or_(User.id == identifier, User.email == identifier, User.username == identifier)
-        ).first()
+    def show(self, user_identifier: str) -> tuple[User]:
+        user, = user_repository.show(user_identifier=user_identifier)
         if user is None:
             raise NotFound('User not found')
 
@@ -127,10 +109,12 @@ class UserService(Service):
         if user is None:
             raise NotFound('User not found')
             
-        user.name = form.name.data
+        if form.name.data != user.name:
+            user.name = form.name.data
         if form.username.data != user.username: 
             user.username = form.username.data
-        user.birth_date = form.birth_date.data
+        if form.birth_date.data != user.birth_date:
+            user.birth_date = form.birth_date.data
 
         try:
             db.session.commit()
