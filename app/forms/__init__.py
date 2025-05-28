@@ -1,8 +1,6 @@
 from wtforms import Form
 from app.helpers.form_helpers import try_validate   
 
-from .query_form import QueryForm
-
 from .login_form import LoginForm
 from .register_form import RegisterForm
 
