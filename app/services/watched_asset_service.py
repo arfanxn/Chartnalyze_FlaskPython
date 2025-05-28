@@ -1,7 +1,6 @@
 from app.services import Service
 from app.repositories import WatchedAssetRepository
 from app.forms import StoreWatchedAssetForm, UpdateWatchedAssetOrderForm
-from app.forms import QueryForm
 from flask import g
 
 wa_repository = WatchedAssetRepository()
@@ -11,16 +10,13 @@ class WatchedAssetService(Service):
     def __init__(self):
         super().__init__()
     
-    def all_watched_assets_by_self (self, form: QueryForm) -> tuple[list[object]]:
-        user_id = g.user.id
-
-        watched_assets, = wa_repository.all_by_user_id(user_id=user_id, keyword=form.keyword.data)
-
+    def all (self, user_id: str|None = None) -> tuple[list[object]]:
+        watched_assets, = wa_repository.all(user_id=user_id)
         return (watched_assets, )
     
-    def store_by_self(self, form: StoreWatchedAssetForm) -> tuple[object]:
+    def store(self, form: StoreWatchedAssetForm, user_id: str) -> tuple[object]:
         watched_asset = {
-            'user_id': g.user.id,
+            'user_id': user_id,
             'key': form.key.data,
             'name': form.name.data,
             'symbol': form.symbol.data,
@@ -32,19 +28,17 @@ class WatchedAssetService(Service):
 
         return (watched_asset, )
     
-    def update_order_by_self(self, form: UpdateWatchedAssetOrderForm) -> tuple[object, bool]:
+    def update_order(self, form: UpdateWatchedAssetOrderForm, user_id: str) -> tuple[object, bool]:
         asset, _ = wa_repository.\
             update_order_by_user_id_and_key(
-                user_id=g.user.id,
+                user_id=user_id,
                 watched_asset_key=form.key.data,
                 order=form.order.data
             )
 
         return (asset, )
     
-    def destroy_by_self_and_key(self, watched_asset_key: str) -> tuple[bool]:        
-        user_id = g.user.id
-
+    def destroy(self, watched_asset_key: str, user_id: str) -> tuple[bool]:        
         wa_repository.\
             destroy_by_user_id_and_key(
                 user_id=user_id,

@@ -1,10 +1,10 @@
 from app.middlewares import api_key_verified
 from app.services import WatchedAssetService
-from app.forms import QueryForm, StoreWatchedAssetForm, UpdateWatchedAssetOrderForm
+from app.forms import StoreWatchedAssetForm, UpdateWatchedAssetOrderForm
 from app.helpers.response_helpers import create_response_tuple
 from app.middlewares import authenticated, api_key_verified, email_verified
 from app.resources import WatchedAssetResource
-from flask import Blueprint, request
+from flask import Blueprint, request, g
 from http import HTTPStatus
 
 wa_service = WatchedAssetService()
@@ -17,10 +17,9 @@ watched_asset_bp = wa_bp
 @authenticated
 @email_verified
 def index():
-    form = QueryForm(request.args)
-    form.try_validate()
+    user_id = g.user.id
     
-    watched_assets, = wa_service.all_watched_assets_by_self(form=form)
+    watched_assets, = wa_service.all(user_id=user_id)
     watched_assets_json = WatchedAssetResource.collection(watched_assets)
     
     return create_response_tuple(
@@ -37,12 +36,14 @@ def index():
 def store (): 
     form = StoreWatchedAssetForm(request.form)
     form.try_validate()
+
+    user_id = g.user.id
     
-    watched_asset, = wa_service.store_by_self(form=form)
+    watched_asset, = wa_service.store(form=form, user_id=user_id)
     watched_asset_json = WatchedAssetResource(watched_asset).to_json()
     
     return create_response_tuple(
-        status=HTTPStatus.OK,
+        status=HTTPStatus.CREATED,
         message='Asset stored into watched assets successfully',
         data={'watched_asset': watched_asset_json},
     )
@@ -55,8 +56,10 @@ def update_order (watched_asset_key: str):
     form = UpdateWatchedAssetOrderForm(request.form)
     form.key.data = watched_asset_key
     form.try_validate()
+
+    user_id = g.user.id
     
-    asset, = wa_service.update_order_by_self(form=form)
+    asset, = wa_service.update_order(form=form, user_id=user_id)
     
     return create_response_tuple(
         status=HTTPStatus.OK,
@@ -70,7 +73,9 @@ def update_order (watched_asset_key: str):
 @authenticated
 @email_verified
 def destroy (watched_asset_key: str): 
-    wa_service.destroy_by_self_and_watched_asset_key(watched_asset_key=watched_asset_key)
+    user_id = g.user.id 
+
+    wa_service.destroy(watched_asset_key=watched_asset_key, user_id=user_id)
     
     return create_response_tuple(
         status=HTTPStatus.OK,

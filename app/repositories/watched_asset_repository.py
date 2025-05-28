@@ -1,5 +1,6 @@
 from app.repositories.repository import Repository
 from app.extensions import mongo
+from flask import request
 from werkzeug.exceptions import NotFound, Conflict
 from datetime import datetime 
 
@@ -8,22 +9,15 @@ class WatchedAssetRepository(Repository):
     def __init__(self):
         super().__init__()
     
-    def all_by_user_id(self, user_id: str, keyword: str = None) -> tuple[list[object]]:
-        """
-        Get all watched assets for a given user ID.
+    def all(self, user_id: str|None = None) -> tuple[list[object]]:
+        filter = request.args.get('filter', None)
 
-        Args:
-            user_id (str): The user ID to get watched assets for.
-            keyword (str, optional): An optional keyword to search for in the name of the watched assets. Defaults to None.
-
-        Returns:
-            tuple[list[object]]: A tuple containing a list of watched asset objects, sorted by order.
-        """
         find = {}
-        find['user_id'] = user_id
+        if user_id is not None:
+            find['user_id'] = user_id
 
-        if keyword:
-            regex_pattern = f".*{keyword}.*"
+        if filter is not None:
+            regex_pattern = f".*{filter}.*"
             find['name'] = {"$regex": regex_pattern, "$options": "i"}
 
         cursor = mongo.db.watched_assets.find(find).sort([('order', 1), ('created_at', -1)]).limit(10)
