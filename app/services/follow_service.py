@@ -1,11 +1,8 @@
 from app.repositories import FollowRepository
 from app.services import Service
 from app.models import Follow, User
-from app.forms import QueryForm
 from app.extensions import db
-from flask import request
 from werkzeug.exceptions import NotFound, BadRequest
-from flask_query_builder.querying import QueryBuilder, AllowedFilter, AllowedSort
 
 follow_repository = FollowRepository()
 

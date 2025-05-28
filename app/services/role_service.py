@@ -4,7 +4,7 @@ from app.services import Service
 from app.enums.role_enums import RoleName
 from app.enums.notification_enums import NotifiableType, Type as NotificationType
 from app.models import Role, User, Notification
-from app.forms import QueryForm, AssignUserRoleForm
+from app.forms import AssignUserRoleForm
 from app.extensions import db
 from flask import g
 from werkzeug.exceptions import NotFound, Forbidden, Conflict, UnprocessableEntity

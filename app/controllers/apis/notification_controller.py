@@ -1,7 +1,6 @@
 from app.middlewares import api_key_verified, authenticated, authorized, email_verified
 from app.resources import NotificationResource
 from app.services import NotificationService 
-from app.forms import QueryForm
 from app.helpers.response_helpers import create_response_tuple
 from flask import Blueprint, request, g
 from http import HTTPStatus
