@@ -19,4 +19,6 @@ from .update_watched_asset_order import UpdateWatchedAssetOrderForm
 
 from .save_post import SavePostForm
 
+from .store_comment import StoreCommentForm
+
 Form.try_validate = try_validate
