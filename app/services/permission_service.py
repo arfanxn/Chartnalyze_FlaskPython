@@ -15,7 +15,7 @@ class PermissionService(Service):
         return (permissions, meta)
     
     def show(self, permission_id: str) -> tuple[Permission]:
-        permission = permission_repository.show(permission_id=permission_id)
+        permission, = permission_repository.show(permission_id=permission_id)
         if permission is None:
             raise NotFound('Permission not found')
         return (permission, )

@@ -1,9 +1,10 @@
 from app.repositories.repository import Repository
 from app.extensions import db
-from app.models import Permission
+from app.models import Permission, Role, PermissionRole
 from flask import request
 from flask_sqlalchemy.query import Query
-from flask_query_builder.querying import QueryBuilder, AllowedFilter
+from flask_query_builder.querying import QueryBuilder, AllowedFilter, AllowedSort
+from sqlalchemy import text
 
 class PermissionRepository(Repository):
 
@@ -11,20 +12,30 @@ class PermissionRepository(Repository):
         super().__init__()
 
     def query(self) -> Query:
+        sorts = request.args.get('sort', '').split(',')
         joins = request.args.get('join', '').split(',')
 
         query = Permission.query
-
-        if 'roles' in joins:
-            query = query.options(db.joinedload(Permission.roles))
 
         query = QueryBuilder(Permission, query=query)\
             .allowed_filters([
                 AllowedFilter.partial('name'),
             ]
             )\
-            .allowed_sorts(['name', 'created_at'])\
             .query
+    
+        if sorts is not None and len(sorts) > 0:
+            if '-name' in sorts:
+                query = query.order_by(Permission.name.desc())
+            elif 'name' in sorts:
+                query = query.order_by(Permission.name)
+            if '-created_at' in sorts:
+                query = query.order_by(Permission.created_at.desc())
+            elif 'created_at' in sorts:
+                query = query.order_by(Permission.created_at)
+        
+        if 'roles' in joins:
+            query = query.options(db.joinedload(Permission.roles))
 
         return query        
     
@@ -36,9 +47,9 @@ class PermissionRepository(Repository):
 
         pagination = query.paginate(page=page, per_page=per_page, error_out=False)
 
-        notifications = []
-        for notification in pagination.items:
-            notifications.append(notification)
+        permissions = []
+        for permission in pagination.items:
+            permissions.append(permission)
 
         meta = {
             'page': pagination.page,
@@ -49,8 +60,8 @@ class PermissionRepository(Repository):
             'total': pagination.total,
         }
 
-        return (notifications, meta)
+        return (permissions, meta)
 
     def show (self, permission_id : str) -> tuple[Permission]:
-        notification = self.query().filter(Permission.id == permission_id).first()
-        return (notification, )
+        permission = self.query().filter(Permission.id == permission_id).first()
+        return (permission, )
