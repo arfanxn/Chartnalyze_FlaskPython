@@ -1,7 +1,7 @@
+from app.enums.like_enums import LikeableType   
 from app.resources import Resource
-from app.models import Like, User
-from sqlalchemy import inspect  # Add this import
-from app.config import Config
+from app.models import Like
+from sqlalchemy import inspect
 
 class LikeResource(Resource): 
     def __init__(self, entity: Like):
@@ -25,10 +25,10 @@ class LikeResource(Resource):
             from app.resources import UserResource
             data['user']  = UserResource(entity.user).to_json()
 
-        if 'likeable_post' not in ins.unloaded:
+        if 'likeable_post' not in ins.unloaded and entity.likeable_type == LikeableType.POST.value:
             from app.resources import PostResource
             data['likeable'] = PostResource(entity.likeable).to_json()  if entity.likeable is not None else None
-        elif 'likeable_comment' not in ins.unloaded:
+        elif 'likeable_comment' not in ins.unloaded and entity.likeable_type == LikeableType.COMMENT.value:
             from app.resources import CommentResource
             data['likeable'] = CommentResource(entity.likeable).to_json()  if entity.likeable is not None else None
 
