@@ -21,6 +21,9 @@ class CommentResource(Resource):
             'updated_at': entity.updated_at.isoformat() if entity.updated_at is not None else None,
         }
 
+        if hasattr(entity, 'like_count') and entity.like_count is not None:
+            data['like_count'] = entity.like_count
+
         ins = inspect(entity)
 
         if 'user' not in ins.unloaded:
