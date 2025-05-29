@@ -9,3 +9,4 @@ from .watched_asset_resource import WatchedAssetResource
 from .post_resource import PostResource
 from .comment_resource import CommentResource
 from .like_resource import LikeResource
+from .save_resource import SaveResource
