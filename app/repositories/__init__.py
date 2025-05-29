@@ -8,3 +8,4 @@ from .watched_asset_repository import WatchedAssetRepository
 from .post_repository import PostRepository
 from .comment_repository import CommentRepository
 from .like_repository import LikeRepository
+from .save_repository import SaveRepository
