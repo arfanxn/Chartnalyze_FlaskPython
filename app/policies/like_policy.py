@@ -1,5 +1,7 @@
 from app.policies.policy import Policy
-from app.models import User, Like
+from app.models import User, Like, Comment, Post
+from app.enums.like_enums import LikeableType   
+from werkzeug.exceptions import NotFound
 
 class LikePolicy(Policy):
 
@@ -12,8 +14,3 @@ class LikePolicy(Policy):
     def show(self, user: User, like: Like):
         return user is not None
     
-    def store(self, user: User):
-        return user is not None
-    
-    def destroy(self, user: User, like: Like):
-        return user.id == like.user_id
