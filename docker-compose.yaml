@@ -3,7 +3,7 @@ services:
         container_name: chartnalyze_flask
         build: .
         image: chartnalyze_flask:latest
-        env_file: .env.docker
+        env_file: .docker.env
         depends_on:
             - chartnalyze_mysql
             - chartnalyze_mongo
