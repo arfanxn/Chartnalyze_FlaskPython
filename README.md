@@ -1,102 +1,84 @@
 # Chartnalyze (Flask Backend)
 
-**AI-powered market analysis meets financial education — all in one smart platform.**
+**AI-powered market analysis meets financial education — all in one platform.**
 
 ---
 
-## 🚀 Installation
+## 🚀 Getting Started
 
-### Local Installation
+### 📍 Local Installation
 
-#### 1. Install dependencies
+1. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```sh
-pip install -r requirements.txt
-```
+2. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
 
-#### 2. Create environment configuration
+3. **Generate secret keys**
+   Automatically generate `SECRET_KEY`, `HASH_KEY`, and `JWT_SECRET_KEY`:
+   ```bash
+   make generate-secret-key
+   ```
 
-```sh
-cp .env.example .env
-```
+4. **Run database migrations**
+   Choose one:
+   ```bash
+   make db-upgrade         # Apply migrations
+   make db-downgrade       # Roll back migrations
+   make db-fresh           # Reset and re-apply migrations
+   make db-fresh-seed      # Reset, re-apply, and seed data
+   ```
 
-#### 3. Generate secret keys
+5. **Start the development server**
+   ```bash
+   flask run --port 8000              # Standard mode
+   flask run --debug --port 8000      # Debug mode
+   ```
 
-Automatically generate `SECRET_KEY`, `HASH_KEY`, and `JWT_SECRET_KEY` and insert them into `.env`:
-
-```sh
-make generate-secret-key
-```
-
-#### 4. Run database migrations
-
-Use one of the following commands:
-
-```sh
-make db-upgrade         # Apply migrations
-make db-downgrade       # Roll back migrations
-make db-fresh           # Reset and re-apply migrations
-make db-fresh-seed      # Reset, re-apply migrations, and seed data
-```
-
-#### 5. Run the development server
-
-```sh
-flask run --port 8000                     # Run normally
-flask run --debug --port 8000            # Run in debug mode
-```
-
-#### 6. Run unit or feature tests
-
-```sh
-# Documentation for testing is coming soon...
-```
+6. **Run tests**
+   *(Coming soon: test documentation)*
 
 ---
 
 ### 🐳 Docker Installation
 
-#### 1. Create environment configuration for Docker
+1. **Set up Docker environment**
+   ```bash
+   cp .env.example .docker.env
+   ```
 
-```sh
-cp .env.example .docker.env
-```
+2. **Generate secret keys**
+   ```bash
+   make generate-secret-key
+   ```
 
-#### 2. Generate secret keys
+3. **Build and start the app**
+   ```bash
+   docker compose up --build -d
+   ```
 
-Automatically generate `SECRET_KEY`, `HASH_KEY`, and `JWT_SECRET_KEY` and insert them into `.env`:
+   App will be available at:
+   ```
+   http://localhost:80
+   ```
 
-```sh
-make generate-secret-key ENV_FILE=.docker.env
-```
-
-#### 3. Build and run with Docker
-
-```sh
-docker compose up --build -d
-```
-
-Once started, the app will be accessible at:
-
-```
-http://localhost:80
-```
-
-#### 4. Seed database in Docker
-
-```sh
-docker compose exec chartnalyze_flask make db-fresh-seed
-```
+4. **Run migrations and seed the database in Docker** (Run if needed)
+   ```bash
+   docker compose exec chartnalyze_flask make db-fresh-seed
+   ```
 
 ---
 
-## 📡 Routes
+## 📡 API Routes
 
-API routes are documented in the `postman_collection.json` file.
+API endpoints are documented in `postman_collection.json`.
 
-Preview the contents:
-
-```sh
+Preview the file:
+```bash
 head postman_collection.json
 ```
 
@@ -104,6 +86,18 @@ head postman_collection.json
 
 ## 📄 License
 
-This project is open-source under the **MIT License**.
+This project is licensed under the [MIT License](LICENSE).
 
-Made with ❤️ by **Chartnalyze**
+Made with ❤️ by **Chartnalyze** 
+
+---
+
+## 👥 Contributors
+
+A huge thanks to the amazing people who have contributed to this project! 🚀
+
+| [![Arfanxn](https://avatars.githubusercontent.com/u/82434988?v=4&)](https://github.com/arfanxn) | [![Deny Faishal Ardiyanto](https://avatars.githubusercontent.com/u/122851646?v=4)](https://github.com/1lwlawck) |
+|:--:|:--:|
+| [**Arfanxn**](https://github.com/arfanxn) | [**Deny Faishal Ardiyanto**](https://github.com/1lwlawck) |
+
+Want to contribute? [Join us on GitHub!](https://github.com/your-username/chartnalyze/graphs/contributors)
