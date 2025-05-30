@@ -60,7 +60,7 @@
 2. **Generate secret keys**
 
     ```bash
-    make generate-secret-key
+    make generate-secret-key ENV_FILE=.docker.env
     ```
 
 3. **Build and start the app**
