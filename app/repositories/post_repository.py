@@ -26,6 +26,9 @@ class PostRepository(Repository):
         return post
 
     def query(self) -> Query:
+        joins = request.args.get('join', '').split(',')
+        sorts = request.args.get('sort', '').split(',')
+
         comment_count_subquery = db.session.query(
                 Comment.commentable_id,
                 db.func.count(Comment.id).label('comment_count')
@@ -47,6 +50,15 @@ class PostRepository(Repository):
             )\
             .outerjoin(comment_count_subquery, comment_count_subquery.c.commentable_id == Post.id)\
             .outerjoin(like_count_subquery, like_count_subquery.c.likeable_id == Post.id)
+
+        if 'user' in joins:
+            query = query.options(db.joinedload(Post.user))
+        
+        if sorts is not None and len(sorts) > 0:
+            if '-created_at' in sorts:
+                query = query.order_by(Post.created_at.desc())
+            elif 'created_at' in sorts:
+                query = query.order_by(Post.created_at)
         
         query = query.order_by(Post.created_at.desc())
         
