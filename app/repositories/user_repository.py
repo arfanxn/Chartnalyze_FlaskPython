@@ -1,6 +1,6 @@
 from app.repositories.repository import Repository
 from app.extensions import db
-from app.models import User
+from app.models import User, Role, RoleUser
 from flask import request
 from flask_sqlalchemy.query import Query
 
@@ -16,23 +16,29 @@ class UserRepository(Repository):
         name = request.args.get('filter[name]', None)
         email = request.args.get('filter[email]', None)
         username = request.args.get('filter[username]', None)
+        role = request.args.get('filter[role]', None)
 
         query = db.session.query(User)
 
         if filter is not None:
-            if filter is not None:
-                query = query.filter(db.or_(
-                    User.name.contains(filter),
-                    User.email.contains(filter),
-                    User.username.contains(filter)
-                ))
-            else:
-                if name is not None:
-                    query = query.filter(User.name.contains(name))
-                if email is not None:
-                    query = query.filter(User.email.contains(email))
-                if username is not None:
-                    query = query.filter(User.username.contains(username))
+            query = query.filter(db.or_(
+                User.name.contains(filter),
+                User.email.contains(filter),
+                User.username.contains(filter)
+            ))
+        else:
+            if name is not None:
+                query = query.filter(User.name.contains(name))
+            if email is not None:
+                query = query.filter(User.email.contains(email))
+            if username is not None:
+                query = query.filter(User.username.contains(username))
+
+        if role is not None:
+            query = query.join(RoleUser).join(Role).filter(db.or_(
+                Role.id == role,
+                Role.name == role
+            ))
     
         if sorts is not None and len(sorts) > 0:
             if '-name' in sorts:
@@ -48,7 +54,7 @@ class UserRepository(Repository):
             elif 'created_at' in sorts:
                 query = query.order_by(User.created_at)
         
-        if 'roles' in joins:
+        if 'role' in joins:
             query = query.options(db.joinedload(User.roles))
         if 'posts' in joins:
             query = query.options(db.joinedload(User.posts))
