@@ -14,15 +14,19 @@ class PermissionRepository(Repository):
     def query(self) -> Query:
         sorts = request.args.get('sort', '').split(',')
         joins = request.args.get('join', '').split(',')
+        filter = request.args.get('filter', None)
+        name = request.args.get('filter[name]', None)
 
         query = Permission.query
 
-        query = QueryBuilder(Permission, query=query)\
-            .allowed_filters([
-                AllowedFilter.partial('name'),
-            ]
-            )\
-            .query
+        if filter is not None:
+            query = query.filter(db.or_(
+                Permission.id == filter,
+                Permission.name.contains(filter),
+            ))
+        else:
+            if name is not None:
+                query = query.filter(Permission.name.contains(name))
     
         if sorts is not None and len(sorts) > 0:
             if '-name' in sorts:
