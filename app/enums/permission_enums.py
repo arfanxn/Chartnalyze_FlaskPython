@@ -3,6 +3,8 @@ from enum import Enum
 class PermissionName(Enum):
     ALL = '*'
 
+    DASHBOARD_INDEX = 'dashboard.index'
+
     USERS_INDEX = 'users.index'
     USERS_SHOW = 'users.show'
     USERS_STORE = 'users.store'
