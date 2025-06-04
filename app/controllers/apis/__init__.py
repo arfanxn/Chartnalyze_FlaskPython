@@ -10,6 +10,7 @@ from .post_controller import post_bp
 from .comment_controller import comment_bp
 from .like_controller import like_bp
 from .save_controller import save_bp
+from .dashboard_controller import dashboard_bp
 from werkzeug.exceptions import HTTPException, UnprocessableEntity, TooManyRequests
 from app.helpers.response_helpers import create_response_tuple
 from http import HTTPStatus
@@ -29,6 +30,7 @@ api_bp.register_blueprint(post_bp)
 api_bp.register_blueprint(comment_bp)
 api_bp.register_blueprint(like_bp)
 api_bp.register_blueprint(save_bp)
+api_bp.register_blueprint(dashboard_bp)
 
 @api_bp.errorhandler(UnprocessableEntity)
 def handle_unprocessable_entity_error(e: UnprocessableEntity):
