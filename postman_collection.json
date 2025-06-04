@@ -22,7 +22,7 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "admin@chartnalyze.edu",
+											"value": "user@chartnalyze.edu",
 											"type": "text"
 										},
 										{
@@ -182,7 +182,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/roles?per_page=10&page=1&sort=name&join=permissions&filter[name]=admin",
+									"raw": "{{BASE_URL}}/api/roles?per_page=10&page=1&sort=name&join=permissions&filter=admin&filter[name]=admin",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -210,6 +210,10 @@
 											"key": "join",
 											"value": "permissions",
 											"description": "Join relations"
+										},
+										{
+											"key": "filter",
+											"value": "admin"
 										},
 										{
 											"key": "filter[name]",
@@ -854,7 +858,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/permissions?per_page=10&page=1&join=roles&sort=-name&filter[name]=users",
+									"raw": "{{BASE_URL}}/api/permissions?per_page=10&page=1&join=roles&sort=-name&filter=users&filter[name]=users",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -882,6 +886,10 @@
 											"key": "sort",
 											"value": "-name",
 											"description": "Sort by name in descending"
+										},
+										{
+											"key": "filter",
+											"value": "users"
 										},
 										{
 											"key": "filter[name]",
@@ -1192,7 +1200,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/users/self/notifications?filter[title]=Request analyst",
+									"raw": "{{BASE_URL}}/api/users/self/notifications?sort=created_at",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -1218,8 +1226,7 @@
 										{
 											"key": "sort",
 											"value": "created_at",
-											"description": "Sort by created at but in descending",
-											"disabled": true
+											"description": "Sort by created at but in descending"
 										},
 										{
 											"key": "filter",
@@ -1228,7 +1235,8 @@
 										},
 										{
 											"key": "filter[title]",
-											"value": "Request analyst"
+											"value": "Request analyst",
+											"disabled": true
 										},
 										{
 											"key": "filter[message]",
@@ -2353,7 +2361,7 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "jack@gm.com",
+											"value": "user@chartnalyze.edu",
 											"type": "text"
 										},
 										{
@@ -2368,7 +2376,7 @@
 										},
 										{
 											"key": "code",
-											"value": "876957",
+											"value": "317591",
 											"description": "OTP code to reset the password",
 											"type": "text"
 										}
@@ -2529,7 +2537,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/users/self",
+									"raw": "{{BASE_URL}}/api/users/self?join=role",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -2537,6 +2545,12 @@
 										"api",
 										"users",
 										"self"
+									],
+									"query": [
+										{
+											"key": "join",
+											"value": "role"
+										}
 									]
 								}
 							},
@@ -3406,7 +3420,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/users?sort=name&join=posts&filter[email]=bryan88@example.net",
+									"raw": "{{BASE_URL}}/api/users?join=role,posts",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -3430,11 +3444,12 @@
 										{
 											"key": "sort",
 											"value": "name",
-											"description": "Sort the result in asc or by in desc by adding `-` before the sort's name"
+											"description": "Sort the result in asc or by in desc by adding `-` before the sort's name",
+											"disabled": true
 										},
 										{
 											"key": "join",
-											"value": "posts",
+											"value": "role,posts",
 											"description": "Optional field, (not implemented yet)"
 										},
 										{
@@ -3446,7 +3461,23 @@
 										{
 											"key": "filter[email]",
 											"value": "bryan88@example.net",
-											"description": "Specific column filter"
+											"description": "Specific column filter",
+											"disabled": true
+										},
+										{
+											"key": "filter[name]",
+											"value": "Jack",
+											"disabled": true
+										},
+										{
+											"key": "filter[username]",
+											"value": "jack2222",
+											"disabled": true
+										},
+										{
+											"key": "filter[role]",
+											"value": "user",
+											"disabled": true
 										}
 									]
 								}
@@ -4813,7 +4844,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/posts?per_page=10&page=1",
+									"raw": "{{BASE_URL}}/api/posts?per_page=10&page=1&join=user&sort=-created_at",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -4837,6 +4868,14 @@
 											"value": "hand",
 											"description": "Filter by column",
 											"disabled": true
+										},
+										{
+											"key": "join",
+											"value": "user"
+										},
+										{
+											"key": "sort",
+											"value": "-created_at"
 										}
 									]
 								}
@@ -4916,7 +4955,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/posts?per_page=10&page=1&filter[body]=hand",
+									"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/posts?per_page=10&page=1&sort=-created_at&join=user&filter[body]=hand",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -4934,6 +4973,14 @@
 										{
 											"key": "page",
 											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "-created_at"
+										},
+										{
+											"key": "join",
+											"value": "user"
 										},
 										{
 											"key": "filter[body]",
@@ -7560,6 +7607,121 @@
 									"body": "{\n    \"status\": 404,\n    \"message\": \"Post not found\"\n}"
 								}
 							]
+						}
+					]
+				},
+				{
+					"name": "Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/dashboard",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"dashboard"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/dashboard",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"dashboard"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.11.9"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 04 Jun 2025 09:22:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "472"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Dashboard data retrieved successfully\",\n    \"data\": {\n        \"total_all_roles\": 3,\n        \"total_all_permissions\": 19,\n        \"total_all_users\": 15,\n        \"total_admin_users\": 5,\n        \"total_analyst_users\": 5,\n        \"total_user_users\": 5,\n        \"total_all_follows\": 30,\n        \"total_all_posts\": 37,\n        \"total_admin_posts\": 10,\n        \"total_analyst_posts\": 14,\n        \"total_user_posts\": 13,\n        \"total_all_post_likes\": 272,\n        \"total_all_comment_likes\": 623,\n        \"total_all_post_comments\": 1480,\n        \"total_all_saved_posts\": 275\n    }\n}"
+						},
+						{
+							"name": "403",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/dashboard",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"dashboard"
+									]
+								}
+							},
+							"status": "FORBIDDEN",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.11.9"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 04 Jun 2025 09:23:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 403,\n    \"message\": \"Forbidden action\"\n}"
 						}
 					]
 				}
