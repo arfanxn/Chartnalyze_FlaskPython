@@ -17,6 +17,10 @@ class Config:
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
+    GOOGLE_OAUTH_CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID')
+    GOOGLE_OAUTH_CLIENT_SECRET = os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')
+    OAUTHLIB_RELAX_TOKEN_SCOPE = os.getenv('OAUTHLIB_RELAX_TOKEN_SCOPE', 'True') == 'True'
+    OAUTHLIB_INSECURE_TRANSPORT = os.getenv('OAUTHLIB_INSECURE_TRANSPORT', 'True') == 'True'
 
     # The environment variables that are used without injection
     UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
