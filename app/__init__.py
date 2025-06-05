@@ -1,11 +1,12 @@
 from flask import Flask
-from app.extensions import cors,db, mongo, jwt, limiter, mail, migrate
+from app.extensions import cors, db, mongo, jwt, limiter, mail, migrate
 from app.config import Config
 from app.controllers import register_blueprints
 from app.commands import register_commands
 
 def create_app():
     app = Flask(__name__)
+    app.secret_key = Config.SECRET_KEY
     app.config.from_object(Config)
 
     # Initialize extensions
