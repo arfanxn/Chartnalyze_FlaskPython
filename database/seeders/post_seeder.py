@@ -23,12 +23,16 @@ class PostSeeder(Seeder):
                 title = ' '.join(fake.words(nb=fake.random_int(min=1, max=4))) if fake.boolean() else None
                 paragraph_count = fake.random_int(min=1, max=5, step=1)
                 body = '\n\n'.join(fake.paragraphs(nb=paragraph_count))
+                created_at = fake.date_time_between(start_date='-1y', end_date='now')
+                updated_at = fake.date_time_between(start_date=created_at, end_date='now') if fake.boolean() else None
 
                 post = Post()
                 post.user_id = user.id,
                 post.title = title
                 post.slug = fake.slug()
                 post.body = body
+                post.created_at = created_at
+                post.updated_at = updated_at
                 
                 posts.append(post)
 
