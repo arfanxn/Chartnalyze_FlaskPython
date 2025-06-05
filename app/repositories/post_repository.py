@@ -1,7 +1,7 @@
 from app.repositories.repository import Repository
 from app.extensions import db
 from app.forms import SavePostForm
-from app.models import Post, Comment, Like
+from app.models import Post, Comment, Like, User, Role, RoleUser
 from sqlalchemy import literal_column
 from flask import request
 from flask_sqlalchemy.query import Query
@@ -28,6 +28,10 @@ class PostRepository(Repository):
     def query(self) -> Query:
         joins = request.args.get('join', '').split(',')
         sorts = request.args.get('sort', '').split(',')
+        filter = request.args.get('filter', None)
+        title = request.args.get('filter[title]', None)
+        body = request.args.get('filter[body]', None)
+        role = request.args.get('filter[user.role]', None)
 
         comment_count_subquery = db.session.query(
                 Comment.commentable_id,
@@ -53,21 +57,30 @@ class PostRepository(Repository):
 
         if 'user' in joins:
             query = query.options(db.joinedload(Post.user))
+
+        if filter is not None:
+            query = query.filter(db.or_(
+                Post.id == filter,
+                Post.title.contains(filter),
+                Post.body.contains(filter),
+            ))
+        else:
+            if title is not None:
+                query = query.filter(Post.title.contains(title))
+            if body is not None:
+                query = query.filter(Post.body.contains(body))
+            
+        if role is not None:
+            query = query.join(User).join(RoleUser).join(Role).filter(db.or_(
+                Role.id == role,
+                Role.name == role,
+            ))
         
         if sorts is not None and len(sorts) > 0:
             if '-created_at' in sorts:
                 query = query.order_by(Post.created_at.desc())
             elif 'created_at' in sorts:
                 query = query.order_by(Post.created_at)
-        
-        query = query.order_by(Post.created_at.desc())
-        
-        query = QueryBuilder(Post, query=query)\
-            .allowed_filters([
-                AllowedFilter.partial('title'),
-                AllowedFilter.partial('body'),
-            ])\
-            .query
         
         return query        
 
