@@ -2060,6 +2060,38 @@
 							]
 						},
 						{
+							"name": "Google Login",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/login/google/authorized",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"login",
+										"google",
+										"authorized"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Verify Self Email",
 							"request": {
 								"method": "POST",
@@ -2069,7 +2101,7 @@
 									"formdata": [
 										{
 											"key": "code",
-											"value": "993665",
+											"value": "647882",
 											"type": "text"
 										}
 									]
@@ -4844,7 +4876,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/posts?per_page=10&page=1&join=user&sort=-created_at",
+									"raw": "{{BASE_URL}}/api/posts?per_page=10&page=1&join=user&sort=-created_at&filter[user.role]=analyst",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -4864,18 +4896,34 @@
 											"description": "Optional field"
 										},
 										{
-											"key": "filter[body]",
-											"value": "hand",
-											"description": "Filter by column",
-											"disabled": true
-										},
-										{
 											"key": "join",
 											"value": "user"
 										},
 										{
 											"key": "sort",
 											"value": "-created_at"
+										},
+										{
+											"key": "filter",
+											"value": null,
+											"description": "Generic filter",
+											"disabled": true
+										},
+										{
+											"key": "filter[body]",
+											"value": "hand",
+											"description": "Filter by column",
+											"disabled": true
+										},
+										{
+											"key": "filter[title]",
+											"value": "title",
+											"disabled": true
+										},
+										{
+											"key": "filter[user.role]",
+											"value": "analyst",
+											"description": "Filter by post's user role, could be role id or role name"
 										}
 									]
 								}
@@ -4887,7 +4935,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{BASE_URL}}/api/posts?per_page=10&page=1",
+											"raw": "{{BASE_URL}}/api/posts?per_page=10&page=1&join=user&sort=-created_at&filter[user.role]=analyst",
 											"host": [
 												"{{BASE_URL}}"
 											],
@@ -4907,10 +4955,34 @@
 													"description": "Optional field"
 												},
 												{
+													"key": "join",
+													"value": "user"
+												},
+												{
+													"key": "sort",
+													"value": "-created_at"
+												},
+												{
+													"key": "filter",
+													"value": null,
+													"description": "Generic filter",
+													"disabled": true
+												},
+												{
 													"key": "filter[body]",
 													"value": "hand",
 													"description": "Filter by column",
 													"disabled": true
+												},
+												{
+													"key": "filter[title]",
+													"value": "title",
+													"disabled": true
+												},
+												{
+													"key": "filter[user.role]",
+													"value": "analyst",
+													"description": "Filter by post's user role, could be role id or role name"
 												}
 											]
 										}
@@ -4925,7 +4997,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 27 May 2025 15:46:53 GMT"
+											"value": "Thu, 05 Jun 2025 15:47:30 GMT"
 										},
 										{
 											"key": "Content-Type",
@@ -4933,7 +5005,7 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "4830"
+											"value": "9389"
 										},
 										{
 											"key": "Access-Control-Allow-Origin",
@@ -4945,7 +5017,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"status\": 200,\n    \"message\": \"Posts paginated successfully\",\n    \"data\": {\n        \"posts\": [\n            {\n                \"id\": \"01JW960ATDTGMNF7KZFYYQESAT\",\n                \"user_id\": \"01JW1X56JH0FZ49J64J4M5D2VA\",\n                \"title\": \"Hello lorem\",\n                \"slug\": \"hello-world-526222\",\n                \"body\": \"Lorem ipsum dolor sit amet constectur\",\n                \"created_at\": \"2025-05-27T22:33:02\",\n                \"updated_at\": \"2025-05-27T22:33:53\",\n                \"comment_count\": 0,\n                \"like_count\": 0,\n                \"image_urls\": [\n                    \"http://localhost:8000/public/images/posts/01JW960ATHJKWKA85D6QC5R802.png\",\n                    \"http://localhost:8000/public/images/posts/01JW960ATD6FC54P80VCA89HNM.png\"\n                ]\n            },\n            {\n                \"id\": \"01JW1X56SJFBDKM1ZPTNEWM173\",\n                \"user_id\": \"01JW1X56JH0FZ49J64J4M5D2VA\",\n                \"title\": null,\n                \"slug\": \"during-mention\",\n                \"body\": \"Receive throw sing dark way stand. Society surface other relate close.\",\n                \"created_at\": \"2025-05-25T02:43:43\",\n                \"updated_at\": null,\n                \"comment_count\": 3,\n                \"like_count\": 5,\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JW1X56SJG73QSRM630NGJK4T\",\n                \"user_id\": \"01JW1X56JH0FZ49J64J4M5D2VA\",\n                \"title\": \"eight once what\",\n                \"slug\": \"newspaper-always\",\n                \"body\": \"Home individual successful prove war fly hotel single. Your sometimes look. Science record visit address successful national edge.\\n\\nCarry then skill outside media always television trial. Black paper letter begin. Wall system successful civil.\",\n                \"created_at\": \"2025-05-25T02:43:43\",\n                \"updated_at\": null,\n                \"comment_count\": 4,\n                \"like_count\": 6,\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JW1X56SJN309P1Q8J84DRVWS\",\n                \"user_id\": \"01JW1X56JH0FZ49J64J4M5D2VA\",\n                \"title\": null,\n                \"slug\": \"end-court-trade\",\n                \"body\": \"Street hair hair debate. Like floor both second. Action level ready risk camera method view money. Sort little price.\\n\\nAfter leg staff near actually to each really. Program full defense difference manager. Size low include attention maintain fill offer.\\n\\nSouthern run officer everything kid toward. Hope since team detail sing like development attack. Federal over perform pull bad our computer.\",\n                \"created_at\": \"2025-05-25T02:43:43\",\n                \"updated_at\": null,\n                \"comment_count\": 4,\n                \"like_count\": 7,\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JW1X56SK86D7303TYT4DRZ7T\",\n                \"user_id\": \"01JW1X56JJ3J6HTNTR6GE5NC9J\",\n                \"title\": null,\n                \"slug\": \"american-art-method\",\n                \"body\": \"Message contain audience week within industry financial group. Pass interview land camera pattern discussion during their. Reduce again writer material.\\n\\nBall goal positive care group training apply name. Hot because single.\\n\\nExist room its century step instead.\",\n                \"created_at\": \"2025-05-25T02:43:43\",\n                \"updated_at\": null,\n                \"comment_count\": 3,\n                \"like_count\": 3,\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JW1X56SK8F9DBV7A220V5JTJ\",\n                \"user_id\": \"01JW1X56JJ4NV2JMCFZFS22S54\",\n                \"title\": null,\n                \"slug\": \"environmental-these\",\n                \"body\": \"Age hand purpose them. Wind parent history economic particularly everyone. Read health street door no up.\",\n                \"created_at\": \"2025-05-25T02:43:43\",\n                \"updated_at\": null,\n                \"comment_count\": 3,\n                \"like_count\": 7,\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JW1X56SK9X2S2BJV0W9XT4M8\",\n                \"user_id\": \"01JW1X56JH2990HYDJ5QCES62F\",\n                \"title\": \"product poor environment the\",\n                \"slug\": \"sit-can-hard-stuff\",\n                \"body\": \"Never one however turn would individual support. Wind establish attorney show.\\n\\nHe determine break chair. Offer necessary not name now.\\n\\nSupport right reflect. Compare local center. Training year ahead environment easy.\\n\\nSell special material child. Leg five force several stand issue say.\\n\\nCup daughter compare statement. Today though nice themselves.\",\n                \"created_at\": \"2025-05-25T02:43:43\",\n                \"updated_at\": null,\n                \"comment_count\": 8,\n                \"like_count\": 5,\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JW1X56SKBVEZ1T0H79N089E9\",\n                \"user_id\": \"01JW1X56JHW3SDX055KVJ042YW\",\n                \"title\": \"charge\",\n                \"slug\": \"difference-than-but\",\n                \"body\": \"Total young involve piece life.\\n\\nHot behavior executive up stand.\\n\\nUnit write film sit seek. Line son least anyone. Far trial tend on value wear.\",\n                \"created_at\": \"2025-05-25T02:43:43\",\n                \"updated_at\": null,\n                \"comment_count\": 7,\n                \"like_count\": 11,\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JW1X56SKDNZY223F7NN6F59K\",\n                \"user_id\": \"01JW1X56JJ1BRRA1GH680Z5S52\",\n                \"title\": null,\n                \"slug\": \"both-democrat\",\n                \"body\": \"Part majority century certainly economic seat physical.\",\n                \"created_at\": \"2025-05-25T02:43:43\",\n                \"updated_at\": null,\n                \"comment_count\": 3,\n                \"like_count\": 8,\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JW1X56SKE79Z4XNJY2T5M5CS\",\n                \"user_id\": \"01JW1X56JJ1BRRA1GH680Z5S52\",\n                \"title\": null,\n                \"slug\": \"short-probably\",\n                \"body\": \"Store mother travel everybody standard. Measure look game feel office. Deal fill then appear value to. Today author whether technology your simply seek community.\\n\\nRemain analysis ok be real. Million usually west record.\\n\\nStreet condition meet write toward. Board picture each pay.\",\n                \"created_at\": \"2025-05-25T02:43:43\",\n                \"updated_at\": null,\n                \"comment_count\": 7,\n                \"like_count\": 4,\n                \"image_urls\": []\n            }\n        ],\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 4,\n        \"has_prev\": false,\n        \"has_next\": true,\n        \"total\": 34\n    }\n}"
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Posts paginated successfully\",\n    \"data\": {\n        \"posts\": [\n            {\n                \"id\": \"01JWYZN72QWWDXS6SHB5ZX69HT\",\n                \"user_id\": \"01JWYZN6WB9D8Z2FXY8WYZJRP4\",\n                \"title\": null,\n                \"slug\": \"write-age-third\",\n                \"body\": \"Magazine your pick professional. Seek staff reveal people. Writer whom feel type rule cultural.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 1351,\n                \"like_count\": 7,\n                \"user\": {\n                    \"id\": \"01JWYZN6WB9D8Z2FXY8WYZJRP4\",\n                    \"country_id\": null,\n                    \"name\": \"Selena Kelly\",\n                    \"username\": \"amanda30\",\n                    \"birth_date\": \"1945-09-06\",\n                    \"email\": \"joanna18@example.net\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": null\n                },\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JWYZN72QH8ZSGTE52Q44C5ZR\",\n                \"user_id\": \"01JWYZN6WB9D8Z2FXY8WYZJRP4\",\n                \"title\": null,\n                \"slug\": \"international-offer\",\n                \"body\": \"Party second television usually rather. Police analysis same property rich today bad. Ahead act small middle majority break. Unit meeting end simple.\\n\\nThemselves adult interview image realize most modern suffer. Past executive night great will fund school.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 6,\n                \"like_count\": 6,\n                \"user\": {\n                    \"id\": \"01JWYZN6WB9D8Z2FXY8WYZJRP4\",\n                    \"country_id\": null,\n                    \"name\": \"Selena Kelly\",\n                    \"username\": \"amanda30\",\n                    \"birth_date\": \"1945-09-06\",\n                    \"email\": \"joanna18@example.net\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": null\n                },\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JWYZN72PD441T8J5NPJDYJMK\",\n                \"user_id\": \"01JWYZN6WB9D8Z2FXY8WYZJRP4\",\n                \"title\": null,\n                \"slug\": \"animal-health\",\n                \"body\": \"Plant control goal magazine clearly space everything. Charge relate to one your important.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 6,\n                \"like_count\": 5,\n                \"user\": {\n                    \"id\": \"01JWYZN6WB9D8Z2FXY8WYZJRP4\",\n                    \"country_id\": null,\n                    \"name\": \"Selena Kelly\",\n                    \"username\": \"amanda30\",\n                    \"birth_date\": \"1945-09-06\",\n                    \"email\": \"joanna18@example.net\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": null\n                },\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JWYZN72P7Z1BR5PEYC8MJ1CH\",\n                \"user_id\": \"01JWYZN6WB9D8Z2FXY8WYZJRP4\",\n                \"title\": \"office party knowledge\",\n                \"slug\": \"relate-authority\",\n                \"body\": \"Probably hundred between support include view about. Themselves land media entire share let program. Think quality reach eight goal property well threat. Mr meet should mention close toward affect.\\n\\nDesign likely everybody each. Bag wonder American or southern true.\\n\\nWork treat stage sport the direction trip. Meet direction fact voice ready team. Investment reduce everybody least before.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 4,\n                \"like_count\": 4,\n                \"user\": {\n                    \"id\": \"01JWYZN6WB9D8Z2FXY8WYZJRP4\",\n                    \"country_id\": null,\n                    \"name\": \"Selena Kelly\",\n                    \"username\": \"amanda30\",\n                    \"birth_date\": \"1945-09-06\",\n                    \"email\": \"joanna18@example.net\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": null\n                },\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JWYZN72P4763WSGAM79D3WXW\",\n                \"user_id\": \"01JWYZN6WB73KD9HEVQPTGAN6C\",\n                \"title\": \"could\",\n                \"slug\": \"race-begin-company\",\n                \"body\": \"Year debate natural occur accept certain. Necessary off guy bed fear mission. Responsibility some together quickly staff. No grow nation huge appear.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 3,\n                \"like_count\": 8,\n                \"user\": {\n                    \"id\": \"01JWYZN6WB73KD9HEVQPTGAN6C\",\n                    \"country_id\": \"01JWYZN1F9P5J1WHSQV45QZRSD\",\n                    \"name\": \"Beth White\",\n                    \"username\": \"gregorykim\",\n                    \"birth_date\": \"2012-09-04\",\n                    \"email\": \"maddenholly@example.org\",\n                    \"email_verified_at\": \"2025-05-17T03:46:43\",\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JWYZN1F9P5J1WHSQV45QZRSD\",\n                        \"name\": \"Equatorial Guinea\",\n                        \"iso_code\": \"GQ\",\n                        \"created_at\": \"2025-06-05T09:45:18\",\n                        \"updated_at\": null\n                    }\n                },\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JWYZN72NZCKS7QX5YS8STMFP\",\n                \"user_id\": \"01JWYZN6WB73KD9HEVQPTGAN6C\",\n                \"title\": null,\n                \"slug\": \"health-us-hold\",\n                \"body\": \"Party detail beautiful official. Computer walk near leave no the. Despite speech hit.\\n\\nClose today fact rise. Music or worker live power.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 9,\n                \"like_count\": 6,\n                \"user\": {\n                    \"id\": \"01JWYZN6WB73KD9HEVQPTGAN6C\",\n                    \"country_id\": \"01JWYZN1F9P5J1WHSQV45QZRSD\",\n                    \"name\": \"Beth White\",\n                    \"username\": \"gregorykim\",\n                    \"birth_date\": \"2012-09-04\",\n                    \"email\": \"maddenholly@example.org\",\n                    \"email_verified_at\": \"2025-05-17T03:46:43\",\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JWYZN1F9P5J1WHSQV45QZRSD\",\n                        \"name\": \"Equatorial Guinea\",\n                        \"iso_code\": \"GQ\",\n                        \"created_at\": \"2025-06-05T09:45:18\",\n                        \"updated_at\": null\n                    }\n                },\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JWYZN72ND8BPB42NGYVW0VWC\",\n                \"user_id\": \"01JWYZN6WA9AFMY1M3BDHF4CXZ\",\n                \"title\": \"enjoy speak\",\n                \"slug\": \"check-miss-street\",\n                \"body\": \"Century current could forget production. Pull rate remember thing road. Evidence apply view report.\\n\\nMain author board could. Dream important worry may open. Explain apply science light.\\n\\nPositive society world charge recognize beautiful series. May modern conference general yourself focus.\\n\\nEverybody method pull ten answer. History character your write guy feel citizen.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 4,\n                \"like_count\": 7,\n                \"user\": {\n                    \"id\": \"01JWYZN6WA9AFMY1M3BDHF4CXZ\",\n                    \"country_id\": \"01JWYZN1FBXEJ6G68B78M5VQKF\",\n                    \"name\": \"Karl White\",\n                    \"username\": \"deannadavis\",\n                    \"birth_date\": \"1919-03-29\",\n                    \"email\": \"nburton@example.com\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JWYZN1FBXEJ6G68B78M5VQKF\",\n                        \"name\": \"India\",\n                        \"iso_code\": \"IN\",\n                        \"created_at\": \"2025-06-05T09:45:18\",\n                        \"updated_at\": null\n                    }\n                },\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JWYZN72N0CG9JJBRAQXFM69V\",\n                \"user_id\": \"01JWYZN6WB73KD9HEVQPTGAN6C\",\n                \"title\": null,\n                \"slug\": \"able-focus-ten\",\n                \"body\": \"Performance fund realize music. Face democratic cold improve real product debate social. Likely character food plant establish. Wear between could large.\\n\\nA east security book size would. Yeah federal need cold especially. Despite treatment scientist pay visit again several.\\n\\nGuess walk by security community wear summer. Race child ahead.\\n\\nStructure fact work. Available rich table particular evening either want receive. Just anything minute realize.\\n\\nWife you hotel father sell. Image set discuss apply option wish against. Medical interview administration economic model cause.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 2,\n                \"like_count\": 6,\n                \"user\": {\n                    \"id\": \"01JWYZN6WB73KD9HEVQPTGAN6C\",\n                    \"country_id\": \"01JWYZN1F9P5J1WHSQV45QZRSD\",\n                    \"name\": \"Beth White\",\n                    \"username\": \"gregorykim\",\n                    \"birth_date\": \"2012-09-04\",\n                    \"email\": \"maddenholly@example.org\",\n                    \"email_verified_at\": \"2025-05-17T03:46:43\",\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JWYZN1F9P5J1WHSQV45QZRSD\",\n                        \"name\": \"Equatorial Guinea\",\n                        \"iso_code\": \"GQ\",\n                        \"created_at\": \"2025-06-05T09:45:18\",\n                        \"updated_at\": null\n                    }\n                },\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JWYZN72MWQGV8N6V61A7PJ2Y\",\n                \"user_id\": \"01JWYZN6WA7M1BK66YF6J5QV8A\",\n                \"title\": \"first on price environment\",\n                \"slug\": \"program-authority\",\n                \"body\": \"Policy stock right available good strong. Agreement two officer number beyond speech.\\n\\nResource without car its ever. Action public ok on anything. Someone mind traditional ground.\\n\\nAmerican raise beat night particular begin environmental. Town good actually. Help up area deep still seven meet.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 8,\n                \"like_count\": 10,\n                \"user\": {\n                    \"id\": \"01JWYZN6WA7M1BK66YF6J5QV8A\",\n                    \"country_id\": \"01JWYZN1FTSNJRN3A43DQF8WKA\",\n                    \"name\": \"Brittany Johnson\",\n                    \"username\": \"analyst\",\n                    \"birth_date\": \"1991-10-26\",\n                    \"email\": \"analyst@chartnalyze.edu\",\n                    \"email_verified_at\": \"2024-08-25T17:37:34\",\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JWYZN1FTSNJRN3A43DQF8WKA\",\n                        \"name\": \"Uganda\",\n                        \"iso_code\": \"UG\",\n                        \"created_at\": \"2025-06-05T09:45:18\",\n                        \"updated_at\": null\n                    }\n                },\n                \"image_urls\": []\n            },\n            {\n                \"id\": \"01JWYZN72MVHJ2TTZ2XBRMCRHR\",\n                \"user_id\": \"01JWYZN6WA9AFMY1M3BDHF4CXZ\",\n                \"title\": null,\n                \"slug\": \"camera-somebody\",\n                \"body\": \"Where enough report recently. Move article expect north smile region. Live gas travel property allow forward authority. Receive yes eight daughter husband.\\n\\nCrime operation beautiful nice box call.\\n\\nMouth voice eat especially among physical same long. Environmental protect exactly knowledge not. Religious near human kid risk team.\",\n                \"created_at\": \"2025-06-05T09:45:24\",\n                \"updated_at\": null,\n                \"comment_count\": 5,\n                \"like_count\": 5,\n                \"user\": {\n                    \"id\": \"01JWYZN6WA9AFMY1M3BDHF4CXZ\",\n                    \"country_id\": \"01JWYZN1FBXEJ6G68B78M5VQKF\",\n                    \"name\": \"Karl White\",\n                    \"username\": \"deannadavis\",\n                    \"birth_date\": \"1919-03-29\",\n                    \"email\": \"nburton@example.com\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2025-06-05T09:45:23\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JWYZN1FBXEJ6G68B78M5VQKF\",\n                        \"name\": \"India\",\n                        \"iso_code\": \"IN\",\n                        \"created_at\": \"2025-06-05T09:45:18\",\n                        \"updated_at\": null\n                    }\n                },\n                \"image_urls\": []\n            }\n        ],\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 2,\n        \"has_prev\": false,\n        \"has_next\": true,\n        \"total\": 13\n    }\n}"
 								}
 							]
 						},
@@ -4997,7 +5069,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/posts?per_page=10&page=1&filter[body]=hand",
+											"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/posts?per_page=10&page=1",
 											"host": [
 												"{{BASE_URL}}"
 											],
@@ -5017,9 +5089,20 @@
 													"value": "1"
 												},
 												{
+													"key": "filter",
+													"value": "",
+													"description": "Filter by body column",
+													"disabled": true
+												},
+												{
 													"key": "filter[body]",
 													"value": "hand",
-													"description": "Filter by body column"
+													"disabled": true
+												},
+												{
+													"key": "filter[title]",
+													"value": "title",
+													"disabled": true
 												}
 											]
 										}
@@ -7724,6 +7807,25 @@
 							"body": "{\n    \"status\": 403,\n    \"message\": \"Forbidden action\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/google/authorized",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"google",
+								"authorized"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
