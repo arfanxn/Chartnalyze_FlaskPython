@@ -28,6 +28,7 @@ class Config:
     GOOGLE_OAUTH_AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
     GOOGLE_OAUTH_TOKEN_URI = 'https://oauth2.googleapis.com/token'
     GOOGLE_OATUH_USERINFO_URI = 'https://www.googleapis.com/oauth2/v3/userinfo'
+    GOOGlE_OAUTH_REVOKE_URI = 'https://oauth2.googleapis.com/revoke'
     GOOGLE_OAUTH_SCOPES = [
         "https://www.googleapis.com/auth/userinfo.profile",
         "https://www.googleapis.com/auth/userinfo.email",
