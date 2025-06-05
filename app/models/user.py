@@ -23,7 +23,7 @@ class User(db.Model):
     birth_date = db.Column(db.Date)
     email = db.Column(db.String(50), nullable=False, unique=True)
     email_verified_at = db.Column(db.DateTime)
-    _password = db.Column('password', db.String(255), nullable=False)
+    _password = db.Column('password', db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now())
     updated_at = db.Column(db.DateTime, onupdate=lambda: datetime.now())
 
@@ -98,6 +98,9 @@ class User(db.Model):
     @password.setter
     def password(self, password):
         """Hashes and sets the password."""
+        if (password is None):
+            self._password = None
+            return 
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         self._password =  hashed_password.decode('utf-8') if isinstance(hashed_password, bytes) else hashed_password
 

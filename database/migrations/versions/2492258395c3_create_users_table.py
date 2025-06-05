@@ -26,7 +26,7 @@ def upgrade():
         sa.Column('birth_date', sa.Date),
         sa.Column('email', sa.VARCHAR(50), unique=True, nullable=False),
         sa.Column('email_verified_at', sa.DateTime),
-        sa.Column('password', sa.VARCHAR(255), nullable=False),
+        sa.Column('password', sa.VARCHAR(255), nullable=True),
         sa.Column('created_at', sa.DateTime, nullable=False, server_default=sa.func.now()),
         sa.Column('updated_at', sa.DateTime, server_onupdate=sa.func.now()),
     )
