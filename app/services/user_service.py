@@ -1,3 +1,15 @@
+import ulid
+import os
+import requests
+import re
+import random
+from datetime import timedelta, datetime
+from flask import session, request
+from flask_jwt_extended import create_access_token
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from werkzeug.exceptions import InternalServerError, NotFound, UnprocessableEntity, Unauthorized
+from werkzeug.datastructures import FileStorage
+from app.helpers.file_helpers import get_file_size, get_file_extension
 from app.config import Config
 from app.repositories import UserRepository
 from app.services import Service
@@ -12,17 +24,9 @@ from app.forms import (
     UpdateUserPasswordForm
 )
 from app.models import User, Role, Media
-from app.extensions import db
+from app.extensions import db, flow
 from app.enums.role_enums import RoleName
 from app.enums.media_enums import ModelType
-from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from werkzeug.exceptions import InternalServerError, NotFound, UnprocessableEntity
-from werkzeug.datastructures import FileStorage
-from app.helpers.file_helpers import get_file_size, get_file_extension
-from flask_jwt_extended import create_access_token
-from datetime import timedelta, datetime
-import ulid
-import os
 
 user_repository = UserRepository()
 
@@ -62,6 +66,47 @@ class UserService(Service):
         access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=Config.JWT_EXPIRATION_DAYS))
 
         return (user, access_token)
+    
+    def login_google_authorized(self) -> tuple[User, str]:
+        """
+        Handles Google OAuth2 authorization callback.
+        Fetches the authorization token from the flow object, then uses it to fetch user info from Google.
+        If the user does not exist in the database, creates a new user with the email and username fields.
+        Returns a tuple containing the user and the JWT access token.
+        """
+        flow.fetch_token(authorization_response=request.url)
+        
+        credentials = flow.credentials
+        session['google_oauth2'] = {'credentials': {'token': credentials.token}}
+        
+        user_json = requests.get(
+            Config.GOOGLE_OATUH_USERINFO_URI,
+            headers={'Authorization': f'Bearer {credentials.token}'}
+        ).json()
+
+        email = user_json.get('email')
+        user = User.query.filter(User.email == email).first()
+
+        if user is None:
+            role = Role.query.filter_by(name=RoleName.USER.value).first()
+
+            name = user_json.get('name')
+            username = re.sub(r'\s+', '_', name[:12]).lower() + str(random.randrange(1000, 9999, 1))
+            
+            user = User()
+            user.email = email
+            user.name = name
+            user.username = username
+            user.password = None
+            user.roles.extend([role])
+
+            db.session.add(user)
+            db.session.commit()    
+
+        access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=Config.JWT_EXPIRATION_DAYS))
+        
+        return (user, access_token)
+        
 
     def verify_email (self, form: OtpCodeForm, email: str) -> tuple[User]: 
         try:
@@ -77,6 +122,27 @@ class UserService(Service):
         except SQLAlchemyError as e:
             db.session.rollback()
             raise InternalServerError('Email verification failed')
+        
+    def logout (self) -> tuple[bool]:
+        """
+        Revoke the current user's Google OAuth token and clear the session.
+
+        Returns:
+            tuple[bool]: (True, ) if the logout was successful, otherwise an InternalServerError will be raised.
+        """
+        try:
+            token = session['google_oauth2']['credentials']['token']
+        except KeyError:
+            token = None
+        if token:
+            requests.post(
+                Config.GOOGlE_OAUTH_REVOKE_URI, 
+                params={'token': token}, 
+                headers={'content-type': 'application/x-www-form-urlencoded'}
+            )
+
+        session.clear()
+        return (True, )
         
     def reset_password(self, form: ResetUserPasswordForm) -> tuple[User]:
         try:

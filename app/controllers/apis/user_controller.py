@@ -1,6 +1,8 @@
-from flask import Blueprint, g, request
+import requests
+from flask import Blueprint, g, request, session, redirect
 from http import HTTPStatus
-from app.extensions import limiter
+from app.extensions import limiter, flow
+from app.config import Config
 from app.forms import (
     LoginForm,
     OtpCodeForm,
@@ -53,6 +55,26 @@ def login():
 
     return create_response_tuple(status=HTTPStatus.OK, message='User logged in successfully', data={'access_token': access_token})
 
+@user_bp.route('/login/google')
+def login_google():
+    authorization_url, state = flow.authorization_url(
+        access_type='offline',
+        include_granted_scopes='true',
+        prompt='select_account'  # Force account selection
+    )
+    session['google_oauth2'] = {'state': state}
+
+
+    print('authorization_url')
+    print(authorization_url)
+
+    return redirect(authorization_url)
+
+@user_bp.route('/login/google/authorized', methods=['GET', 'POST'])
+def login_google_authorized():
+    _, access_token = user_service.login_google_authorized()
+    return create_response_tuple(status=HTTPStatus.OK, message='User logged in with Google successfully', data={'access_token': access_token})
+
 @user_bp.route('/self/email/verify', methods=['POST'])
 @api_key_verified
 @authenticated
@@ -75,6 +97,7 @@ def logout():
     """
     Logs out the authenticated user and returns a success message.
     """
+    user_service.logout()
     return create_response_tuple(status=HTTPStatus.OK, message='User logged out successfully')
 
 @user_bp.route("/reset-password", methods=["PATCH"])

@@ -34,4 +34,7 @@ class Config:
         "https://www.googleapis.com/auth/userinfo.email",
         "openid"
     ]
-    GOOGLE_OAUTH_REDIRECT_URIS = [f"{APP_URL}/api/users/login/google/authorized"]
+    GOOGLE_OAUTH_REDIRECT_URIS = [
+        "http://localhost:5173/users/login",
+        f"{APP_URL}/api/users/login/google/authorized",
+    ]
