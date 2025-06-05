@@ -17,11 +17,20 @@ class Config:
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
-    GOOGLE_OAUTH_CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID')
-    GOOGLE_OAUTH_CLIENT_SECRET = os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')
 
     # The environment variables that are used without injection
     UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
     LIMITER_DEFAULT_LIMITS = os.getenv('LIMITER_DEFAULT_LIMITS').split(',')
     OTP_EXPIRATION_MINUTES = int(os.getenv('OTP_EXPIRATION_MINUTES'))
     JWT_EXPIRATION_DAYS = int(os.getenv('JWT_EXPIRATION_DAYS'))
+    GOOGLE_OAUTH_CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID')
+    GOOGLE_OAUTH_CLIENT_SECRET = os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')
+    GOOGLE_OAUTH_AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
+    GOOGLE_OAUTH_TOKEN_URI = 'https://oauth2.googleapis.com/token'
+    GOOGLE_OATUH_USERINFO_URI = 'https://www.googleapis.com/oauth2/v3/userinfo'
+    GOOGLE_OAUTH_SCOPES = [
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "openid"
+    ]
+    GOOGLE_OAUTH_REDIRECT_URIS = [f"{APP_URL}/api/users/login/google/authorized"]
