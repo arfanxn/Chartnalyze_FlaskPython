@@ -4,10 +4,10 @@ import requests
 import re
 import random
 from datetime import timedelta, datetime
-from flask import session, request
+from flask import session, request, g
 from flask_jwt_extended import create_access_token
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from werkzeug.exceptions import InternalServerError, NotFound, UnprocessableEntity, Unauthorized
+from werkzeug.exceptions import InternalServerError, NotFound, UnprocessableEntity
 from werkzeug.datastructures import FileStorage
 from app.helpers.file_helpers import get_file_size, get_file_extension
 from app.config import Config
@@ -24,7 +24,9 @@ from app.forms import (
     UpdateUserPasswordForm
 )
 from app.models import User, Role, Media
+from app.actions import CreateActivityAction
 from app.extensions import db, flow
+from app.enums.activity_enums import CauserType, SubjectType, Type
 from app.enums.role_enums import RoleName
 from app.enums.media_enums import ModelType
 
@@ -47,10 +49,21 @@ class UserService(Service):
             user.roles.extend([role]) 
             db.session.add(user)
 
+            create_activity = CreateActivityAction()
+            create_activity(
+                causer=user,
+                type=Type.REGISTER.value,
+                description=f"{user.name} ({user.email}) has registered",
+                properties={
+                    'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
+                },
+            )
+
             db.session.commit()    
 
             return (user, )
         except IntegrityError as e:
+            db.session.rollback()
             raise UnprocessableEntity({'email' : ['Email or username already exists']})
 
     def login(self, form: LoginForm) -> tuple[User, str]:
@@ -65,6 +78,16 @@ class UserService(Service):
         # Generate a JWT token with the user's ID as the identity and 30 days expiration time.
         access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=Config.JWT_EXPIRATION_DAYS))
 
+        create_activity = CreateActivityAction()
+        create_activity(
+            causer=user,
+            type=Type.LOGIN.value,
+            description=f"{user.name} ({user.email}) has logged in",
+            properties={
+                'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
+            },
+        )
+
         return (user, access_token)
     
     def login_google_authorized(self) -> tuple[User, str]:
@@ -74,6 +97,8 @@ class UserService(Service):
         If the user does not exist in the database, creates a new user with the email and username fields.
         Returns a tuple containing the user and the JWT access token.
         """
+        create_activity = CreateActivityAction()
+
         flow.fetch_token(authorization_response=request.url)
         
         credentials = flow.credentials
@@ -101,9 +126,27 @@ class UserService(Service):
             user.roles.extend([role])
 
             db.session.add(user)
-            db.session.commit()    
+            db.session.commit()
+
+            create_activity(
+                causer=user,
+                type=Type.REGISTER.value,
+                description=f"{user.name} ({user.email}) has registered",
+                properties={
+                    'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
+                },
+            )
 
         access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=Config.JWT_EXPIRATION_DAYS))
+
+        create_activity(
+            causer=user,
+            type=Type.LOGIN.value,
+            description=f"{user.name} ({user.email}) has logged in",
+            properties={
+                    'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
+            },
+        )
         
         return (user, access_token)
         
@@ -118,6 +161,16 @@ class UserService(Service):
 
             db.session.commit()
 
+            create_activity = CreateActivityAction()
+            create_activity(
+                causer=user,
+                type=Type.VERIFY_EMAIL.value,
+                description=f"{user.name} ({user.email}) has verified their email",
+                properties={
+                    'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
+                }
+            )
+
             return (user, )
         except SQLAlchemyError as e:
             db.session.rollback()
@@ -130,6 +183,8 @@ class UserService(Service):
         Returns:
             tuple[bool]: (True, ) if the logout was successful, otherwise an InternalServerError will be raised.
         """
+        user = g.user
+
         try:
             token = session['google_oauth2']['credentials']['token']
         except KeyError:
@@ -142,6 +197,17 @@ class UserService(Service):
             )
 
         session.clear()
+
+        create_activity = CreateActivityAction()
+        create_activity(
+            causer=user,
+            type=Type.LOGOUT.value,
+            description=f"{user.name} ({user.email}) has logged out",
+            properties={
+                'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
+            }
+        )
+
         return (True, )
         
     def reset_password(self, form: ResetUserPasswordForm) -> tuple[User]:
