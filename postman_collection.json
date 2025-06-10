@@ -1911,7 +1911,7 @@
 									"formdata": [
 										{
 											"key": "identifier",
-											"value": "user",
+											"value": "admin",
 											"description": "Login via email or username",
 											"type": "text"
 										},
@@ -7688,6 +7688,266 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"status\": 404,\n    \"message\": \"Post not found\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Activities",
+					"item": [
+						{
+							"name": "Activities",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/activities?per_page=10&page=1&sort=created_at&join=causer",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"activities"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": "Optional field"
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Optional field"
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "Sort by `created at` descending "
+										},
+										{
+											"key": "join",
+											"value": "causer",
+											"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+										},
+										{
+											"key": "filter[type]",
+											"value": "verify_email",
+											"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/activities?per_page=10&page=1&sort=created_at&join=causer",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field"
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"description": "Optional field"
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "Sort by `created at` descending "
+												},
+												{
+													"key": "join",
+													"value": "causer",
+													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+												},
+												{
+													"key": "filter[type]",
+													"value": "verify_email",
+													"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Jun 2025 11:45:48 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "7896"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Activities paginated successfully\",\n    \"data\": {\n        \"activities\": [\n            {\n                \"id\": \"01JXCTF77NJE41C6AZ2D8DEFZM\",\n                \"type\": \"register\",\n                \"description\": \"Zachary Watson (gallegosrobert@example.org) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-08-15T00:43:09\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n                    \"country_id\": null,\n                    \"name\": \"Zachary Watson\",\n                    \"username\": \"swalker\",\n                    \"birth_date\": \"1985-11-11\",\n                    \"email\": \"gallegosrobert@example.org\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-08-15T00:43:09\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": null\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N744HZ3SMNT2HPPW3\",\n                \"type\": \"register\",\n                \"description\": \"Tara Perry (garciaalejandra@example.net) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-08-20T18:57:50\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                    \"country_id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                    \"name\": \"Tara Perry\",\n                    \"username\": \"smiles\",\n                    \"birth_date\": \"2000-02-22\",\n                    \"email\": \"garciaalejandra@example.net\",\n                    \"email_verified_at\": \"2024-10-13T08:31:16\",\n                    \"created_at\": \"2024-08-20T18:57:50\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                        \"name\": \"Brazil\",\n                        \"iso_code\": \"BR\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N3R4F60C8VC9NWT6S\",\n                \"type\": \"register\",\n                \"description\": \"Tyler Arnold (analyst@chartnalyze.edu) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYP8MCQ3E5G5KR505D\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-09-02T17:49:01\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYP8MCQ3E5G5KR505D\",\n                    \"country_id\": \"01JXCTEZC6ACKVPSHK2DR569M9\",\n                    \"name\": \"Tyler Arnold\",\n                    \"username\": \"analyst\",\n                    \"birth_date\": \"1936-01-19\",\n                    \"email\": \"analyst@chartnalyze.edu\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-09-02T17:49:01\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC6ACKVPSHK2DR569M9\",\n                        \"name\": \"Dominican Republic\",\n                        \"iso_code\": \"DO\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77NM30V3S0J0SX6G4P9\",\n                \"type\": \"register\",\n                \"description\": \"Robert Thomas (rodriguezsarah@example.com) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z0PQX8D0JFJ265F3GP\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-09-03T21:55:07\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4Z0PQX8D0JFJ265F3GP\",\n                    \"country_id\": \"01JXCTEZC3A3DK0CTTRW492VSG\",\n                    \"name\": \"Robert Thomas\",\n                    \"username\": \"rowetheresa\",\n                    \"birth_date\": \"1932-07-15\",\n                    \"email\": \"rodriguezsarah@example.com\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-09-03T21:55:07\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC3A3DK0CTTRW492VSG\",\n                        \"name\": \"Congo, The Democratic Republic of the\",\n                        \"iso_code\": \"CD\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77NSXVQ58PG371XQRCM\",\n                \"type\": \"login\",\n                \"description\": \"Tyler Arnold (analyst@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYP8MCQ3E5G5KR505D\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-05T19:25:57\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYP8MCQ3E5G5KR505D\",\n                    \"country_id\": \"01JXCTEZC6ACKVPSHK2DR569M9\",\n                    \"name\": \"Tyler Arnold\",\n                    \"username\": \"analyst\",\n                    \"birth_date\": \"1936-01-19\",\n                    \"email\": \"analyst@chartnalyze.edu\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-09-02T17:49:01\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC6ACKVPSHK2DR569M9\",\n                        \"name\": \"Dominican Republic\",\n                        \"iso_code\": \"DO\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N8R85D0QC7DHEE0AK\",\n                \"type\": \"login\",\n                \"description\": \"Tara Perry (garciaalejandra@example.net) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-10T11:03:40\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                    \"country_id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                    \"name\": \"Tara Perry\",\n                    \"username\": \"smiles\",\n                    \"birth_date\": \"2000-02-22\",\n                    \"email\": \"garciaalejandra@example.net\",\n                    \"email_verified_at\": \"2024-10-13T08:31:16\",\n                    \"created_at\": \"2024-08-20T18:57:50\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                        \"name\": \"Brazil\",\n                        \"iso_code\": \"BR\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N09QCAATTRCBE0ZTN\",\n                \"type\": \"verify_email\",\n                \"description\": \"Tara Perry (garciaalejandra@example.net) has verified their email\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-13T08:31:16\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                    \"country_id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                    \"name\": \"Tara Perry\",\n                    \"username\": \"smiles\",\n                    \"birth_date\": \"2000-02-22\",\n                    \"email\": \"garciaalejandra@example.net\",\n                    \"email_verified_at\": \"2024-10-13T08:31:16\",\n                    \"created_at\": \"2024-08-20T18:57:50\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                        \"name\": \"Brazil\",\n                        \"iso_code\": \"BR\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N3SF059RTAZJRMXE5\",\n                \"type\": \"login\",\n                \"description\": \"Robert Thomas (rodriguezsarah@example.com) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z0PQX8D0JFJ265F3GP\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-28T12:14:42\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4Z0PQX8D0JFJ265F3GP\",\n                    \"country_id\": \"01JXCTEZC3A3DK0CTTRW492VSG\",\n                    \"name\": \"Robert Thomas\",\n                    \"username\": \"rowetheresa\",\n                    \"birth_date\": \"1932-07-15\",\n                    \"email\": \"rodriguezsarah@example.com\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-09-03T21:55:07\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC3A3DK0CTTRW492VSG\",\n                        \"name\": \"Congo, The Democratic Republic of the\",\n                        \"iso_code\": \"CD\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77NWM22FW9RRFDMZGH9\",\n                \"type\": \"register\",\n                \"description\": \"Danielle Sanders (user@chartnalyze.edu) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z08NHG0WY3869XK2V2\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-31T21:26:26\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4Z08NHG0WY3869XK2V2\",\n                    \"country_id\": \"01JXCTEZCSABT57N64WPVZXPTF\",\n                    \"name\": \"Danielle Sanders\",\n                    \"username\": \"user\",\n                    \"birth_date\": \"1953-06-27\",\n                    \"email\": \"user@chartnalyze.edu\",\n                    \"email_verified_at\": \"2025-03-14T04:05:46\",\n                    \"created_at\": \"2024-10-31T21:26:26\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZCSABT57N64WPVZXPTF\",\n                        \"name\": \"Slovenia\",\n                        \"iso_code\": \"SI\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77MXWWJACH2XHPS3EMQ\",\n                \"type\": \"register\",\n                \"description\": \"Amy Estrada (turnernicole@example.com) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYEC66JYRK5C47JHJ9\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-11-21T21:05:00\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYEC66JYRK5C47JHJ9\",\n                    \"country_id\": \"01JXCTEZCJHR392G5FWYQ7Y1RY\",\n                    \"name\": \"Amy Estrada\",\n                    \"username\": \"torresgrace\",\n                    \"birth_date\": \"2005-11-21\",\n                    \"email\": \"turnernicole@example.com\",\n                    \"email_verified_at\": \"2024-11-23T23:02:25\",\n                    \"created_at\": \"2024-11-21T21:05:00\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZCJHR392G5FWYQ7Y1RY\",\n                        \"name\": \"Mali\",\n                        \"iso_code\": \"ML\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            }\n        ],\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 10,\n        \"has_prev\": false,\n        \"has_next\": true,\n        \"total\": 100\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Activities of User",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/activities?per_page=10&page=1&sort=created_at",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{USER_ID}}",
+										"activities"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": "Optional field"
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Optional field"
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "Sort by `created at` descending "
+										},
+										{
+											"key": "join",
+											"value": "subject",
+											"description": "it could be \"causer\" or \"subject\" or \"causer,subject\"",
+											"disabled": true
+										},
+										{
+											"key": "filter[type]",
+											"value": "login",
+											"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/activities/{{ACTIVITY_ID}}?join=causer,subject",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"activities",
+										"{{ACTIVITY_ID}}"
+									],
+									"query": [
+										{
+											"key": "join",
+											"value": "causer,subject",
+											"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/activities/{{ACTIVITY_ID}}?join=causer,subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"activities",
+												"{{ACTIVITY_ID}}"
+											],
+											"query": [
+												{
+													"key": "join",
+													"value": "causer,subject",
+													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+												}
+											]
+										}
+									},
+									"status": "NOT FOUND",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 10 Jun 2025 09:33:24 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "48"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 404,\n    \"message\": \"Activity not found\"\n}"
 								}
 							]
 						}
