@@ -23,11 +23,11 @@ def upgrade():
         sa.Column('id', sa.CHAR(26), primary_key=True),
         sa.Column('type', sa.Enum(*[e.value for e in Type], name='types'), nullable=False),
         sa.Column('description', sa.Text, nullable=False),
-        sa.Column('subject_id', sa.CHAR(26), nullable=True),
-        sa.Column('subject_type', sa.Enum(*[e.value for e in SubjectType], name='subject_types'), nullable=True),
-        sa.Column('causer_id', sa.CHAR(26), nullable=True),
-        sa.Column('causer_type', sa.Enum(*[e.value for e in CauserType], name='causer_types'), nullable=True),
-        sa.Column('properties', sa.JSON, nullable=False),
+        sa.Column('subject_id', sa.CHAR(26)),
+        sa.Column('subject_type', sa.Enum(*[e.value for e in SubjectType], name='subject_types')),
+        sa.Column('causer_id', sa.CHAR(26)),
+        sa.Column('causer_type', sa.Enum(*[e.value for e in CauserType], name='causer_types')),
+        sa.Column('properties', sa.JSON),
         sa.Column('created_at', sa.DateTime, nullable=False, server_default=sa.func.now()),
         sa.Column('updated_at', sa.DateTime, server_onupdate=sa.func.now())
     )
