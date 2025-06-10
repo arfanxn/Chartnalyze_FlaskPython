@@ -22,7 +22,8 @@ class UserSeeder(Seeder):
 
             for j in range(5):
                 country_id = fake.random_element(elements=countries).id if fake.boolean() else None
-                email_verified_at = fake.date_time_between(start_date='-1y', end_date='now') if fake.boolean() else None
+                created_at = fake.date_time_between(start_date='-1y', end_date='now')
+                email_verified_at = fake.date_time_between(start_date=created_at, end_date='now') if fake.boolean() else None
 
                 user = User()
                 user.country_id = country_id
@@ -40,6 +41,7 @@ class UserSeeder(Seeder):
 
                 user.email_verified_at = email_verified_at
                 user.password = '11112222'   
+                user.created_at = created_at
                 user.roles.extend([role]) 
 
                 users.append(user)
