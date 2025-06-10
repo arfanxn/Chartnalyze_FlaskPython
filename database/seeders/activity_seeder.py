@@ -1,9 +1,8 @@
 from app.extensions import db
 from app.models import User, Activity
-from app.enums.activity_enums import CauserType, SubjectType, Type
+from app.enums.activity_enums import CauserType, Type
 from database.seeders.seeder import Seeder
 from faker import Faker
-import ulid
 
 fake = Faker()
 
@@ -34,23 +33,12 @@ class ActivitySeeder(Seeder):
 
         # Loop through each user to generate activity records
         for user in users:
-            # Define common properties for activities related to this user
-            props = {
-                'user': {
-                    'id': user.id,
-                    'email': user.email,
-                    'name': user.name,
-                    'username': user.username,
-                }
-            }
-
             # Create registration activity
             activity = Activity(
                 type=Type.REGISTER.value,
                 description=f"{user.name} ({user.email}) has registered",
                 causer_id=user.id,
                 causer_type=CauserType.USER.value,
-                properties=props,
                 created_at=user.created_at.isoformat(),
                 updated_at=None
             )
@@ -58,15 +46,12 @@ class ActivitySeeder(Seeder):
 
             # Create email verification activity if applicable
             if user.email_verified_at is not None:
-                verification_props = props.copy()
-                verification_props['user']['email_verified_at'] = user.email_verified_at.isoformat()
 
                 activity = Activity(
                     type=Type.VERIFY_EMAIL.value,
                     description=f"{user.name} ({user.email}) has verified their email",
                     causer_id=user.id,
                     causer_type=CauserType.USER.value,
-                    properties=verification_props,
                     created_at=user.email_verified_at.isoformat(),
                     updated_at=None
                 )
@@ -88,7 +73,6 @@ class ActivitySeeder(Seeder):
                     description=f"{user.name} ({user.email}) has logged in",
                     causer_id=user.id,
                     causer_type=CauserType.USER.value,
-                    properties=props,
                     created_at=logged_in_at.isoformat(),
                     updated_at=None
                 )
@@ -107,7 +91,6 @@ class ActivitySeeder(Seeder):
                     description=f"{user.name} ({user.email}) has logged out",
                     causer_id=user.id,
                     causer_type=CauserType.USER.value,
-                    properties=props,
                     created_at=logged_out_at.isoformat(),
                     updated_at=None
                 )
