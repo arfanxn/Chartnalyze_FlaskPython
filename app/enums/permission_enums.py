@@ -26,3 +26,5 @@ class PermissionName(Enum):
     POSTS_DESTROY = 'posts.destroy'
 
     COMMENTS_DESTROY = 'comments.destroy'
+
+    ACTIVITIES_INDEX = 'activities.index'
