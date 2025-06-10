@@ -53,10 +53,7 @@ class UserService(Service):
             create_activity(
                 causer=user,
                 type=Type.REGISTER.value,
-                description=f"{user.name} ({user.email}) has registered",
-                properties={
-                    'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
-                },
+                description=f"{user.name if user.name else user.username} ({user.email}) has registered",
             )
 
             db.session.commit()    
@@ -82,10 +79,7 @@ class UserService(Service):
         create_activity(
             causer=user,
             type=Type.LOGIN.value,
-            description=f"{user.name} ({user.email}) has logged in",
-            properties={
-                'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
-            },
+            description=f"{user.name if user.name else user.username} ({user.email}) has logged in",
         )
 
         return (user, access_token)
@@ -131,10 +125,7 @@ class UserService(Service):
             create_activity(
                 causer=user,
                 type=Type.REGISTER.value,
-                description=f"{user.name} ({user.email}) has registered",
-                properties={
-                    'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
-                },
+                description=f"{user.name if user.name else user.username} ({user.email}) has registered",
             )
 
         access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=Config.JWT_EXPIRATION_DAYS))
@@ -142,10 +133,7 @@ class UserService(Service):
         create_activity(
             causer=user,
             type=Type.LOGIN.value,
-            description=f"{user.name} ({user.email}) has logged in",
-            properties={
-                    'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
-            },
+            description=f"{user.name if user.name else user.username} ({user.email}) has logged in",
         )
         
         return (user, access_token)
@@ -165,10 +153,7 @@ class UserService(Service):
             create_activity(
                 causer=user,
                 type=Type.VERIFY_EMAIL.value,
-                description=f"{user.name} ({user.email}) has verified their email",
-                properties={
-                    'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
-                }
+                description=f"{user.name if user.name else user.username} ({user.email}) has verified their email",
             )
 
             return (user, )
@@ -202,10 +187,7 @@ class UserService(Service):
         create_activity(
             causer=user,
             type=Type.LOGOUT.value,
-            description=f"{user.name} ({user.email}) has logged out",
-            properties={
-                'user': {key: getattr(user, key) for key in ['id', 'name', 'email', 'username']},
-            }
+            description=f"{user.name if user.name else user.username} ({user.email}) has logged out",
         )
 
         return (True, )
