@@ -5,3 +5,4 @@ from .post_policy import PostPolicy
 from .comment_policy import CommentPolicy
 from .like_policy import LikePolicy
 from .save_policy import SavePolicy
+from .activity_policy import ActivityPolicy

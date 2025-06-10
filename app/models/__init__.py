@@ -15,3 +15,4 @@ from .comment import Comment
 from .like import Like
 from .save import Save
 from .media import Media
+from .activity import Activity
