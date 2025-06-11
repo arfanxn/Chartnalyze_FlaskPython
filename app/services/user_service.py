@@ -48,6 +48,7 @@ class UserService(Service):
             user.password = form.password.data 
             user.roles.extend([role]) 
             db.session.add(user)
+            db.session.commit()    
 
             create_activity = CreateActivityAction()
             create_activity(
@@ -55,8 +56,6 @@ class UserService(Service):
                 type=Type.REGISTER.value,
                 description=f"{user.name if user.name else user.username} ({user.email}) has registered",
             )
-
-            db.session.commit()    
 
             return (user, )
         except IntegrityError as e:
