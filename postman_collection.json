@@ -7729,7 +7729,7 @@
 										{
 											"key": "join",
 											"value": "user",
-											"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+											"description": "it could be `user` or `subject` or `user,subject`"
 										},
 										{
 											"key": "filter",
@@ -7740,22 +7740,22 @@
 										{
 											"key": "filter[type]",
 											"value": "verify_email",
-											"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+											"description": "it could be `register`,  `verify_email`, `login`, `logout`",
 											"disabled": true
 										},
 										{
 											"key": "filter[user_agent]",
-											"value": null,
+											"value": "",
 											"disabled": true
 										},
 										{
 											"key": "filter[user_ip_address]",
-											"value": null,
+											"value": "",
 											"disabled": true
 										},
 										{
 											"key": "filter[description]",
-											"value": null,
+											"value": "",
 											"disabled": true
 										}
 									]
@@ -7795,7 +7795,7 @@
 												{
 													"key": "join",
 													"value": "user",
-													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+													"description": "it could be `user` or `subject` or `user,subject`"
 												},
 												{
 													"key": "filter",
@@ -7806,7 +7806,7 @@
 												{
 													"key": "filter[type]",
 													"value": "verify_email",
-													"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+													"description": "it could be `register`,  `verify_email`, `login`, `logout`",
 													"disabled": true
 												},
 												{
@@ -7896,7 +7896,7 @@
 										{
 											"key": "join",
 											"value": "subject",
-											"description": "it could be \"causer\" or \"subject\" or \"causer,subject\"",
+											"description": "it could be `user` or `subject` or `user,subject`",
 											"disabled": true
 										},
 										{
@@ -7908,7 +7908,7 @@
 										{
 											"key": "filter[type]",
 											"value": "verify_email",
-											"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+											"description": "it could be `register`,  `verify_email`, `login`, `logout`",
 											"disabled": true
 										},
 										{
@@ -7965,7 +7965,7 @@
 												{
 													"key": "join",
 													"value": "subject",
-													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\"",
+													"description": "it could be `user` or `subject` or `user,subject`",
 													"disabled": true
 												},
 												{
@@ -7977,7 +7977,7 @@
 												{
 													"key": "filter[type]",
 													"value": "verify_email",
-													"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+													"description": "it could be `register`,  `verify_email`, `login`, `logout`",
 													"disabled": true
 												},
 												{
@@ -8136,7 +8136,7 @@
 												{
 													"key": "join",
 													"value": "subject",
-													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\"",
+													"description": "it could be `user` or `subject` or `user,subject`",
 													"disabled": true
 												},
 												{
@@ -8148,7 +8148,7 @@
 												{
 													"key": "filter[type]",
 													"value": "verify_email",
-													"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+													"description": "it could be `register`,  `verify_email`, `login`, `logout`",
 													"disabled": true
 												},
 												{
@@ -8222,7 +8222,7 @@
 										{
 											"key": "join",
 											"value": "user,subject",
-											"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+											"description": "it could be `user` or `subject` or `user,subject`"
 										}
 									]
 								}
@@ -8247,7 +8247,7 @@
 												{
 													"key": "join",
 													"value": "causer,subject",
-													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+													"description": "it could be `user` or `subject` or `user,subject`"
 												}
 											]
 										}
@@ -8303,7 +8303,7 @@
 												{
 													"key": "join",
 													"value": "user,subject",
-													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+													"description": "it could be `user` or `subject` or `user,subject`"
 												}
 											]
 										}
