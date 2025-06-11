@@ -1,8 +1,5 @@
 from enum import Enum
 
-class CauserType(Enum):
-    USER = 'user'
-
 class SubjectType(Enum):
     USER = 'user'
 

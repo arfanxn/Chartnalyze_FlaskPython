@@ -1,4 +1,5 @@
 from flask import Flask
+from werkzeug.middleware.proxy_fix import ProxyFix
 from app.extensions import cors, db, mongo, jwt, limiter, mail, migrate
 from app.config import Config
 from app.controllers import register_blueprints
@@ -8,6 +9,7 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = Config.SECRET_KEY
     app.config.from_object(Config)
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
     # Initialize extensions
 

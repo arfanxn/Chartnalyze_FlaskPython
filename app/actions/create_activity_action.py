@@ -1,7 +1,7 @@
+from flask import g, request
 from app.actions.action import Action
 from app.models import Activity, User
 from app.extensions import db
-from app.enums.activity_enums import CauserType, SubjectType, Type
 from werkzeug.exceptions import InternalServerError
 from datetime import datetime
 
@@ -11,7 +11,7 @@ class CreateActivityAction(Action):
 
     def __call__(
             self, 
-            causer: object,
+            user: User,
             type: str,
             description: str,
             subject: object = None,
@@ -20,20 +20,18 @@ class CreateActivityAction(Action):
         try:
             activity = Activity()
 
+            activity.user_id = user.id
+            activity.user_ip_address = request.headers.get('X-Forwarded-For', request.remote_addr)
+            activity.user_agent = request.headers.get('User-Agent')
+
             activity.type = type
             activity.description = description
-            activity.properties = properties
-
-            if isinstance(causer, User):
-                activity.causer_id = causer.id
-                activity.causer_type = CauserType.USER.value
-            elif hasattr(causer, 'id'):
-                activity.causer_id = causer.id
-                activity.causer_type = causer.__class__.__name__.lower()
-
-            if hasattr(subject, 'id'):
-                activity.subject_id = subject.id
-                activity.subject_type = subject.__class__.__name__.lower()
+            if properties is not None:
+                activity.properties = properties
+            if subject is not None:
+                if hasattr(subject, 'id'):
+                    activity.subject_id = subject.id
+                    activity.subject_type = subject.__class__.__name__.lower()
 
             db.session.add(activity)
             db.session.commit()

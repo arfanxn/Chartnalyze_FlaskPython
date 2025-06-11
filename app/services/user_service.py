@@ -26,7 +26,7 @@ from app.forms import (
 from app.models import User, Role, Media
 from app.actions import CreateActivityAction
 from app.extensions import db, flow
-from app.enums.activity_enums import CauserType, SubjectType, Type
+from app.enums.activity_enums import Type
 from app.enums.role_enums import RoleName
 from app.enums.media_enums import ModelType
 
@@ -51,7 +51,7 @@ class UserService(Service):
 
             create_activity = CreateActivityAction()
             create_activity(
-                causer=user,
+                user=user,
                 type=Type.REGISTER.value,
                 description=f"{user.name if user.name else user.username} ({user.email}) has registered",
             )
@@ -77,7 +77,7 @@ class UserService(Service):
 
         create_activity = CreateActivityAction()
         create_activity(
-            causer=user,
+            user=user,
             type=Type.LOGIN.value,
             description=f"{user.name if user.name else user.username} ({user.email}) has logged in",
         )
@@ -123,7 +123,7 @@ class UserService(Service):
             db.session.commit()
 
             create_activity(
-                causer=user,
+                user=user,
                 type=Type.REGISTER.value,
                 description=f"{user.name if user.name else user.username} ({user.email}) has registered",
             )
@@ -131,7 +131,7 @@ class UserService(Service):
         access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=Config.JWT_EXPIRATION_DAYS))
 
         create_activity(
-            causer=user,
+            user=user,
             type=Type.LOGIN.value,
             description=f"{user.name if user.name else user.username} ({user.email}) has logged in",
         )
@@ -151,7 +151,7 @@ class UserService(Service):
 
             create_activity = CreateActivityAction()
             create_activity(
-                causer=user,
+                user=user,
                 type=Type.VERIFY_EMAIL.value,
                 description=f"{user.name if user.name else user.username} ({user.email}) has verified their email",
             )
@@ -185,7 +185,7 @@ class UserService(Service):
 
         create_activity = CreateActivityAction()
         create_activity(
-            causer=user,
+            user=user,
             type=Type.LOGOUT.value,
             description=f"{user.name if user.name else user.username} ({user.email}) has logged out",
         )

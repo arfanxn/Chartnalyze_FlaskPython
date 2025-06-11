@@ -1,4 +1,3 @@
-from app.enums.activity_enums import CauserType, SubjectType, Type
 from app.enums.permission_enums import PermissionName
 from app.services import ActivityService
 from app.helpers.response_helpers import create_response_tuple
@@ -29,8 +28,22 @@ def index():
 @api_key_verified
 @authenticated
 @email_verified
-def index_by_causer_user_self(user_id: str):
-    activities, meta = activity_service.paginate(causer_id=user_id)
+def index_by_user(user_id: str):
+    activities, meta = activity_service.paginate(user_id=user_id)
+
+    return create_response_tuple(
+        status=HTTPStatus.OK,
+        message='Activities paginated successfully',
+        data={'activities': ActivityResource.collection(activities), **meta}
+    )
+
+@activity_bp.route('/users/self/activities', methods=['GET'])
+@api_key_verified
+@authenticated
+@email_verified
+def index_by_self():
+    user_id = g.user.id
+    activities, meta = activity_service.paginate(user_id=user_id)
 
     return create_response_tuple(
         status=HTTPStatus.OK,

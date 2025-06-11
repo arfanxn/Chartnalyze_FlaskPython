@@ -15,12 +15,12 @@ class ActivityService(Service):
     
     def paginate (
         self, 
+        user_id: str|None = None,
         subject_id: str|None = None, 
-        causer_id: str|None = None,
     ) -> tuple[list[Activity], dict]:
         activities, meta = activity_repository.paginate(
+            user_id=user_id,
             subject_id=subject_id,
-            causer_id=causer_id,
         )
         return (activities, meta)
     

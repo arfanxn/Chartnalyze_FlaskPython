@@ -15,15 +15,16 @@ class ActivityRepository(Repository):
         sorts = request.args.get('sort', '').split(',')
         filter = request.args.get('filter', None)
         type = request.args.get('filter[type]', None)
-        causer_type = request.args.get('filter[causer_type]', None)
+        user_ip_address = request.args.get('filter[user_ip_address]', None)
+        user_agent = request.args.get('filter[user_agent]', None)
         subject_type = request.args.get('filter[subject_type]', None)
         description = request.args.get('filter[description]', None)
 
         query = Activity.query
 
         if len(joins) > 0:
-            if 'causer' in joins:
-                query = query.options(db.joinedload(Activity.causer_user))
+            if 'user' in joins:
+                query = query.options(db.joinedload(Activity.user))
             if 'subject' in joins:
                 query = query.options(db.joinedload(Activity.subject_user))
         
@@ -31,18 +32,22 @@ class ActivityRepository(Repository):
             query = query.filter(db.or_(
                 Activity.id == filter,
                 Activity.description.contains(filter),
-                Activity.causer_id == filter,
+                Activity.user_id == filter,
+                Activity.user_ip_address == filter,
+                Activity.user_agent.contains(filter),
                 Activity.subject_id == filter,
             ))
         else:
             if type is not None: 
                 query = query.filter(Activity.type == type)
-            if causer_type is not None: 
-                query = query.filter(Activity.causer_type == causer_type)
-            if subject_type is not None: 
-                query = query.filter(Activity.subject_type == subject_type)
             if description is not None: 
                 query = query.filter(Activity.description.contains(description))
+            if user_ip_address is not None: 
+                query = query.filter(Activity.user_ip_address == user_ip_address)
+            if user_agent is not None: 
+                query = query.filter(Activity.user_agent.contains(user_agent))
+            if subject_type is not None: 
+                query = query.filter(Activity.subject_type == subject_type)
         
         if len(sorts) > 0:
             if '-created_at' in sorts:
@@ -54,16 +59,16 @@ class ActivityRepository(Repository):
 
     def paginate(
             self, 
+            user_id: str|None = None,
             subject_id: str|None = None, 
-            causer_id: str|None = None,
         ) -> tuple[list[Activity], dict]:
         page = int(request.args.get('page', 1))
         per_page = int(request.args.get('per_page', 10))
 
         query = self.query()
 
-        if causer_id is not None:
-            query = query.filter(Activity.causer_id == causer_id)
+        if user_id is not None:
+            query = query.filter(Activity.user_id == user_id)
         if subject_id is not None:
             query = query.filter(Activity.subject_id == subject_id)
 

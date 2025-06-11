@@ -61,6 +61,7 @@ class User(db.Model):
     comments = db.relationship('Comment', back_populates='user')
     likes = db.relationship('Like', back_populates='user')
     saves = db.relationship('Save', back_populates='user')
+    activities = db.relationship('Activity', back_populates='user')
     medias = db.relationship(
         'Media',
         foreign_keys='Media.model_id',
