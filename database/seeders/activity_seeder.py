@@ -1,6 +1,6 @@
 from app.extensions import db
 from app.models import User, Activity
-from app.enums.activity_enums import CauserType, Type
+from app.enums.activity_enums import Type
 from database.seeders.seeder import Seeder
 from faker import Faker
 
@@ -33,12 +33,16 @@ class ActivitySeeder(Seeder):
 
         # Loop through each user to generate activity records
         for user in users:
+            ip_address = fake.ipv4(),
+            user_agent = fake.user_agent(),
+
             # Create registration activity
             activity = Activity(
+                user_ip_address=ip_address,
+                user_agent=user_agent,
+                user_id=user.id,
                 type=Type.REGISTER.value,
                 description=f"{user.name} ({user.email}) has registered",
-                causer_id=user.id,
-                causer_type=CauserType.USER.value,
                 created_at=user.created_at.isoformat(),
                 updated_at=None
             )
@@ -48,10 +52,11 @@ class ActivitySeeder(Seeder):
             if user.email_verified_at is not None:
 
                 activity = Activity(
+                    user_id=user.id,
+                    user_ip_address=ip_address,
+                    user_agent=user_agent,
                     type=Type.VERIFY_EMAIL.value,
                     description=f"{user.name} ({user.email}) has verified their email",
-                    causer_id=user.id,
-                    causer_type=CauserType.USER.value,
                     created_at=user.email_verified_at.isoformat(),
                     updated_at=None
                 )
@@ -69,10 +74,11 @@ class ActivitySeeder(Seeder):
 
                 # Create login activity
                 activity = Activity(
+                    user_id=user.id,
+                    user_ip_address=ip_address,
+                    user_agent=user_agent,
                     type=Type.LOGIN.value,
                     description=f"{user.name} ({user.email}) has logged in",
-                    causer_id=user.id,
-                    causer_type=CauserType.USER.value,
                     created_at=logged_in_at.isoformat(),
                     updated_at=None
                 )
@@ -87,10 +93,11 @@ class ActivitySeeder(Seeder):
 
                 # Create logout activity
                 activity = Activity(
+                    user_id=user.id,
+                    user_ip_address=ip_address,
+                    user_agent=user_agent,
                     type=Type.LOGOUT.value,
                     description=f"{user.name} ({user.email}) has logged out",
-                    causer_id=user.id,
-                    causer_type=CauserType.USER.value,
                     created_at=logged_out_at.isoformat(),
                     updated_at=None
                 )
