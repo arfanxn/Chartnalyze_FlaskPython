@@ -7702,7 +7702,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/activities?per_page=10&page=1&sort=created_at&join=causer",
+									"raw": "{{BASE_URL}}/api/activities?per_page=10&page=1&sort=-created_at&join=user",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -7723,18 +7723,39 @@
 										},
 										{
 											"key": "sort",
-											"value": "created_at",
+											"value": "-created_at",
 											"description": "Sort by `created at` descending "
 										},
 										{
 											"key": "join",
-											"value": "causer",
+											"value": "user",
 											"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+										},
+										{
+											"key": "filter",
+											"value": "",
+											"description": "Generic filter",
+											"disabled": true
 										},
 										{
 											"key": "filter[type]",
 											"value": "verify_email",
 											"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+											"disabled": true
+										},
+										{
+											"key": "filter[user_agent]",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "filter[user_ip_address]",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "filter[description]",
+											"value": null,
 											"disabled": true
 										}
 									]
@@ -7747,7 +7768,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{BASE_URL}}/api/activities?per_page=10&page=1&sort=created_at&join=causer",
+											"raw": "{{BASE_URL}}/api/activities?per_page=10&page=1&sort=-created_at&join=user",
 											"host": [
 												"{{BASE_URL}}"
 											],
@@ -7768,18 +7789,39 @@
 												},
 												{
 													"key": "sort",
-													"value": "created_at",
+													"value": "-created_at",
 													"description": "Sort by `created at` descending "
 												},
 												{
 													"key": "join",
-													"value": "causer",
+													"value": "user",
 													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
+												},
+												{
+													"key": "filter",
+													"value": "",
+													"description": "Generic filter",
+													"disabled": true
 												},
 												{
 													"key": "filter[type]",
 													"value": "verify_email",
 													"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+													"disabled": true
+												},
+												{
+													"key": "filter[user_agent]",
+													"value": null,
+													"disabled": true
+												},
+												{
+													"key": "filter[user_ip_address]",
+													"value": null,
+													"disabled": true
+												},
+												{
+													"key": "filter[description]",
+													"value": null,
 													"disabled": true
 												}
 											]
@@ -7795,7 +7837,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 10 Jun 2025 11:45:48 GMT"
+											"value": "Wed, 11 Jun 2025 11:31:38 GMT"
 										},
 										{
 											"key": "Content-Type",
@@ -7803,7 +7845,7 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "7896"
+											"value": "9286"
 										},
 										{
 											"key": "Access-Control-Allow-Origin",
@@ -7815,7 +7857,178 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"status\": 200,\n    \"message\": \"Activities paginated successfully\",\n    \"data\": {\n        \"activities\": [\n            {\n                \"id\": \"01JXCTF77NJE41C6AZ2D8DEFZM\",\n                \"type\": \"register\",\n                \"description\": \"Zachary Watson (gallegosrobert@example.org) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-08-15T00:43:09\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n                    \"country_id\": null,\n                    \"name\": \"Zachary Watson\",\n                    \"username\": \"swalker\",\n                    \"birth_date\": \"1985-11-11\",\n                    \"email\": \"gallegosrobert@example.org\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-08-15T00:43:09\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": null\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N744HZ3SMNT2HPPW3\",\n                \"type\": \"register\",\n                \"description\": \"Tara Perry (garciaalejandra@example.net) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-08-20T18:57:50\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                    \"country_id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                    \"name\": \"Tara Perry\",\n                    \"username\": \"smiles\",\n                    \"birth_date\": \"2000-02-22\",\n                    \"email\": \"garciaalejandra@example.net\",\n                    \"email_verified_at\": \"2024-10-13T08:31:16\",\n                    \"created_at\": \"2024-08-20T18:57:50\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                        \"name\": \"Brazil\",\n                        \"iso_code\": \"BR\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N3R4F60C8VC9NWT6S\",\n                \"type\": \"register\",\n                \"description\": \"Tyler Arnold (analyst@chartnalyze.edu) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYP8MCQ3E5G5KR505D\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-09-02T17:49:01\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYP8MCQ3E5G5KR505D\",\n                    \"country_id\": \"01JXCTEZC6ACKVPSHK2DR569M9\",\n                    \"name\": \"Tyler Arnold\",\n                    \"username\": \"analyst\",\n                    \"birth_date\": \"1936-01-19\",\n                    \"email\": \"analyst@chartnalyze.edu\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-09-02T17:49:01\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC6ACKVPSHK2DR569M9\",\n                        \"name\": \"Dominican Republic\",\n                        \"iso_code\": \"DO\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77NM30V3S0J0SX6G4P9\",\n                \"type\": \"register\",\n                \"description\": \"Robert Thomas (rodriguezsarah@example.com) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z0PQX8D0JFJ265F3GP\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-09-03T21:55:07\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4Z0PQX8D0JFJ265F3GP\",\n                    \"country_id\": \"01JXCTEZC3A3DK0CTTRW492VSG\",\n                    \"name\": \"Robert Thomas\",\n                    \"username\": \"rowetheresa\",\n                    \"birth_date\": \"1932-07-15\",\n                    \"email\": \"rodriguezsarah@example.com\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-09-03T21:55:07\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC3A3DK0CTTRW492VSG\",\n                        \"name\": \"Congo, The Democratic Republic of the\",\n                        \"iso_code\": \"CD\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77NSXVQ58PG371XQRCM\",\n                \"type\": \"login\",\n                \"description\": \"Tyler Arnold (analyst@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYP8MCQ3E5G5KR505D\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-05T19:25:57\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYP8MCQ3E5G5KR505D\",\n                    \"country_id\": \"01JXCTEZC6ACKVPSHK2DR569M9\",\n                    \"name\": \"Tyler Arnold\",\n                    \"username\": \"analyst\",\n                    \"birth_date\": \"1936-01-19\",\n                    \"email\": \"analyst@chartnalyze.edu\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-09-02T17:49:01\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC6ACKVPSHK2DR569M9\",\n                        \"name\": \"Dominican Republic\",\n                        \"iso_code\": \"DO\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N8R85D0QC7DHEE0AK\",\n                \"type\": \"login\",\n                \"description\": \"Tara Perry (garciaalejandra@example.net) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-10T11:03:40\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                    \"country_id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                    \"name\": \"Tara Perry\",\n                    \"username\": \"smiles\",\n                    \"birth_date\": \"2000-02-22\",\n                    \"email\": \"garciaalejandra@example.net\",\n                    \"email_verified_at\": \"2024-10-13T08:31:16\",\n                    \"created_at\": \"2024-08-20T18:57:50\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                        \"name\": \"Brazil\",\n                        \"iso_code\": \"BR\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N09QCAATTRCBE0ZTN\",\n                \"type\": \"verify_email\",\n                \"description\": \"Tara Perry (garciaalejandra@example.net) has verified their email\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-13T08:31:16\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYJDTRNGNY71XSR075\",\n                    \"country_id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                    \"name\": \"Tara Perry\",\n                    \"username\": \"smiles\",\n                    \"birth_date\": \"2000-02-22\",\n                    \"email\": \"garciaalejandra@example.net\",\n                    \"email_verified_at\": \"2024-10-13T08:31:16\",\n                    \"created_at\": \"2024-08-20T18:57:50\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC1JJ19SFCN1H145V1P\",\n                        \"name\": \"Brazil\",\n                        \"iso_code\": \"BR\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77N3SF059RTAZJRMXE5\",\n                \"type\": \"login\",\n                \"description\": \"Robert Thomas (rodriguezsarah@example.com) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z0PQX8D0JFJ265F3GP\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-28T12:14:42\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4Z0PQX8D0JFJ265F3GP\",\n                    \"country_id\": \"01JXCTEZC3A3DK0CTTRW492VSG\",\n                    \"name\": \"Robert Thomas\",\n                    \"username\": \"rowetheresa\",\n                    \"birth_date\": \"1932-07-15\",\n                    \"email\": \"rodriguezsarah@example.com\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-09-03T21:55:07\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZC3A3DK0CTTRW492VSG\",\n                        \"name\": \"Congo, The Democratic Republic of the\",\n                        \"iso_code\": \"CD\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77NWM22FW9RRFDMZGH9\",\n                \"type\": \"register\",\n                \"description\": \"Danielle Sanders (user@chartnalyze.edu) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z08NHG0WY3869XK2V2\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-10-31T21:26:26\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4Z08NHG0WY3869XK2V2\",\n                    \"country_id\": \"01JXCTEZCSABT57N64WPVZXPTF\",\n                    \"name\": \"Danielle Sanders\",\n                    \"username\": \"user\",\n                    \"birth_date\": \"1953-06-27\",\n                    \"email\": \"user@chartnalyze.edu\",\n                    \"email_verified_at\": \"2025-03-14T04:05:46\",\n                    \"created_at\": \"2024-10-31T21:26:26\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZCSABT57N64WPVZXPTF\",\n                        \"name\": \"Slovenia\",\n                        \"iso_code\": \"SI\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXCTF77MXWWJACH2XHPS3EMQ\",\n                \"type\": \"register\",\n                \"description\": \"Amy Estrada (turnernicole@example.com) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4YYEC66JYRK5C47JHJ9\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-11-21T21:05:00\",\n                \"updated_at\": null,\n                \"causer\": {\n                    \"id\": \"01JXCTF4YYEC66JYRK5C47JHJ9\",\n                    \"country_id\": \"01JXCTEZCJHR392G5FWYQ7Y1RY\",\n                    \"name\": \"Amy Estrada\",\n                    \"username\": \"torresgrace\",\n                    \"birth_date\": \"2005-11-21\",\n                    \"email\": \"turnernicole@example.com\",\n                    \"email_verified_at\": \"2024-11-23T23:02:25\",\n                    \"created_at\": \"2024-11-21T21:05:00\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXCTEZCJHR392G5FWYQ7Y1RY\",\n                        \"name\": \"Mali\",\n                        \"iso_code\": \"ML\",\n                        \"created_at\": \"2025-06-10T18:43:58\",\n                        \"updated_at\": null\n                    }\n                }\n            }\n        ],\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 10,\n        \"has_prev\": false,\n        \"has_next\": true,\n        \"total\": 100\n    }\n}"
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Activities paginated successfully\",\n    \"data\": {\n        \"activities\": [\n            {\n                \"id\": \"01JXFBVS106G38TGYR8W2VRE8G\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"PostmanRuntime/7.44.0\",\n                \"user_ip_address\": \"127.0.0.1\",\n                \"type\": \"login\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T18:26:32\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                    \"country_id\": \"01JXFBMVK9Z09HHACSPW51ZWAC\",\n                    \"name\": \"Samantha Smith\",\n                    \"username\": \"admin\",\n                    \"birth_date\": \"1912-04-15\",\n                    \"email\": \"admin@chartnalyze.edu\",\n                    \"email_verified_at\": \"2025-03-28T07:38:41\",\n                    \"created_at\": \"2025-01-08T01:20:10\",\n                    \"updated_at\": null,\n                    \"role\": {\n                        \"id\": \"01JXFBMVM6BTPGDK6HTKNS6Z1W\",\n                        \"name\": \"admin\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    },\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXFBMVK9Z09HHACSPW51ZWAC\",\n                        \"name\": \"Japan\",\n                        \"iso_code\": \"JP\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXFBQVAEB0SXYYXBACPCXFJQ\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"PostmanRuntime/7.44.0\",\n                \"user_ip_address\": \"127.0.0.1\",\n                \"type\": \"login\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T18:24:24\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                    \"country_id\": \"01JXFBMVK9Z09HHACSPW51ZWAC\",\n                    \"name\": \"Samantha Smith\",\n                    \"username\": \"admin\",\n                    \"birth_date\": \"1912-04-15\",\n                    \"email\": \"admin@chartnalyze.edu\",\n                    \"email_verified_at\": \"2025-03-28T07:38:41\",\n                    \"created_at\": \"2025-01-08T01:20:10\",\n                    \"updated_at\": null,\n                    \"role\": {\n                        \"id\": \"01JXFBMVM6BTPGDK6HTKNS6Z1W\",\n                        \"name\": \"admin\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    },\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXFBMVK9Z09HHACSPW51ZWAC\",\n                        \"name\": \"Japan\",\n                        \"iso_code\": \"JP\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXFBN4QBZW07P6PG06B1MBTJ\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"login\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T13:43:43\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                    \"country_id\": \"01JXFBMVJTFK52CWBV7BN0W0VN\",\n                    \"name\": \"Jared Lucas\",\n                    \"username\": \"analyst\",\n                    \"birth_date\": \"1945-02-13\",\n                    \"email\": \"analyst@chartnalyze.edu\",\n                    \"email_verified_at\": \"2025-06-10T01:19:31\",\n                    \"created_at\": \"2025-06-03T02:42:22\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXFBMVJTFK52CWBV7BN0W0VN\",\n                        \"name\": \"Brazil\",\n                        \"iso_code\": \"BR\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXFBN4QBVCRJDGC18M3RCZKH\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"Opera/8.84.(X11; Linux i686; az-AZ) Presto/2.9.177 Version/10.00\",\n                \"user_ip_address\": \"110.44.117.3\",\n                \"type\": \"logout\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T11:28:51\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                    \"country_id\": \"01JXFBMVK9Z09HHACSPW51ZWAC\",\n                    \"name\": \"Samantha Smith\",\n                    \"username\": \"admin\",\n                    \"birth_date\": \"1912-04-15\",\n                    \"email\": \"admin@chartnalyze.edu\",\n                    \"email_verified_at\": \"2025-03-28T07:38:41\",\n                    \"created_at\": \"2025-01-08T01:20:10\",\n                    \"updated_at\": null,\n                    \"role\": {\n                        \"id\": \"01JXFBMVM6BTPGDK6HTKNS6Z1W\",\n                        \"name\": \"admin\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    },\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXFBMVK9Z09HHACSPW51ZWAC\",\n                        \"name\": \"Japan\",\n                        \"iso_code\": \"JP\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXFBN4QBKFD1TC87Y32AZX35\",\n                \"user_id\": \"01JXFBN240QMYRS0SMRPGTTKV6\",\n                \"user_agent\": \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/36.0.843.0 Safari/532.0\",\n                \"user_ip_address\": \"24.91.50.15\",\n                \"type\": \"logout\",\n                \"description\": \"Michael Mendoza (jessicafisher@example.net) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T07:27:41\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN240QMYRS0SMRPGTTKV6\",\n                    \"country_id\": null,\n                    \"name\": \"Michael Mendoza\",\n                    \"username\": \"sotojessica\",\n                    \"birth_date\": \"1936-03-15\",\n                    \"email\": \"jessicafisher@example.net\",\n                    \"email_verified_at\": \"2025-05-19T02:00:19\",\n                    \"created_at\": \"2025-04-02T18:30:32\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": null\n                }\n            },\n            {\n                \"id\": \"01JXFBN4QB5J0P01JW8DN5JMYM\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"logout\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T01:58:40\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                    \"country_id\": \"01JXFBMVJTFK52CWBV7BN0W0VN\",\n                    \"name\": \"Jared Lucas\",\n                    \"username\": \"analyst\",\n                    \"birth_date\": \"1945-02-13\",\n                    \"email\": \"analyst@chartnalyze.edu\",\n                    \"email_verified_at\": \"2025-06-10T01:19:31\",\n                    \"created_at\": \"2025-06-03T02:42:22\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXFBMVJTFK52CWBV7BN0W0VN\",\n                        \"name\": \"Brazil\",\n                        \"iso_code\": \"BR\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXFBN4QC4A4NBZTZQ08QE708\",\n                \"user_id\": \"01JXFBN2415J8SAVJTPFY2A7W1\",\n                \"user_agent\": \"Mozilla/5.0 (iPad; CPU iPad OS 13_7 like Mac OS X) AppleWebKit/536.1 (KHTML, like Gecko) CriOS/26.0.837.0 Mobile/79V825 Safari/536.1\",\n                \"user_ip_address\": \"111.91.4.42\",\n                \"type\": \"logout\",\n                \"description\": \"Tabitha Morgan MD (fdunn@example.org) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-10T16:46:52\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN2415J8SAVJTPFY2A7W1\",\n                    \"country_id\": \"01JXFBMVKJSSJXYKGZCDGSP3ZZ\",\n                    \"name\": \"Tabitha Morgan MD\",\n                    \"username\": \"ygarrett\",\n                    \"birth_date\": \"1958-03-21\",\n                    \"email\": \"fdunn@example.org\",\n                    \"email_verified_at\": \"2025-06-04T03:25:49\",\n                    \"created_at\": \"2025-05-15T10:32:05\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXFBMVKJSSJXYKGZCDGSP3ZZ\",\n                        \"name\": \"Romania\",\n                        \"iso_code\": \"RO\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXFBN4QB51K7Q5FC0YVWVFWQ\",\n                \"user_id\": \"01JXFBN240QMYRS0SMRPGTTKV6\",\n                \"user_agent\": \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/36.0.843.0 Safari/532.0\",\n                \"user_ip_address\": \"24.91.50.15\",\n                \"type\": \"logout\",\n                \"description\": \"Michael Mendoza (jessicafisher@example.net) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-10T13:48:05\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN240QMYRS0SMRPGTTKV6\",\n                    \"country_id\": null,\n                    \"name\": \"Michael Mendoza\",\n                    \"username\": \"sotojessica\",\n                    \"birth_date\": \"1936-03-15\",\n                    \"email\": \"jessicafisher@example.net\",\n                    \"email_verified_at\": \"2025-05-19T02:00:19\",\n                    \"created_at\": \"2025-04-02T18:30:32\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": null\n                }\n            },\n            {\n                \"id\": \"01JXFBN4QB5H9K529MH6EDPDNK\",\n                \"user_id\": \"01JXFBN23ZTMGGKXWRWMN84KHD\",\n                \"user_agent\": \"Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_9_8 rv:5.0; wae-CH) AppleWebKit/534.6.7 (KHTML, like Gecko) Version/4.1 Safari/534.6.7\",\n                \"user_ip_address\": \"16.69.76.110\",\n                \"type\": \"logout\",\n                \"description\": \"Lisa Miller (yguzman@example.com) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-10T07:47:06\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN23ZTMGGKXWRWMN84KHD\",\n                    \"country_id\": \"01JXFBMVK2FEW4ZX1QS08J6ZY9\",\n                    \"name\": \"Lisa Miller\",\n                    \"username\": \"egrant\",\n                    \"birth_date\": \"2008-09-02\",\n                    \"email\": \"yguzman@example.com\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2025-02-22T07:56:21\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXFBMVK2FEW4ZX1QS08J6ZY9\",\n                        \"name\": \"France\",\n                        \"iso_code\": \"FR\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    }\n                }\n            },\n            {\n                \"id\": \"01JXFBN4QB11SMVHN6XJ8EPDHG\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"verify_email\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has verified their email\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-10T01:19:31\",\n                \"updated_at\": null,\n                \"user\": {\n                    \"id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                    \"country_id\": \"01JXFBMVJTFK52CWBV7BN0W0VN\",\n                    \"name\": \"Jared Lucas\",\n                    \"username\": \"analyst\",\n                    \"birth_date\": \"1945-02-13\",\n                    \"email\": \"analyst@chartnalyze.edu\",\n                    \"email_verified_at\": \"2025-06-10T01:19:31\",\n                    \"created_at\": \"2025-06-03T02:42:22\",\n                    \"updated_at\": null,\n                    \"avatar_url\": null,\n                    \"country\": {\n                        \"id\": \"01JXFBMVJTFK52CWBV7BN0W0VN\",\n                        \"name\": \"Brazil\",\n                        \"iso_code\": \"BR\",\n                        \"created_at\": \"2025-06-11T18:22:46\",\n                        \"updated_at\": null\n                    }\n                }\n            }\n        ],\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 11,\n        \"has_prev\": false,\n        \"has_next\": true,\n        \"total\": 102\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Activities of self",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/users/self/activities?per_page=10&page=1&sort=-created_at",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"self",
+										"activities"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": "Optional field"
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Optional field"
+										},
+										{
+											"key": "sort",
+											"value": "-created_at",
+											"description": "Sort by `created at` descending "
+										},
+										{
+											"key": "join",
+											"value": "subject",
+											"description": "it could be \"causer\" or \"subject\" or \"causer,subject\"",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "",
+											"description": "Generic filter",
+											"disabled": true
+										},
+										{
+											"key": "filter[type]",
+											"value": "verify_email",
+											"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+											"disabled": true
+										},
+										{
+											"key": "filter[user_agent]",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "filter[user_ip_address]",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "filter[description]",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/users/self/activities?per_page=10&page=1&sort=-created_at",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"self",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "Optional field"
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"description": "Optional field"
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "Sort by `created at` descending "
+												},
+												{
+													"key": "join",
+													"value": "subject",
+													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\"",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "",
+													"description": "Generic filter",
+													"disabled": true
+												},
+												{
+													"key": "filter[type]",
+													"value": "verify_email",
+													"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+													"disabled": true
+												},
+												{
+													"key": "filter[user_agent]",
+													"value": "",
+													"disabled": true
+												},
+												{
+													"key": "filter[user_ip_address]",
+													"value": "",
+													"disabled": true
+												},
+												{
+													"key": "filter[description]",
+													"value": "",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 11 Jun 2025 11:33:50 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "4148"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Activities paginated successfully\",\n    \"data\": {\n        \"activities\": [\n            {\n                \"id\": \"01JXFBVS106G38TGYR8W2VRE8G\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"PostmanRuntime/7.44.0\",\n                \"user_ip_address\": \"127.0.0.1\",\n                \"type\": \"login\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T18:26:32\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBQVAEB0SXYYXBACPCXFJQ\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"PostmanRuntime/7.44.0\",\n                \"user_ip_address\": \"127.0.0.1\",\n                \"type\": \"login\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T18:24:24\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QBVCRJDGC18M3RCZKH\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"Opera/8.84.(X11; Linux i686; az-AZ) Presto/2.9.177 Version/10.00\",\n                \"user_ip_address\": \"110.44.117.3\",\n                \"type\": \"logout\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T11:28:51\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QBAM9W8YQSDKF83KA0\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"Opera/8.84.(X11; Linux i686; az-AZ) Presto/2.9.177 Version/10.00\",\n                \"user_ip_address\": \"110.44.117.3\",\n                \"type\": \"login\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-05-26T06:43:06\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QBJ6HRME0EKWQ2ZKKC\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"Opera/8.84.(X11; Linux i686; az-AZ) Presto/2.9.177 Version/10.00\",\n                \"user_ip_address\": \"110.44.117.3\",\n                \"type\": \"logout\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-05-19T02:25:17\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB8JKE0Y1BFBV58ZKW\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"Opera/8.84.(X11; Linux i686; az-AZ) Presto/2.9.177 Version/10.00\",\n                \"user_ip_address\": \"110.44.117.3\",\n                \"type\": \"login\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-05-03T10:11:37\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB0ER4RSR6319RGNQA\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"Opera/8.84.(X11; Linux i686; az-AZ) Presto/2.9.177 Version/10.00\",\n                \"user_ip_address\": \"110.44.117.3\",\n                \"type\": \"logout\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-04-26T19:12:17\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB1EAD3VCFBN4NM0PR\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"Opera/8.84.(X11; Linux i686; az-AZ) Presto/2.9.177 Version/10.00\",\n                \"user_ip_address\": \"110.44.117.3\",\n                \"type\": \"verify_email\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has verified their email\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-03-28T07:38:41\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB6JP5DJM36J57ZB2Q\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"Opera/8.84.(X11; Linux i686; az-AZ) Presto/2.9.177 Version/10.00\",\n                \"user_ip_address\": \"110.44.117.3\",\n                \"type\": \"logout\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-02-09T14:03:24\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB7MWAKA4RTYCA5G5R\",\n                \"user_id\": \"01JXFBN23AP80P7DVFP85YHDME\",\n                \"user_agent\": \"Opera/8.84.(X11; Linux i686; az-AZ) Presto/2.9.177 Version/10.00\",\n                \"user_ip_address\": \"110.44.117.3\",\n                \"type\": \"login\",\n                \"description\": \"Samantha Smith (admin@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-02-04T15:06:05\",\n                \"updated_at\": null\n            }\n        ],\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 2,\n        \"has_prev\": false,\n        \"has_next\": true,\n        \"total\": 13\n    }\n}"
 								}
 							]
 						},
@@ -7825,7 +8038,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/activities?per_page=10&page=1&sort=created_at",
+									"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/activities?per_page=10&page=1&sort=-created_at",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -7848,7 +8061,7 @@
 										},
 										{
 											"key": "sort",
-											"value": "created_at",
+											"value": "-created_at",
 											"description": "Sort by `created at` descending "
 										},
 										{
@@ -7858,9 +8071,30 @@
 											"disabled": true
 										},
 										{
+											"key": "filter",
+											"value": "",
+											"description": "Generic filter",
+											"disabled": true
+										},
+										{
 											"key": "filter[type]",
-											"value": "login",
+											"value": "verify_email",
 											"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+											"disabled": true
+										},
+										{
+											"key": "filter[user_agent]",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "filter[user_ip_address]",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "filter[description]",
+											"value": "",
 											"disabled": true
 										}
 									]
@@ -7873,7 +8107,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/activities?per_page=10&page=1&sort=created_at",
+											"raw": "{{BASE_URL}}/api/users/{{USER_ID}}/activities?per_page=10&page=1&sort=-created_at",
 											"host": [
 												"{{BASE_URL}}"
 											],
@@ -7896,7 +8130,7 @@
 												},
 												{
 													"key": "sort",
-													"value": "created_at",
+													"value": "-created_at",
 													"description": "Sort by `created at` descending "
 												},
 												{
@@ -7906,9 +8140,30 @@
 													"disabled": true
 												},
 												{
+													"key": "filter",
+													"value": "",
+													"description": "Generic filter",
+													"disabled": true
+												},
+												{
 													"key": "filter[type]",
-													"value": "login",
+													"value": "verify_email",
 													"description": "it could be \"register\",  \"verify_email\", \"login\", \"logout\"",
+													"disabled": true
+												},
+												{
+													"key": "filter[user_agent]",
+													"value": "",
+													"disabled": true
+												},
+												{
+													"key": "filter[user_ip_address]",
+													"value": "",
+													"disabled": true
+												},
+												{
+													"key": "filter[description]",
+													"value": "",
 													"disabled": true
 												}
 											]
@@ -7924,7 +8179,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 10 Jun 2025 12:07:17 GMT"
+											"value": "Wed, 11 Jun 2025 11:35:48 GMT"
 										},
 										{
 											"key": "Content-Type",
@@ -7932,7 +8187,7 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "1454"
+											"value": "5040"
 										},
 										{
 											"key": "Access-Control-Allow-Origin",
@@ -7944,7 +8199,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"status\": 200,\n    \"message\": \"Activities paginated successfully\",\n    \"data\": {\n        \"activities\": [\n            {\n                \"id\": \"01JXCTF77NJE41C6AZ2D8DEFZM\",\n                \"type\": \"register\",\n                \"description\": \"Zachary Watson (gallegosrobert@example.org) has registered\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2024-08-15T00:43:09\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXCTF77N4WTD3F1FDYTBEXGN\",\n                \"type\": \"login\",\n                \"description\": \"Zachary Watson (gallegosrobert@example.org) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2025-04-23T08:35:11\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXCTF77N83XB6VHW2PX9HW2N\",\n                \"type\": \"login\",\n                \"description\": \"Zachary Watson (gallegosrobert@example.org) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2025-06-05T18:11:40\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXCTF77N5830G66PQMFXYY38\",\n                \"type\": \"logout\",\n                \"description\": \"Zachary Watson (gallegosrobert@example.org) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"causer_id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n                \"causer_type\": \"user\",\n                \"properties\": null,\n                \"created_at\": \"2025-06-06T20:41:43\",\n                \"updated_at\": null\n            }\n        ],\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 1,\n        \"has_prev\": false,\n        \"has_next\": false,\n        \"total\": 4\n    }\n}"
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Activities paginated successfully\",\n    \"data\": {\n        \"activities\": [\n            {\n                \"id\": \"01JXFBN4QBZW07P6PG06B1MBTJ\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"login\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T13:43:43\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB5J0P01JW8DN5JMYM\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"logout\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-11T01:58:40\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB11SMVHN6XJ8EPDHG\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"verify_email\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has verified their email\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-10T01:19:31\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB7NAFEYB6MRSGZR2V\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"login\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-09T17:33:26\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QBYKRJ8SWMX61KCDVN\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"logout\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-07T17:47:32\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB46GYZ4F284HP6ZWV\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"logout\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-07T17:24:08\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QBJJS3BF89JJF8FD8F\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"login\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-07T05:48:38\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QBFG1KCG0NA4FR2ETQ\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"logout\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged out\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-05T09:44:37\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QBGHCGTVB3HCNGKMWX\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"login\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-04T22:25:13\",\n                \"updated_at\": null\n            },\n            {\n                \"id\": \"01JXFBN4QB44HHV2K8X6C9FPN3\",\n                \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n                \"user_ip_address\": \"45.9.14.89\",\n                \"type\": \"login\",\n                \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged in\",\n                \"subject_id\": null,\n                \"subject_type\": null,\n                \"properties\": null,\n                \"created_at\": \"2025-06-03T17:39:24\",\n                \"updated_at\": null\n            }\n        ],\n        \"page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 2,\n        \"has_prev\": false,\n        \"has_next\": true,\n        \"total\": 11\n    }\n}"
 								}
 							]
 						},
@@ -7954,7 +8209,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/activities/{{ACTIVITY_ID}}?join=causer,subject",
+									"raw": "{{BASE_URL}}/api/activities/{{ACTIVITY_ID}}?join=user,subject",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -7966,7 +8221,7 @@
 									"query": [
 										{
 											"key": "join",
-											"value": "causer,subject",
+											"value": "user,subject",
 											"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
 										}
 									]
@@ -8035,7 +8290,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{BASE_URL}}/api/activities/{{ACTIVITY_ID}}?join=causer,subject",
+											"raw": "{{BASE_URL}}/api/activities/{{ACTIVITY_ID}}?join=user,subject",
 											"host": [
 												"{{BASE_URL}}"
 											],
@@ -8047,7 +8302,7 @@
 											"query": [
 												{
 													"key": "join",
-													"value": "causer,subject",
+													"value": "user,subject",
 													"description": "it could be \"causer\" or \"subject\" or \"causer,subject\""
 												}
 											]
@@ -8063,7 +8318,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 10 Jun 2025 12:08:33 GMT"
+											"value": "Wed, 11 Jun 2025 11:37:15 GMT"
 										},
 										{
 											"key": "Content-Type",
@@ -8071,7 +8326,7 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "721"
+											"value": "1044"
 										},
 										{
 											"key": "Access-Control-Allow-Origin",
@@ -8083,7 +8338,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"status\": 200,\n    \"message\": \"Activity found successfully\",\n    \"data\": {\n        \"activity\": {\n            \"id\": \"01JXCTF77NJE41C6AZ2D8DEFZM\",\n            \"type\": \"register\",\n            \"description\": \"Zachary Watson (gallegosrobert@example.org) has registered\",\n            \"subject_id\": null,\n            \"subject_type\": null,\n            \"causer_id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n            \"causer_type\": \"user\",\n            \"properties\": null,\n            \"created_at\": \"2024-08-15T00:43:09\",\n            \"updated_at\": null,\n            \"subject\": null,\n            \"causer\": {\n                \"id\": \"01JXCTF4Z1R8KYGYCQQ8D7VPEM\",\n                \"country_id\": null,\n                \"name\": \"Zachary Watson\",\n                \"username\": \"swalker\",\n                \"birth_date\": \"1985-11-11\",\n                \"email\": \"gallegosrobert@example.org\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2024-08-15T00:43:09\",\n                \"updated_at\": null,\n                \"avatar_url\": null,\n                \"country\": null\n            }\n        }\n    }\n}"
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Activity found successfully\",\n    \"data\": {\n        \"activity\": {\n            \"id\": \"01JXFBN4QB46GYZ4F284HP6ZWV\",\n            \"user_id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n            \"user_agent\": \"Mozilla/5.0 (iPod; U; CPU iPhone OS 4_0 like Mac OS X; unm-US) AppleWebKit/531.24.3 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6531.24.3\",\n            \"user_ip_address\": \"45.9.14.89\",\n            \"type\": \"logout\",\n            \"description\": \"Jared Lucas (analyst@chartnalyze.edu) has logged out\",\n            \"subject_id\": null,\n            \"subject_type\": null,\n            \"properties\": null,\n            \"created_at\": \"2025-06-07T17:24:08\",\n            \"updated_at\": null,\n            \"subject\": null,\n            \"user\": {\n                \"id\": \"01JXFBN2400S9FBRYNMC2F7D30\",\n                \"country_id\": \"01JXFBMVJTFK52CWBV7BN0W0VN\",\n                \"name\": \"Jared Lucas\",\n                \"username\": \"analyst\",\n                \"birth_date\": \"1945-02-13\",\n                \"email\": \"analyst@chartnalyze.edu\",\n                \"email_verified_at\": \"2025-06-10T01:19:31\",\n                \"created_at\": \"2025-06-03T02:42:22\",\n                \"updated_at\": null,\n                \"avatar_url\": null,\n                \"country\": {\n                    \"id\": \"01JXFBMVJTFK52CWBV7BN0W0VN\",\n                    \"name\": \"Brazil\",\n                    \"iso_code\": \"BR\",\n                    \"created_at\": \"2025-06-11T18:22:46\",\n                    \"updated_at\": null\n                }\n            }\n        }\n    }\n}"
 								}
 							]
 						}
