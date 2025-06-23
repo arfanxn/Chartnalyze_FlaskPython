@@ -1,13 +1,14 @@
 from app.repositories.repository import Repository
 from app.extensions import db
 from app.forms import SavePostForm
-from app.models import Post, Comment, Like, User, Role, RoleUser
-from sqlalchemy import literal_column
+from app.models import Post, Comment, Like, Save, User, Role, RoleUser
+from app.enums.comment_enums import CommentableType
+from app.enums.like_enums import LikeableType
+from app.enums.save_enums import SaveableType
 from flask import request
 from flask_sqlalchemy.query import Query
-from flask_query_builder.querying import QueryBuilder, AllowedFilter, AllowedSort
 from werkzeug.exceptions import NotFound
-from slugify import slugify
+import types
 import ulid
 
 class PostRepository(Repository):
@@ -24,6 +25,55 @@ class PostRepository(Repository):
         post.comment_count = comment_count if comment_count is not None else 0
         post.like_count = like_count if like_count is not None else 0
         return post
+
+    def statistics (self, user_id: str|None = None) -> tuple[list]:
+        post_count_sq = db.select(db.func.count(Post.id))\
+            .where(Post.user_id == User.id)\
+            .correlate_except(Post).scalar_subquery().label('post_count')
+
+        comment_count_sq = db.select(db.func.count(Comment.id))\
+            .join(Post, db.and_(
+                Post.id == Comment.commentable_id,
+                Comment.commentable_type == CommentableType.POST.value
+            ))\
+            .where(Post.user_id == User.id)\
+            .correlate_except(Comment, Post).scalar_subquery().label('comment_count')
+        
+        like_count_sq = db.select(db.func.count(Like.id))\
+            .join(Post, db.and_(
+                Post.id == Like.likeable_id,
+                Like.likeable_type == LikeableType.POST.value
+            ))\
+            .where(Post.user_id == User.id)\
+            .correlate_except(Like, Post).scalar_subquery().label('like_count')
+        
+        save_count_sq = db.select(db.func.count(Save.id))\
+            .join(Post, db.and_(
+                Post.id == Save.saveable_id,
+                Save.saveable_type == SaveableType.POST.value
+            ))\
+            .where(Post.user_id == User.id)\
+            .correlate_except(Save, Post).scalar_subquery().label('save_count')
+
+        query = db.session.query(
+            post_count_sq,
+            comment_count_sq,
+            like_count_sq,
+            save_count_sq,
+        )
+
+        if user_id is not None:
+            query = query.filter(User.id == user_id)
+
+        result = query.first()
+
+        if not result:
+            raise NotFound('User not found')
+
+        statistics = types.SimpleNamespace(**result._mapping)
+
+        return (statistics,)
+
 
     def query(self) -> Query:
         joins = request.args.get('join', '').split(',')

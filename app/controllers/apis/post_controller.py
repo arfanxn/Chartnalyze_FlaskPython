@@ -36,6 +36,19 @@ def index_by_user(user_id: str):
         data={'posts': PostResource.collection(posts), **meta}
     )
 
+@post_bp.route('/users/<string:user_id>/posts/statistics', methods=['GET'])
+@api_key_verified
+@authenticated
+@email_verified
+def statistics_by_user(user_id: str):
+    statistics, = post_service.statistics(user_id=user_id)
+    statistics_json = statistics.__dict__
+    return create_response_tuple(
+        status=HTTPStatus.OK,
+        message='Statistics of user\'s posts retrieved successfully', 
+        data={**statistics_json}
+    )
+
 @post_bp.route('/posts/<string:post_id>', methods=['GET'])
 @api_key_verified
 @authenticated

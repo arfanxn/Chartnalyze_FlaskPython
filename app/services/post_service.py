@@ -1,7 +1,7 @@
 from app.repositories import PostRepository
 from app.services import Service
 from app.forms import SavePostForm
-from app.models import Post, Media
+from app.models import Post, Media, Comment, Like, Save
 from app.config import Config
 from app.extensions import db
 from app.helpers.file_helpers import get_file_extension, get_file_size   
@@ -27,6 +27,10 @@ class PostService(Service):
     def paginate_by_user (self, user_id: str) -> tuple[list[Post], dict]: 
         posts, meta = post_repository.paginate(user_id=user_id)
         return (posts, meta)
+    
+    def statistics (self, user_id: str|None = None) -> tuple[list]:
+        statistics = post_repository.statistics(user_id=user_id)
+        return (statistics, )
     
     def show(self, post_id: str) -> tuple[Post]:
         post, = post_repository.show(post_id=post_id)
