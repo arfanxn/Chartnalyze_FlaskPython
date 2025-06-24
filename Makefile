@@ -40,6 +40,12 @@ db-seed:
 db-fresh-seed:
 	$(MAKE) db-fresh
 	$(MAKE) db-seed
+
+test-ddos-should-error-with-429:
+	@flask test-ddos-should-error-with-429 \
+		$(if $(url),--url $(url),) \
+		$(if $(request-count),--request-count $(request-count),) \
+		$(if $(thread-count),--thread-count $(thread-count),)
 	
 generate-secret-key:
 	@flask generate-secret-key --env-file $(ENV_FILE)
