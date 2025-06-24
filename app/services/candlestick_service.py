@@ -8,8 +8,8 @@ class CandlestickService(Service):
         super().__init__()
 
     
-    def predict(self, image_file: str) -> tuple[any]:
+    def predict(self, image_file: str) -> tuple[list]:
         predict_candlestick = PredictCandlestickAction()
-        prediction, = predict_candlestick(image_file=image_file)
+        predictions, = predict_candlestick(image_file=image_file)
 
-        return prediction,
+        return predictions,

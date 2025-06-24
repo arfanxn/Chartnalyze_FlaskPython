@@ -15,12 +15,12 @@ candlestick_bp = Blueprint('candlestick', __name__)
 @email_verified
 def predict():
     image_file = request.files.get('image')
-    prediction, = candlestick_service.predict(image_file=image_file)
+    predictions, = candlestick_service.predict(image_file=image_file)
 
     return create_response_tuple(
         status=HTTPStatus.OK,
-        message=f"Candlestick predicted as `{prediction.class_name}`",
+        message=f"Candlestick predicted successfully",
         data={
-            'candlestick_prediction': CandlestickPredictionResource(prediction).to_json()
+            'candlestick_predictions': CandlestickPredictionResource.collection(predictions)
         }
     )

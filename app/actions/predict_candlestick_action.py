@@ -12,7 +12,7 @@ class PredictCandlestickAction(Action):
     def __call__(
             self, 
             image_file,
-        ) -> tuple[any]:
+        ) -> tuple[list]:
         image_bytes = image_file.read()
         image = Image.open(io.BytesIO(image_bytes))
         
@@ -43,7 +43,5 @@ class PredictCandlestickAction(Action):
 
         if len(predictions) == 0:
             raise UnprocessableEntity({'image' : ['Image does not contain any candlestick or failed to predict']})
-        
-        prediction = predictions[0]
             
-        return prediction, 
+        return predictions, 
