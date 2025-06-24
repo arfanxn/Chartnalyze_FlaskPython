@@ -29,7 +29,7 @@ class PostService(Service):
         return (posts, meta)
     
     def statistics (self, user_id: str|None = None) -> tuple[list]:
-        statistics = post_repository.statistics(user_id=user_id)
+        statistics, = post_repository.statistics(user_id=user_id)
         return (statistics, )
     
     def show(self, post_id: str) -> tuple[Post]:
