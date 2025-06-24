@@ -1,20 +1,19 @@
-FROM python:3.11-alpine
+FROM python:3.11-slim
 
 WORKDIR /chartnalyze
 
-# Install system dependencies
-RUN apk add --no-cache \
-    mariadb-connector-c-dev \
-    build-base \
-    python3-dev \
-    mariadb-dev \
-    gcc \
-    musl-dev
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libmariadb-dev \
+    build-essential \
+    pkg-config \
+    libgl1 \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
 
 # Upgrade pip first
-RUN pip install --upgrade pip 
+RUN pip install --upgrade pip
 
 # Install all Python dependencies
 RUN pip install -r requirements.txt
