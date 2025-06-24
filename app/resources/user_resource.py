@@ -31,7 +31,7 @@ class UserResource(Resource):
 
         if 'avatar' not in ins.unloaded:
             avatar = entity.avatar    
-            data['avatar_url']  = f"{Config.APP_URL}/public/images/avatars/{avatar.file_name}" if avatar is not None else None
+            data['avatar_url']  = f"{Config.API_URL}/public/images/avatars/{avatar.file_name}" if avatar is not None else None
 
         if 'country' not in ins.unloaded:
             from app.resources import CountryResource

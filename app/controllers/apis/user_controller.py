@@ -1,7 +1,8 @@
 import requests
 from flask import Blueprint, g, request, session, redirect
 from http import HTTPStatus
-from app.extensions import limiter, flow
+from app.extensions import limiter
+from app import extensions 
 from app.config import Config
 from app.forms import (
     LoginForm,
@@ -57,7 +58,7 @@ def login():
 
 @user_bp.route('/login/google')
 def login_google():
-    authorization_url, state = flow.authorization_url(
+    authorization_url, state = extensions.flow.authorization_url(
         access_type='offline',
         include_granted_scopes='true',
         prompt='select_account'  # Force account selection

@@ -13,7 +13,7 @@ lock = threading.Lock()
 def register_test_commands(app: Flask):
 
     @app.cli.command('test-ddos-should-error-with-429')
-    @click.argument('url', type=str, default=f"{Config.APP_URL}/api/users/register")
+    @click.argument('url', type=str, default=f"{Config.API_URL}/api/users/register")
     @click.option('--request-count', '-r', type=int, default=100, help='Total number of requests to send.')
     @click.option('--thread-count', '-t', type=int, default=10, help='Number of concurrent threads.')
     def test_ddos_should_error_with_429(url, request_count, thread_count):

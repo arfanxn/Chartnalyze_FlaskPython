@@ -44,6 +44,6 @@ class PostResource(Resource):
             images = entity.images    
             data['image_urls']  = []
             for image in images:
-                data['image_urls'].append(f"{Config.APP_URL}/public/images/posts/{image.file_name}")
+                data['image_urls'].append(f"{Config.API_URL}/public/images/posts/{image.file_name}")
 
         return data
