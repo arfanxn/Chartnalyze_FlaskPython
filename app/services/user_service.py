@@ -25,7 +25,8 @@ from app.forms import (
 )
 from app.models import User, Role, Media
 from app.actions import CreateActivityAction
-from app.extensions import db, flow
+from app.extensions import db
+from app import extensions
 from app.enums.activity_enums import Type
 from app.enums.role_enums import RoleName
 from app.enums.media_enums import ModelType
@@ -92,9 +93,9 @@ class UserService(Service):
         """
         create_activity = CreateActivityAction()
 
-        flow.fetch_token(authorization_response=request.url)
+        extensions.flow.fetch_token(authorization_response=request.url)
         
-        credentials = flow.credentials
+        credentials = extensions.flow.credentials
         session['google_oauth2'] = {'credentials': {'token': credentials.token}}
         
         user_json = requests.get(

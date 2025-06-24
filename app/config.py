@@ -4,6 +4,7 @@ class Config:
     # The environment variables that are injected into application
     APP_NAME = os.getenv('APP_NAME')
     APP_URL = os.getenv('APP_URL')
+    API_URL = os.getenv('API_URL')
     API_KEY= os.getenv('API_KEY')
     SECRET_KEY = os.getenv('SECRET_KEY')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
@@ -35,7 +36,7 @@ class Config:
         "openid"
     ]
     GOOGLE_OAUTH_REDIRECT_URIS = [
-        "http://localhost:5173/users/login",
-        f"{APP_URL}/api/users/login/google/authorized",
+        f"{APP_URL}/users/login",
+        f"{API_URL}/api/users/login/google/authorized",
     ],
     CANDLESTICK_YOLO_V8_MODEL_PATH = '{root_path}/../ml_models/candlestick_yolo_v8/best.pt'
