@@ -38,5 +38,5 @@ class Config:
     GOOGLE_OAUTH_REDIRECT_URIS = [
         f"{APP_URL}/users/login",
         f"{API_URL}/api/users/login/google/authorized",
-    ],
+    ]
     CANDLESTICK_YOLO_V8_MODEL_PATH = '{root_path}/../ml_models/candlestick_yolo_v8/best.pt'
