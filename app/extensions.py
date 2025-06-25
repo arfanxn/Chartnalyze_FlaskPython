@@ -33,8 +33,6 @@ def register_extensions(app):
     migrate.init_app(app, db)
 
     global flow
-    global candlestick_ml_model
-
     flow = Flow.from_client_config(
         client_config={
             "web": {
@@ -49,5 +47,6 @@ def register_extensions(app):
         redirect_uri=Config.GOOGLE_OAUTH_REDIRECT_URIS[0],
     )
 
+    global candlestick_ml_model 
     candlestick_ml_model = YOLO(Config.CANDLESTICK_YOLO_V8_MODEL_PATH.format(root_path=app.root_path))
     if (candlestick_ml_model is None): raise Exception('candlestick_ml_model is None')
