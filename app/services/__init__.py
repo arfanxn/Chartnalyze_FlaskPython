@@ -13,3 +13,4 @@ from .save_service import SaveService
 from .activity_service import ActivityService
 from .dashboard_service import DashboardService
 from .candlestick_service import CandlestickService
+from .price_histories_service import PriceHistoriesService

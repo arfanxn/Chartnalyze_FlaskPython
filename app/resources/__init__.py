@@ -12,3 +12,4 @@ from .like_resource import LikeResource
 from .save_resource import SaveResource
 from .activity_resource import ActivityResource
 from .candlestick_prediction_resource import CandlestickPredictionResource
+from .price_history_resource import PriceHistoryResource

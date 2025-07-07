@@ -10,3 +10,4 @@ from .comment_repository import CommentRepository
 from .like_repository import LikeRepository
 from .save_repository import SaveRepository
 from .activity_repository import ActivityRepository
+from .price_histories_repository import PriceHistoriesRepository
