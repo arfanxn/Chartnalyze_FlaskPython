@@ -28,6 +28,7 @@ pycountry>=22.3.5
 python-dotenv>=0.19.0
 ulid-py>=1.1.0
 ultralytics==8.3.158
+pycoingecko>=3.2.0
 
 # Optional but useful packages
 gunicorn>=20.1.0
