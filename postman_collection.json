@@ -8572,6 +8572,149 @@
 					]
 				},
 				{
+					"name": "Price Histories",
+					"item": [
+						{
+							"name": "Price histories by symbol",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/price_histories/BTC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"price_histories",
+										"BTC"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/price_histories/BTC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"price_histories",
+												"BTC"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Werkzeug/3.1.3 Python/3.11.9"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 07 Jul 2025 19:12:30 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1687"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Price histories retrieved successfully\",\n    \"data\": {\n        \"price_histories\": [\n            {\n                \"id\": \"686be6e7edbe65aca8e5307c\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105665.12362716689,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-08T07:03:39.517Z\"\n                },\n                \"created_at\": null\n            },\n            {\n                \"id\": \"686be6e7edbe65aca8e5307d\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105524.79036817417,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-08T08:03:43.016Z\"\n                },\n                \"created_at\": null\n            },\n            {\n                \"id\": \"686be6e6edbe65aca8e53078\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105740.04411994808,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-08T03:03:40.283Z\"\n                },\n                \"created_at\": null\n            },\n            {\n                \"id\": \"686be6e7edbe65aca8e5307b\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105877.88107706241,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-08T06:03:38.173Z\"\n                },\n                \"created_at\": null\n            },\n            {\n                \"id\": \"686be6e7edbe65aca8e53079\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105879.205828614,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-08T04:03:50.127Z\"\n                },\n                \"created_at\": null\n            },\n            {\n                \"id\": \"686be6e6edbe65aca8e53077\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105642.70799832219,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-08T02:03:40.612Z\"\n                },\n                \"created_at\": null\n            },\n            {\n                \"id\": \"686be6e6edbe65aca8e53075\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105427.00046183626,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-08T00:04:00.461Z\"\n                },\n                \"created_at\": null\n            },\n            {\n                \"id\": \"686be6e6edbe65aca8e53074\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105585.27235064043,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-07T23:01:29.745Z\"\n                },\n                \"created_at\": null\n            },\n            {\n                \"id\": \"686be6e6edbe65aca8e53076\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105483.81159514144,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-08T01:02:29.197Z\"\n                },\n                \"created_at\": null\n            },\n            {\n                \"id\": \"686be6e7edbe65aca8e5307a\",\n                \"symbol\": \"BTC\",\n                \"price_usd\": 105827.43190370961,\n                \"scraped_at\": {\n                    \"$date\": \"2025-06-08T05:03:39.364Z\"\n                },\n                \"created_at\": null\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Price histories symbols",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/price_histories/symbols",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"price_histories",
+										"symbols"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/price_histories/symbols",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"price_histories",
+												"symbols"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx/1.27.5"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 07 Jul 2025 18:58:39 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Content-Length",
+											"value": "265"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Symbols retrieved successfully\",\n    \"data\": {\n        \"symbols\": [\n            \"ADA\",\n            \"AVAX\",\n            \"BCH\",\n            \"BSC-USD\",\n            \"BTC\",\n            \"CBBTC\",\n            \"DOGE\",\n            \"ETH\",\n            \"HBAR\",\n            \"HYPE\",\n            \"LEO\",\n            \"SHIB\",\n            \"STETH\",\n            \"SUI\",\n            \"TRX\",\n            \"USDC\",\n            \"USDS\",\n            \"USDT\",\n            \"WBTC\",\n            \"WETH\",\n            \"WSTETH\",\n            \"XLM\",\n            \"XMR\"\n        ]\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
 					"name": "Dashboard",
 					"request": {
 						"method": "GET",
