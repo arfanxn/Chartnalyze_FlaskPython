@@ -1,9 +1,8 @@
-from app.middlewares import api_key_verified
 from app.services import PriceHistoriesService
 from app.helpers.response_helpers import create_response_tuple
-from app.middlewares import authenticated, api_key_verified, email_verified
+from app.middlewares import api_key_verified
 from app.resources import PriceHistoryResource
-from flask import Blueprint, request, g
+from flask import Blueprint
 from http import HTTPStatus
 
 ph_service = PriceHistoriesService()
@@ -13,8 +12,6 @@ price_history_bp = ph_bp
 
 @ph_bp.route('/price_histories/<string:symbol>', methods=['GET'])
 @api_key_verified
-@authenticated
-@email_verified
 def all_by_symbol(symbol: str):
     
     price_histories, = ph_service.all_by_symbol(symbol=symbol)
@@ -28,8 +25,6 @@ def all_by_symbol(symbol: str):
 
 @ph_bp.route('/price_histories/symbols', methods=['GET'])
 @api_key_verified
-@authenticated
-@email_verified
 def all_distinct_symbols():
     symbols, = ph_service.all_distinct_symbols()
     
