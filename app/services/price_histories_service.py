@@ -1,8 +1,5 @@
-import pandas as pd
-
 from app.services import Service
 from app.repositories import PriceHistoriesRepository
-from flask import g
 
 ph_repository = PriceHistoriesRepository()
 
