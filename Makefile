@@ -50,4 +50,7 @@ test-ddos-should-error-with-429:
 generate-secret-key:
 	@flask generate-secret-key --env-file $(ENV_FILE)
 
-.PHONY: db-init db-migrate db-upgrade db-downgrade db-history db-fresh db-seed db-fresh-seed generate-secret-key
+scrap-price-histories-then-insert:
+	@flask scrap-price-histories-then-insert
+
+.PHONY: db-init db-migrate db-upgrade db-downgrade db-history db-fresh db-seed db-fresh-seed generate-secret-key scrap-price-histories-then-insert
