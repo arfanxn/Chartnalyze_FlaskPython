@@ -37,14 +37,19 @@
     make db-fresh-seed      # Reset, re-apply, and seed data
     ```
 
-5. **Start the development server**
+5. **Scrape price histories and insert them into the database**
+    ```bash
+    make scrap-price-histories-then-insert
+    ```
+
+6. **Start the development server**
 
     ```bash
     flask run --port 8000              # Standard mode
     flask run --debug --port 8000      # Debug mode
     ```
 
-6. **Run tests**
+7. **Run tests**
    _(Coming soon: test documentation)_
 
 ---
@@ -76,8 +81,14 @@
     ```
 
 4. **Run migrations and seed the database in Docker** (Run if needed)
+
     ```bash
     docker compose exec chartnalyze_flask make db-fresh-seed
+    ```
+
+5. **Run scrape price histories and insert them into the database in Docker** (Run if needed)
+    ```bash
+    docker compose exec chartnalyze_flask make scrap-price-histories-then-insert
     ```
 
 ---
