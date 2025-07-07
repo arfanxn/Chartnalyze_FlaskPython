@@ -1,5 +1,6 @@
 from google_auth_oauthlib.flow import Flow
 from ultralytics import YOLO
+from pycoingecko import CoinGeckoAPI
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_limiter import Limiter
@@ -22,6 +23,7 @@ migrate = Migrate()
 # Non Flask extensions
 flow = None
 candlestick_ml_model = None
+coingecko = None
 
 def register_extensions(app):
     cors.init_app(app, resources={r"/*": {"origins": "*"}})
@@ -50,3 +52,6 @@ def register_extensions(app):
     global candlestick_ml_model 
     candlestick_ml_model = YOLO(Config.CANDLESTICK_YOLO_V8_MODEL_PATH.format(root_path=app.root_path))
     if (candlestick_ml_model is None): raise Exception('candlestick_ml_model is None')
+
+    global coingecko
+    coingecko = CoinGeckoAPI()
